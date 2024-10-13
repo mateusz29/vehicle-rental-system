@@ -1,8 +1,7 @@
-package org.example.user.entity.service;
-
+package org.example.user.service;
 
 import org.example.user.entity.User;
-import org.example.user.entity.repository.api.UserRepository;
+import org.example.user.repository.api.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,8 +1,8 @@
-package org.example.user.entity.repository.memory;
+package org.example.user.repository.memory;
 
 import org.example.datastore.DataStore;
 import org.example.user.entity.User;
-import org.example.user.entity.repository.api.UserRepository;
+import org.example.user.repository.api.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

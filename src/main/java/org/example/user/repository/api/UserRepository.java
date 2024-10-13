@@ -1,5 +1,4 @@
-package org.example.user.entity.repository.api;
-
+package org.example.user.repository.api;
 
 import org.example.repository.api.Repository;
 import org.example.user.entity.User;
