@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Repository<E, K> {
-    Optional<E> find(K id);
+    Optional<E> find(K uuid);
     List<E> findAll();
     void create(E entity);
     void delete(E entity);

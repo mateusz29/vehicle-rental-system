@@ -16,9 +16,9 @@ public class UserInMemoryRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> find(UUID id) {
+    public Optional<User> find(UUID uuid) {
         return store.findAllUsers().stream()
-                .filter(user -> user.getUuid().equals(id))
+                .filter(user -> user.getUuid().equals(uuid))
                 .findFirst();
     }
 
