@@ -1,6 +1,6 @@
 package org.example.user.controller.simple;
 
-import jakarta.ws.rs.NotFoundException;
+import org.example.controller.servlet.exception.NotFoundException;
 import org.example.component.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;

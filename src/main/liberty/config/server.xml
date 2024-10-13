@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Open Liberty documentation does not use schema in examples.-->
 <server description="Jakarta EE example server">
+    <httpEndpoint host="*" httpPort="9081" httpsPort="9443"/>
     <featureManager>
         <feature>servlet-6.0</feature>
         <feature>jsonb-3.0</feature>

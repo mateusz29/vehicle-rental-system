@@ -1,0 +1,58 @@
+# Get all users
+
+GET http://localhost:9081/vehicle-rental/api/users
+
+###
+
+# Get a single user
+
+GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+
+###
+
+# Delete a user
+
+DELETE http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+
+###
+
+# Get deleted user
+
+GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+
+###
+
+# Create a user
+
+PUT http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+Content-Type: application/json
+
+{
+  "username": "Cuddy",
+  "birthday": "1980-01-01"
+}
+
+###
+
+# Get user after creation
+
+GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+
+###
+
+# Update user
+
+PUT http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+Content-Type: application/json
+
+{
+  "username": "Lisa",
+  "birthday": "1990-03-03"
+}
+
+###
+
+# Get user after update
+
+GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583
+

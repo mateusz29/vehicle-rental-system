@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class DataStore {
     private final Set<User> users = new HashSet<>();
@@ -34,6 +35,12 @@ public class DataStore {
             users.add(cloningUtility.clone(value));
         } else {
             throw new IllegalArgumentException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
+        }
+    }
+
+    public synchronized void deleteUser(UUID uuid) {
+        if (!users.removeIf(user -> user.getUuid().equals(uuid))) {
+            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(uuid));
         }
     }
 }
