@@ -6,6 +6,10 @@
          metadata-complete="false">
 
     <listener>
+        <listener-class>org.example.configuration.listener.CreateResource</listener-class>
+    </listener>
+
+    <listener>
         <listener-class>org.example.configuration.listener.CreateDataSource</listener-class>
     </listener>
 

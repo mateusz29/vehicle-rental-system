@@ -9,6 +9,8 @@ import org.example.user.dto.PutUserRequest;
 import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
+import java.io.InputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 public class UserSimpleController implements UserController {
@@ -49,5 +51,33 @@ public class UserSimpleController implements UserController {
         } else {
             userService.createUser(user);
         }
+    }
+
+    @Override
+    public byte[] getAvatar(UUID uuid) {
+        return userService.getAvatar(uuid);
+    }
+
+    @Override
+    public void updateAvatar(UUID uuid, InputStream avatar) {
+        userService.find(uuid).ifPresent(user -> {
+            try {
+                userService.updateAvatar(uuid, avatar);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }}
+        );
+    }
+
+    @Override
+    public void deleteAvatar(UUID uuid) {
+        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
+            throw new NotFoundException();
+        });
+    }
+
+    @Override
+    public void createAvatar(UUID uuid, byte[] avatar) {
+        userService.createAvatar(uuid, avatar);
     }
 }

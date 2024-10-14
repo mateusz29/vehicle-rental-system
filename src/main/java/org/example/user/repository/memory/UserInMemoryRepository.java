@@ -49,4 +49,20 @@ public class UserInMemoryRepository implements UserRepository {
         return store.findAllUsers();
     }
 
+    public byte[] getAvatar(UUID uuid) {
+        return store.getAvatar(uuid);
+    }
+
+    public void updateAvatar(UUID uuid, byte[] avatar) {
+        store.updateAvatar(uuid, avatar);
+    }
+
+    public void deleteAvatar(UUID uuid) {
+        store.deleteAvatar(uuid);
+    }
+
+    public void createAvatar(UUID uuid, byte[] avatar) {
+        store.createAvatar(uuid, avatar);
+    }
+
 }
