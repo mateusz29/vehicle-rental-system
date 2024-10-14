@@ -49,7 +49,7 @@ public class UserInMemoryRepository implements UserRepository {
         return store.findAllUsers();
     }
 
-    public byte[] getAvatar(UUID uuid) {
+    public Optional<byte[]> getAvatar(UUID uuid) {
         return store.getAvatar(uuid);
     }
 
@@ -60,9 +60,4 @@ public class UserInMemoryRepository implements UserRepository {
     public void deleteAvatar(UUID uuid) {
         store.deleteAvatar(uuid);
     }
-
-    public void createAvatar(UUID uuid, byte[] avatar) {
-        store.createAvatar(uuid, avatar);
-    }
-
 }

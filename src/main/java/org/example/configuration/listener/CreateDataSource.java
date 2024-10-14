@@ -13,7 +13,6 @@ public class CreateDataSource implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         Path avatarDirectory = (Path) event.getServletContext().getAttribute("avatarDirectory");
-        //avatarDirectory = Path.of("D:\\studia\\semestr_7\\narzedzia_i_aplikacje_JEE\\laby\\vehicle-rental-system\\src\\main\\resources\\avatar");
         event.getServletContext().setAttribute("datasource", new DataStore(new CloningUtility(), avatarDirectory));
     }
 }

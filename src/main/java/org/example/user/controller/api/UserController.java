@@ -13,7 +13,6 @@ public interface UserController {
     void deleteUser(UUID uuid);
     void updateOrCreateUser(PutUserRequest request);
     byte[] getAvatar(UUID uuid);
-    void updateAvatar(UUID uuid, InputStream avatar);
+    void putAvatar(UUID uuid, InputStream avatar);
     void deleteAvatar(UUID uuid);
-    void createAvatar(UUID uuid, byte[] avatar);
 }

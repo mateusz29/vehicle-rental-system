@@ -100,7 +100,7 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.AVATAR, path);
-                userController.updateAvatar(uuid, request.getPart("avatar").getInputStream());
+                userController.putAvatar(uuid, request.getPart("avatar").getInputStream());
                 return;
             }
         }

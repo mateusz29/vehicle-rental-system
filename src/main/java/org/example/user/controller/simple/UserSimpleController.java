@@ -55,29 +55,22 @@ public class UserSimpleController implements UserController {
 
     @Override
     public byte[] getAvatar(UUID uuid) {
-        return userService.getAvatar(uuid);
+        return userService.getAvatar(uuid)
+                .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public void updateAvatar(UUID uuid, InputStream avatar) {
-        userService.find(uuid).ifPresent(user -> {
-            try {
-                userService.updateAvatar(uuid, avatar);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }}
-        );
-    }
-
-    @Override
-    public void deleteAvatar(UUID uuid) {
-        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
+    public void putAvatar(UUID uuid, InputStream avatar) {
+        userService.find(uuid).ifPresentOrElse(user -> userService.updateAvatar(uuid, avatar), () -> {
             throw new NotFoundException();
         });
     }
 
     @Override
-    public void createAvatar(UUID uuid, byte[] avatar) {
-        userService.createAvatar(uuid, avatar);
+    public void deleteAvatar(UUID uuid) {
+        userService.deleteAvatar(uuid);
+//        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
+//            throw new NotFoundException();
+//        });
     }
 }

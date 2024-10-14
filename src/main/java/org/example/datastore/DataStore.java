@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.UUID;
@@ -54,44 +55,29 @@ public class DataStore {
         return avatarDirectory.resolve(userUUID.toString() + ".png");
     }
 
-    public synchronized byte[] getAvatar(UUID uuid) {
+    public Optional<byte[]> getAvatar(UUID uuid) {
         Path avatarPath = getAvatarPath(uuid);
         try {
             if (Files.exists(avatarPath)) {
-                return Files.readAllBytes(avatarPath);
+                return Optional.of(Files.readAllBytes(avatarPath));
             } else {
-                throw new NotFoundException();
+                return Optional.empty();
             }
         } catch (IOException e) {
             throw new RuntimeException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
         }
     }
 
-    public synchronized void createAvatar(UUID uuid, byte[] avatar) {
+    public void updateAvatar(UUID uuid, byte[] avatar) {
         Path avatarPath = getAvatarPath(uuid);
         try {
-            if (Files.exists(avatarPath)) {
-                throw new IllegalArgumentException("Avatar for user with id \"%s\" already exists".formatted(uuid));
-            }
-            Files.write(avatarPath, avatar);
-        } catch (IOException e) {
-            throw new RuntimeException("Cannot create avatar for user with id \"%s\"".formatted(uuid));
-        }
-    }
-
-    public synchronized void updateAvatar(UUID uuid, byte[] avatar) {
-        Path avatarPath = getAvatarPath(uuid);
-        try {
-            if (!Files.exists(avatarPath)) {
-                throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
-            }
             Files.write(avatarPath, avatar);
         } catch (IOException e) {
             throw new RuntimeException("Cannot update avatar for user with id \"%s\"".formatted(uuid));
         }
     }
 
-    public synchronized void deleteAvatar(UUID uuid) {
+    public void deleteAvatar(UUID uuid) {
         Path avatarPath = getAvatarPath(uuid);
         try {
             if (!Files.exists(avatarPath)) {

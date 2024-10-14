@@ -1,5 +1,6 @@
 package org.example.user.service;
 
+import org.example.controller.servlet.exception.NotFoundException;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
@@ -40,19 +41,21 @@ public class UserService {
         repository.update(user);
     }
 
-    public byte[] getAvatar(UUID uuid) {
+    public Optional<byte[]> getAvatar(UUID uuid) {
         return repository.getAvatar(uuid);
     }
 
-    public void updateAvatar(UUID uuid, InputStream avatar) throws IOException {
-        repository.updateAvatar(uuid, avatar.readAllBytes());
+    public void updateAvatar(UUID uuid, InputStream avatar){
+        repository.find(uuid).ifPresent(user -> {
+            try {
+                repository.updateAvatar(uuid, avatar.readAllBytes());
+            } catch (IOException e) {
+                throw new NotFoundException();
+            }
+        });
     }
 
     public void deleteAvatar(UUID uuid) {
         repository.deleteAvatar(uuid);
-    }
-
-    public void createAvatar(UUID uuid, byte[] avatar) {
-        repository.createAvatar(uuid, avatar);
     }
 }

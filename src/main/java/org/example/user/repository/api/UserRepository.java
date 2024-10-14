@@ -8,8 +8,7 @@ import java.util.UUID;
 
 public interface UserRepository extends Repository<User, UUID> {
     Optional<User> findByUsername(String username);
-    byte[] getAvatar(UUID uuid);
+    Optional<byte[]> getAvatar(UUID uuid);
     void updateAvatar(UUID uuid, byte[] avatar);
     void deleteAvatar(UUID uuid);
-    void createAvatar(UUID uuid, byte[] avatar);
 }
