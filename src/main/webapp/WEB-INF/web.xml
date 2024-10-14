@@ -5,6 +5,11 @@
          version="6.0"
          metadata-complete="false">
 
+    <context-param>
+        <param-name>avatarDirectory</param-name>
+        <param-value>D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\avatar</param-value>
+    </context-param>
+
     <listener>
         <listener-class>org.example.configuration.listener.CreateResource</listener-class>
     </listener>

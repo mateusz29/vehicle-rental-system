@@ -70,7 +70,7 @@ DELETE http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f5
 
 ###
 
-# Create avatar
+# Create/update avatar
 
 PUT http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5/avatar
 Content-Type: multipart/form-data; boundary=boundary
@@ -78,7 +78,7 @@ Content-Type: multipart/form-data; boundary=boundary
 --boundary
 Content-Disposition: form-data; name="avatar"; filename="image2.png'
 
-< D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\src\main\resources\avatar\image2.png
+< D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\avatar\image2.png
 --boundary--
 
 ###

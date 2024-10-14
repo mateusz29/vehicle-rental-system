@@ -10,7 +10,6 @@ import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
 import java.io.InputStream;
-import java.io.IOException;
 import java.util.UUID;
 
 public class UserSimpleController implements UserController {
@@ -68,9 +67,8 @@ public class UserSimpleController implements UserController {
 
     @Override
     public void deleteAvatar(UUID uuid) {
-        userService.deleteAvatar(uuid);
-//        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
-//            throw new NotFoundException();
-//        });
+        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
+            throw new NotFoundException();
+        });
     }
 }
