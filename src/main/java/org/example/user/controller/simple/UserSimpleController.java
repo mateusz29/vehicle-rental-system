@@ -39,8 +39,7 @@ public class UserSimpleController implements UserController {
 
     @Override
     public void deleteUser(UUID uuid) {
-        userService.find(uuid)
-            .ifPresentOrElse(userService::deleteUser, () -> {
+        userService.find(uuid).ifPresentOrElse(userService::deleteUser, () -> {
                 throw new NotFoundException();
             });
     }
@@ -71,7 +70,13 @@ public class UserSimpleController implements UserController {
 
     @Override
     public void deleteAvatar(UUID uuid) {
-        userService.find(uuid).ifPresentOrElse(user -> userService.deleteAvatar(uuid), () -> {
+        userService.find(uuid).ifPresentOrElse(user -> {
+                if (userService.getAvatar(uuid).isPresent()) {
+                    userService.deleteAvatar(uuid);
+                } else {
+                    throw new NotFoundException();
+                }
+        }, () -> {
             throw new NotFoundException();
         });
     }
