@@ -78,7 +78,8 @@ Content-Type: multipart/form-data; boundary=boundary
 --boundary
 Content-Disposition: form-data; name="avatar"; filename="image2.png'
 
-< D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\avatar\image2.png
+< D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\src\main\resources\avatar\image2.png
+##D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\avatar\image2.png
 --boundary--
 
 ###

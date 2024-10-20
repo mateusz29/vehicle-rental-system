@@ -1,6 +1,8 @@
 package org.example.user.repository.memory;
 
-import org.example.datastore.DataStore;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.example.datastore.component.DataStore;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
@@ -8,9 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@ApplicationScoped
 public class UserInMemoryRepository implements UserRepository {
     private final DataStore store;
 
+    @Inject
     public UserInMemoryRepository(DataStore store) {
         this.store = store;
     }

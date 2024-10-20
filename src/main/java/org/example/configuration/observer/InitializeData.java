@@ -1,8 +1,10 @@
-package org.example.configuration.listener;
+package org.example.configuration.observer;
 
-import jakarta.servlet.ServletContextEvent;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Initialized;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletContextListener;
-import jakarta.servlet.annotation.WebListener;
 import lombok.SneakyThrows;
 import org.example.user.entity.User;
 import org.example.user.service.UserService;
@@ -10,13 +12,16 @@ import org.example.user.service.UserService;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@WebListener
+@ApplicationScoped
 public class InitializeData implements ServletContextListener {
-    private UserService userService;
+    private final UserService userService;
 
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        userService = (UserService) event.getServletContext().getAttribute("userService");
+    @Inject
+    public InitializeData(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
         init();
     }
 

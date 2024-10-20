@@ -10,20 +10,4 @@
         <param-value>D:\studia\semestr_7\narzedzia_i_aplikacje_JEE\laby\vehicle-rental-system\avatar</param-value>
     </context-param>
 
-    <listener>
-        <listener-class>org.example.configuration.listener.CreateResource</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.example.configuration.listener.CreateDataSource</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.example.configuration.listener.CreateServices</listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>org.example.configuration.listener.CreateControllers</listener-class>
-    </listener>
-
 </web-app>

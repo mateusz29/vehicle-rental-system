@@ -1,12 +1,16 @@
-package org.example.datastore;
+package org.example.datastore.component;
 
-import org.example.controller.servlet.exception.NotFoundException;
-import org.example.serialization.CloningUtility;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.NoArgsConstructor;
+import org.example.serialization.component.CloningUtility;
 import org.example.user.entity.User;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +18,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
+@ApplicationScoped
+@NoArgsConstructor(force = true)
 public class DataStore {
     private final Set<User> users = new HashSet<>();
     private final CloningUtility cloningUtility;
     private final Path avatarDirectory;
 
-    public DataStore(CloningUtility cloningUtility, Path avatarDirectory) {
+    @Inject
+    public DataStore(CloningUtility cloningUtility) throws URISyntaxException {
         this.cloningUtility = cloningUtility;
-        this.avatarDirectory = avatarDirectory;
+        this.avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
     }
 
     public synchronized List<User> findAllUsers() {

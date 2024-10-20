@@ -1,9 +1,11 @@
-package org.example.serialization;
+package org.example.serialization.component;
 
+import jakarta.enterprise.context.Dependent;
 import lombok.SneakyThrows;
 
 import java.io.*;
 
+@Dependent
 public class CloningUtility {
 
     @SneakyThrows

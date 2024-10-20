@@ -1,5 +1,6 @@
 package org.example.controller.servlet;
 
+import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -36,9 +37,9 @@ public class ApiServlet extends HttpServlet {
 
     private final Jsonb jsonb = JsonbBuilder.create();
 
-    @Override
-    public void init() throws ServletException{
-        userController = (UserController) getServletContext().getAttribute("userController");
+    @Inject
+    public ApiServlet(UserController userController) {
+        this.userController = userController;
     }
 
     @SuppressWarnings("RedundantThrows")
