@@ -8,7 +8,6 @@ import org.example.vehicle.entity.Rental;
 import org.example.vehicle.repository.api.RentalRepository;
 import org.example.vehicle.repository.api.VehicleRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

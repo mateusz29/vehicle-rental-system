@@ -22,7 +22,7 @@ import java.util.UUID;
 })
 @MultipartConfig(maxFileSize = 200 * 1024)
 public class ApiServlet extends HttpServlet {
-    private UserController userController;
+    private final UserController userController;
 
     public static final class Paths {
         public static final String API = "/api";
