@@ -22,10 +22,8 @@ public class RentalInMemoryRepository implements RentalRepository {
     }
 
     @Override
-    public Optional<Rental> find(UUID uuid) {
-        return store.findAllRentals().stream()
-                .filter(rental -> rental.getUuid().equals(uuid))
-                .findFirst();
+    public Optional<Rental> find(UUID uuid) {;
+        return Optional.ofNullable(store.findRentalById(uuid));
     }
 
     @Override

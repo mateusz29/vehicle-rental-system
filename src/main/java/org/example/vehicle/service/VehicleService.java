@@ -3,7 +3,9 @@ package org.example.vehicle.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
+import org.example.vehicle.entity.Rental;
 import org.example.vehicle.entity.Vehicle;
+import org.example.vehicle.repository.api.RentalRepository;
 import org.example.vehicle.repository.api.VehicleRepository;
 
 import java.util.List;
@@ -14,10 +16,12 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class VehicleService {
     private final VehicleRepository repository;
+    private final RentalRepository rentalRepository;
 
     @Inject
-    public VehicleService(VehicleRepository repository) {
+    public VehicleService(VehicleRepository repository, RentalRepository rentalRepository) {
         this.repository = repository;
+        this.rentalRepository = rentalRepository;
     }
 
     public Optional<Vehicle> find(UUID uuid) {
@@ -36,7 +40,7 @@ public class VehicleService {
         repository.update(vehicle);
     }
 
-    public void delete(UUID uuid) {
-        repository.delete(repository.find(uuid).orElseThrow());
+    public void delete(Vehicle vehicle) {
+        repository.delete(vehicle);
     }
 }

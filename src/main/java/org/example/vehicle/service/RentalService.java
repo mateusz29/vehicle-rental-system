@@ -42,8 +42,8 @@ public class RentalService {
         rentalRepository.update(rental);
     }
 
-    public void delete(UUID uuid) {
-        rentalRepository.delete(rentalRepository.find(uuid).orElseThrow());
+    public void delete(Rental rental) {
+        rentalRepository.delete(rental);
     }
 
     public Optional<List<Rental>> findAllByUser(UUID uuid) {
@@ -55,7 +55,4 @@ public class RentalService {
         return vehicleRepository.find(uuid)
                 .map(rentalRepository::findAllByVehicle);
     }
-
-
-
 }

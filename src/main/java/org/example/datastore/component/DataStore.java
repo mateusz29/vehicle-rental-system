@@ -38,6 +38,14 @@ public class DataStore {
                 .collect(Collectors.toList());
     }
 
+    public synchronized Rental findRentalById(UUID uuid) {
+        return rentals.stream()
+                .filter(rental -> rental.getUuid().equals(uuid))
+                .findFirst()
+                .map(cloningUtility::clone)
+                .orElse(null);
+    }
+
     public synchronized void createRental(Rental value) {
         if (rentals.stream().anyMatch(rental -> rental.getUuid().equals(value.getUuid()))) {
             throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getUuid()));
@@ -62,9 +70,6 @@ public class DataStore {
     }
 
     public synchronized List<Vehicle> findAllVehicles() {
-//        return vehicles.stream()
-//                .map(cloningUtility::clone)
-//                .collect(Collectors.toList());
         return vehicles.stream()
                 .map(vehicle -> {
                     Vehicle clonedVehicle = cloningUtility.clone(vehicle);
@@ -76,6 +81,22 @@ public class DataStore {
                     return clonedVehicle;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public synchronized Vehicle findVehicleById(UUID uuid) {
+        return vehicles.stream()
+                .filter(vehicle -> vehicle.getUuid().equals(uuid))
+                .findFirst()
+                .map(genre -> {
+                    Vehicle clonedVehicle = cloningUtility.clone(genre);
+                    List<Rental> vehicleRentals = rentals.stream()
+                            .filter(rental -> rental.getVehicle().getUuid().equals(clonedVehicle.getUuid()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedVehicle.setRentals(vehicleRentals);
+                    return clonedVehicle;
+                })
+                .orElse(null);
     }
 
     public synchronized void createVehicle(Vehicle value) throws IllegalArgumentException {
@@ -100,9 +121,6 @@ public class DataStore {
     }
 
     public synchronized List<User> findAllUsers() {
-//        return users.stream()
-//                .map(cloningUtility::clone)
-//                .collect(Collectors.toList());
         return users.stream()
                 .map(user -> {
                     User clonedUser = cloningUtility.clone(user);
@@ -115,6 +133,23 @@ public class DataStore {
                 })
                 .collect(Collectors.toList());
     }
+
+    public synchronized User findUserById(UUID uuid) {
+        return users.stream()
+                .filter(user -> user.getUuid().equals(uuid))
+                .findFirst()
+                .map(user -> {
+                    User clonedUser = cloningUtility.clone(user);
+                    List<Rental> userRentals = rentals.stream()
+                            .filter(rental -> rental.getUser().getUuid().equals(clonedUser.getUuid()))
+                            .map(cloningUtility::clone)
+                            .collect(Collectors.toList());
+                    clonedUser.setRentals(userRentals);
+                    return clonedUser;
+                })
+                .orElse(null);
+    }
+
 
     public synchronized void createUser(User value) throws IllegalArgumentException {
         if (users.stream().anyMatch(user -> user.getUuid().equals(value.getUuid()))) {

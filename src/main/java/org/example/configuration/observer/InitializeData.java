@@ -157,6 +157,15 @@ public class InitializeData implements ServletContextListener {
         System.out.println("Users:");
         userService.findAllUsers().forEach(System.out::println);
 
+        System.out.println("Deleted");
+        rentalService.delete(rental4);
+        System.out.println("Rentals:");
+        rentalService.findAll().forEach(System.out::println);
+        System.out.println("Vehicles:");
+        vehicleService.findAll().forEach(System.out::println);
+        System.out.println("Users:");
+        userService.findAllUsers().forEach(System.out::println);
+
         requestContextController.deactivate();
     }
 }
