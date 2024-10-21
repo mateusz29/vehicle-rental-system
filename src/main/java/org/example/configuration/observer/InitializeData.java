@@ -166,6 +166,22 @@ public class InitializeData implements ServletContextListener {
         System.out.println("Users:");
         userService.findAllUsers().forEach(System.out::println);
 
+        Vehicle motorcycle = Vehicle.builder()
+                .uuid(UUID.fromString("2afa2402-9373-428c-9206-2fc7dd1f83aa"))
+                .model("igkernkn")
+                .brand("ndskndkl")
+                .type(VehicleType.MOTORCYCLE)
+                .build();
+
+        System.out.println("Deleted");
+        vehicleService.update(motorcycle);
+        System.out.println("Rentals:");
+        rentalService.findAll().forEach(System.out::println);
+        System.out.println("Vehicles:");
+        vehicleService.findAll().forEach(System.out::println);
+        System.out.println("Users:");
+        userService.findAllUsers().forEach(System.out::println);
+
         requestContextController.deactivate();
     }
 }

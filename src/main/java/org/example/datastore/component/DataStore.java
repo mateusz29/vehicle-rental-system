@@ -55,8 +55,8 @@ public class DataStore {
     }
 
     public synchronized void updateRental(Rental value) {
+        Rental entity = cloneWithRelationships(value);
         if (rentals.removeIf(rental -> rental.getUuid().equals(value.getUuid()))) {
-            Rental entity = cloneWithRelationships(value);
             rentals.add(entity);
         } else {
             throw new IllegalArgumentException("The rental with id \"%s\" does not exist".formatted(value.getUuid()));
