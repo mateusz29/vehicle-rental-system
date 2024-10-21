@@ -87,3 +87,6 @@ Content-Disposition: form-data; name="avatar"; filename="image2.png'
 # Get avatar after creation
 
 GET http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5/avatar
+
+###
+

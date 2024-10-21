@@ -1,7 +1,7 @@
 package org.example.user.entity;
 
 import lombok.*;
-import org.example.rental.entity.Rental;
+import org.example.vehicle.entity.Rental;
 
 import java.io.Serializable;
 import java.time.LocalDate;

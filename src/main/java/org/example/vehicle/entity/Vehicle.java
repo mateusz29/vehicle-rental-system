@@ -1,7 +1,6 @@
 package org.example.vehicle.entity;
 
 import lombok.*;
-import org.example.rental.entity.Rental;
 
 import java.io.Serializable;
 import java.util.List;
