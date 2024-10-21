@@ -2,6 +2,7 @@ package org.example.datastore.component;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import lombok.NoArgsConstructor;
 import org.example.serialization.component.CloningUtility;
 import org.example.user.entity.User;
@@ -27,9 +28,9 @@ public class DataStore {
     private final Path avatarDirectory;
 
     @Inject
-    public DataStore(CloningUtility cloningUtility) throws URISyntaxException {
+    public DataStore(CloningUtility cloningUtility, ServletContext servletContext) {
         this.cloningUtility = cloningUtility;
-        this.avatarDirectory = Paths.get(getClass().getClassLoader().getResource("avatar").toURI());
+        this.avatarDirectory = Paths.get(servletContext.getInitParameter("avatarDirectory"));
     }
 
     public synchronized List<Rental> findAllRentals() {
