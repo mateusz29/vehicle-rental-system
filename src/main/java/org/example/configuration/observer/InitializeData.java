@@ -70,10 +70,10 @@ public class InitializeData implements ServletContextListener {
                 .birthday(LocalDate.of(1987, 2, 16))
                 .build();
 
-        userService.createUser(George);
-        userService.createUser(Nicholas);
-        userService.createUser(Wilson);
-        userService.createUser(Gregory);
+        userService.create(George);
+        userService.create(Nicholas);
+        userService.create(Wilson);
+        userService.create(Gregory);
 
         Vehicle Porsche = Vehicle.builder()
                 .uuid(UUID.fromString("e83dad4d-5d56-4065-8630-8a887536dc41"))
@@ -174,7 +174,7 @@ public class InitializeData implements ServletContextListener {
                 .build();
 
         System.out.println("Updated user");
-        userService.updateUser(Wilson1);
+        userService.update(Wilson1);
         printAll();
 
 

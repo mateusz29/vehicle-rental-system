@@ -12,6 +12,14 @@ public class UserToResponeFunction implements Function<User, GetUserResponse> {
                 .uuid(user.getUuid())
                 .username(user.getUsername())
                 .birthday(user.getBirthday())
+                .rentals(user.getRentals().stream()
+                        .map(rental -> GetUserResponse.Rental.builder()
+                                .uuid(rental.getUuid())
+                                .rentalDate(rental.getRentalDate())
+                                .returnDate(rental.getReturnDate())
+                                .returned(rental.isReturned())
+                                .build())
+                        .toList())
                 .build();
     }
 }

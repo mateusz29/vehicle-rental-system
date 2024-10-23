@@ -39,45 +39,19 @@ public class UserSimpleController implements UserController {
 
     @Override
     public void deleteUser(UUID uuid) {
-        userService.find(uuid).ifPresentOrElse(userService::deleteUser, () -> {
+        userService.find(uuid).ifPresentOrElse(userService::delete, () -> {
                 throw new NotFoundException();
             });
     }
 
     @Override
-    public void updateOrCreateUser(PutUserRequest request) {
+    public void putUser(PutUserRequest request) {
         User user = factory.requestToUserFunction().apply(request);
 
         if (userService.find(user.getUuid()).isPresent()) {
-            userService.updateUser(user);
+            userService.update(user);
         } else {
-            userService.createUser(user);
+            userService.create(user);
         }
-    }
-
-    @Override
-    public byte[] getAvatar(UUID uuid) {
-        return userService.getAvatar(uuid)
-                .orElseThrow(NotFoundException::new);
-    }
-
-    @Override
-    public void putAvatar(UUID uuid, InputStream avatar) {
-        userService.find(uuid).ifPresentOrElse(user -> userService.updateAvatar(uuid, avatar), () -> {
-            throw new NotFoundException();
-        });
-    }
-
-    @Override
-    public void deleteAvatar(UUID uuid) {
-        userService.find(uuid).ifPresentOrElse(user -> {
-                if (userService.getAvatar(uuid).isPresent()) {
-                    userService.deleteAvatar(uuid);
-                } else {
-                    throw new NotFoundException();
-                }
-        }, () -> {
-            throw new NotFoundException();
-        });
     }
 }

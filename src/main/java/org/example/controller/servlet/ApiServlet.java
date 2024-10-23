@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.user.avatar.controller.api.AvatarController;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.PutUserRequest;
 
@@ -23,6 +24,7 @@ import java.util.UUID;
 @MultipartConfig(maxFileSize = 200 * 1024)
 public class ApiServlet extends HttpServlet {
     private final UserController userController;
+    private final AvatarController avatarController;
 
     public static final class Paths {
         public static final String API = "/api";
@@ -38,8 +40,9 @@ public class ApiServlet extends HttpServlet {
     private final Jsonb jsonb = JsonbBuilder.create();
 
     @Inject
-    public ApiServlet(UserController userController) {
+    public ApiServlet(UserController userController, AvatarController avatarController) {
         this.userController = userController;
+        this.avatarController = avatarController;
     }
 
     @SuppressWarnings("RedundantThrows")
@@ -60,7 +63,7 @@ public class ApiServlet extends HttpServlet {
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 response.setContentType("image/png");
                 UUID uuid = extractUuid(Patterns.AVATAR, path);
-                byte[] avatar = userController.getAvatar(uuid);
+                byte[] avatar = avatarController.getAvatar(uuid);
                 response.setContentLength(avatar.length);
                 response.getOutputStream().write(avatar);
                 return;
@@ -81,7 +84,7 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.AVATAR, path);
-                userController.deleteAvatar(uuid);
+                avatarController.deleteAvatar(uuid);
                 return;
             }
         }
@@ -96,12 +99,12 @@ public class ApiServlet extends HttpServlet {
                 UUID uuid = extractUuid(Patterns.USER, path);
                 PutUserRequest putUserRequest = jsonb.fromJson(request.getReader(), PutUserRequest.class);
                 putUserRequest.setUuid(uuid);
-                userController.updateOrCreateUser(putUserRequest);
+                userController.putUser(putUserRequest);
                 response.addHeader("Location", createUrl(request, Paths.API + "users" + uuid.toString()));
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.AVATAR, path);
-                userController.putAvatar(uuid, request.getPart("avatar").getInputStream());
+                avatarController.putAvatar(uuid, request.getPart("avatar").getInputStream());
                 return;
             }
         }

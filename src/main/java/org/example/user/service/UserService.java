@@ -3,12 +3,9 @@ package org.example.user.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
-import org.example.controller.servlet.exception.NotFoundException;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,33 +32,15 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void createUser(User user) {
+    public void create(User user) {
         repository.create(user);
     }
 
-    public void deleteUser(User user) {
+    public void delete(User user) {
         repository.delete(user);
     }
 
-    public void updateUser(User user) {
+    public void update(User user) {
         repository.update(user);
-    }
-
-    public Optional<byte[]> getAvatar(UUID uuid) {
-        return repository.getAvatar(uuid);
-    }
-
-    public void updateAvatar(UUID uuid, InputStream avatar){
-        repository.find(uuid).ifPresent(user -> {
-            try {
-                repository.updateAvatar(uuid, avatar.readAllBytes());
-            } catch (IOException e) {
-                throw new NotFoundException();
-            }
-        });
-    }
-
-    public void deleteAvatar(UUID uuid) {
-        repository.deleteAvatar(uuid);
     }
 }

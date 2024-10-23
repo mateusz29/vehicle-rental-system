@@ -180,11 +180,11 @@ public class DataStore {
         }
     }
 
-    public Path getAvatarPath(UUID userUUID) {
+    public synchronized Path getAvatarPath(UUID userUUID) {
         return avatarDirectory.resolve(userUUID.toString() + ".png");
     }
 
-    public Optional<byte[]> getAvatar(UUID uuid) {
+    public synchronized Optional<byte[]> getAvatar(UUID uuid) {
         Path avatarPath = getAvatarPath(uuid);
         try {
             if (Files.exists(avatarPath)) {
@@ -197,7 +197,7 @@ public class DataStore {
         }
     }
 
-    public void updateAvatar(UUID uuid, byte[] avatar) {
+    public synchronized void updateAvatar(UUID uuid, byte[] avatar) {
         Path avatarPath = getAvatarPath(uuid);
         try {
             Files.write(avatarPath, avatar);
@@ -206,7 +206,7 @@ public class DataStore {
         }
     }
 
-    public void deleteAvatar(UUID uuid) {
+    public synchronized void deleteAvatar(UUID uuid) {
         Path avatarPath = getAvatarPath(uuid);
         try {
             if (!Files.exists(avatarPath)) {
