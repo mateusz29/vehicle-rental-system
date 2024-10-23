@@ -21,7 +21,9 @@ public class VehicleInMemoryRepository implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> find(UUID uuid) {
-        return Optional.ofNullable(store.findVehicleById(uuid));
+        return store.findAllVehicles().stream()
+                .filter(vehicle -> vehicle.getUuid().equals(uuid))
+                .findFirst();
     }
 
     @Override
