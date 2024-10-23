@@ -164,7 +164,11 @@ public class DataStore {
 
     public synchronized void updateUser(User value) throws IllegalArgumentException {
         if (users.removeIf(user -> user.getUuid().equals(value.getUuid()))) {
-            users.add(cloningUtility.clone(value));
+            User updatedUser = cloningUtility.clone(value);
+            users.add(updatedUser);
+            rentals.stream()
+                    .filter(rental -> rental.getUser().getUuid().equals(updatedUser.getUuid()))
+                    .forEach(rental -> rental.setUser(updatedUser));
         } else {
             throw new IllegalArgumentException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
         }
