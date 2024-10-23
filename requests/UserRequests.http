@@ -1,23 +1,13 @@
-# Get all users
-
+### Get all users
 GET http://localhost:9081/vehicle-rental/api/users
 
-###
-
-# Get a single user
-
+### Get single user
 GET http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 
-###
-
-# Delete a user
-
+### Delete user
 DELETE http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 
-###
-
-# Create a user
-
+### Create user
 PUT http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 Content-Type: application/json
 
@@ -26,10 +16,7 @@ Content-Type: application/json
   "birthday": "1980-01-01"
 }
 
-###
-
-# Update user
-
+### Update user
 PUT http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 Content-Type: application/json
 
@@ -38,22 +25,13 @@ Content-Type: application/json
   "birthday": "1990-03-03"
 }
 
-###
-
-# Get avatar
-
+### Get avatar
 GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583/avatar
 
-###
-
-# Delete avatar
-
+### Delete avatar
 DELETE http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583/avatar
 
-###
-
-# Create/update avatar
-
+### Create/update avatar
 PUT http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583/avatar
 Content-Type: multipart/form-data; boundary=boundary
 

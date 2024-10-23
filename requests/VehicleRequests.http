@@ -1,0 +1,27 @@
+### Get all vehicles
+GET http://localhost:9081/vehicle-rental/api/vehicles
+
+### Get single vehicle
+GET http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+
+### Delete vehicle
+DELETE http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+
+### Create vehicle
+PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+Content-Type: application/json
+
+{
+  "model": "LFA",
+  "brand": "Lexus",
+  "type": "CAR"
+}
+
+### Update vehicle
+PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+Content-Type: application/json
+
+{
+  "model": "Chiron",
+  "brand": "Bugatti"
+}

@@ -149,33 +149,33 @@ public class InitializeData implements ServletContextListener {
         rentalService.create(rental3);
         rentalService.create(rental4);
 
-        System.out.println("Data initialized");
-        printAll();
-
-        System.out.println("Deleted");
-        rentalService.delete(rental4);
-        printAll();
-
-        Vehicle motorcycle = Vehicle.builder()
-                .uuid(UUID.fromString("2afa2402-9373-428c-9206-2fc7dd1f83aa"))
-                .model("igkernkn")
-                .brand("ndskndkl")
-                .type(VehicleType.MOTORCYCLE)
-                .build();
-
-        System.out.println("Updated vehicle");
-        vehicleService.update(motorcycle);
-        printAll();
-
-        User Wilson1 = User.builder()
-                .uuid(UUID.fromString("e3cc7be8-b40c-4c3a-afc3-796880b4cccc"))
-                .username("Wilson")
-                .birthday(LocalDate.of(1990, 4, 20))
-                .build();
-
-        System.out.println("Updated user");
-        userService.update(Wilson1);
-        printAll();
+//        System.out.println("Data initialized");
+//        printAll();
+//
+//        System.out.println("Deleted");
+//        rentalService.delete(rental4);
+//        printAll();
+//
+//        Vehicle motorcycle = Vehicle.builder()
+//                .uuid(UUID.fromString("2afa2402-9373-428c-9206-2fc7dd1f83aa"))
+//                .model("igkernkn")
+//                .brand("ndskndkl")
+//                .type(VehicleType.MOTORCYCLE)
+//                .build();
+//
+//        System.out.println("Updated vehicle");
+//        vehicleService.update(motorcycle);
+//        printAll();
+//
+//        User Wilson1 = User.builder()
+//                .uuid(UUID.fromString("e3cc7be8-b40c-4c3a-afc3-796880b4cccc"))
+//                .username("Wilson")
+//                .birthday(LocalDate.of(1990, 4, 20))
+//                .build();
+//
+//        System.out.println("Updated user");
+//        userService.update(Wilson1);
+//        printAll();
 
 
         requestContextController.deactivate();
@@ -187,6 +187,6 @@ public class InitializeData implements ServletContextListener {
         System.out.println("Vehicles:");
         vehicleService.findAll().forEach(System.out::println);
         System.out.println("Users:");
-        userService.findAllUsers().forEach(System.out::println);
+        userService.findAll().forEach(System.out::println);
     }
 }

@@ -1,0 +1,36 @@
+### Get all rentals
+GET http://localhost:9081/vehicle-rental/api/rentals
+
+### Get single rental
+GET http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
+
+### Delete rental
+DELETE http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
+
+### Create rental
+PUT http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
+Content-Type: application/json
+
+{
+  "rentalDate": "2023-04-05",
+  "returnDate": "2023-04-15",
+  "returned": true,
+  "user": "7553f71e-5217-4a39-9680-f506d52b08e5",
+  "vehicle": "e83dad4d-5d56-4065-8630-8a887536dc41"
+}
+
+### Update rental
+PUT http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
+Content-Type: application/json
+
+{
+  "rentalDate": "2023-05-06",
+  "returnDate": null,
+  "returned": "false"
+}
+
+### Get all user rentals
+GET http://localhost:9081/vehicle-rental/api/users//rentals
+
+### Get all vehicle rentals
+GET http://localhost:9081/vehicle-rental/api/vehicles//rentals
