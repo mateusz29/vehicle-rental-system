@@ -3,6 +3,7 @@ package org.example.datastore.component;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletContext;
+import org.example.controller.servlet.exception.NotFoundException;
 import lombok.NoArgsConstructor;
 import org.example.serialization.component.CloningUtility;
 import org.example.user.entity.User;
@@ -47,17 +48,18 @@ public class DataStore {
     }
 
     public synchronized void updateRental(Rental value) {
+        rentals.forEach(System.out::println);
         Rental entity = cloneWithRelationships(value);
         if (rentals.removeIf(rental -> rental.getUuid().equals(value.getUuid()))) {
             rentals.add(entity);
         } else {
-            throw new IllegalArgumentException("The rental with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(value.getUuid()));
         }
     }
 
     public synchronized void deleteRental(UUID uuid) {
         if (!rentals.removeIf(rental -> rental.getUuid().equals(uuid))) {
-            throw new IllegalArgumentException("The rental with id \"%s\" does not exist".formatted(uuid));
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(uuid));
         }
     }
 
@@ -79,13 +81,13 @@ public class DataStore {
             Vehicle updatedVehicle = cloningUtility.clone(value);
             vehicles.add(updatedVehicle);
         } else {
-            throw new IllegalArgumentException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
         }
     }
 
     public synchronized void deleteVehicle(Vehicle value) {
         if (!vehicles.remove(value)) {
-            throw new IllegalArgumentException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
         }
     }
 
@@ -107,13 +109,13 @@ public class DataStore {
             User updatedUser = cloningUtility.clone(value);
             users.add(updatedUser);
         } else {
-            throw new IllegalArgumentException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
         }
     }
 
     public synchronized void deleteUser(UUID uuid) {
         if (!users.removeIf(user -> user.getUuid().equals(uuid))) {
-            throw new IllegalArgumentException("There is no user with \"%s\"".formatted(uuid));
+            throw new NotFoundException("There is no user with \"%s\"".formatted(uuid));
         }
     }
 
@@ -147,7 +149,7 @@ public class DataStore {
         Path avatarPath = getAvatarPath(uuid);
         try {
             if (!Files.exists(avatarPath)) {
-                throw new IllegalArgumentException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+                throw new NotFoundException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
             }
             Files.delete(avatarPath);
         } catch (IOException e) {
