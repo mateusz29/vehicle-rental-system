@@ -19,21 +19,4 @@ public class GetUserResponse {
     private UUID uuid;
     private String username;
     private LocalDate birthday;
-
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor(access = AccessLevel.PRIVATE)
-    @ToString
-    @EqualsAndHashCode
-    public static class Rental {
-        private UUID uuid;
-        private LocalDate rentalDate;
-        private LocalDate returnDate;
-        private boolean returned;
-    }
-
-    @Singular
-    private List<Rental> rentals;
 }

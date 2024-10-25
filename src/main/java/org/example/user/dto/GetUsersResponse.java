@@ -2,6 +2,7 @@ package org.example.user.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class GetUsersResponse {
     public static class User {
         private UUID uuid;
         private String username;
+        private LocalDate birthday;
     }
 
     @Singular

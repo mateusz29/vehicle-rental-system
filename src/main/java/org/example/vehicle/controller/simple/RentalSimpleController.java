@@ -51,8 +51,8 @@ public class RentalSimpleController implements RentalController {
     }
 
     @Override
-    public void putRental(PutRentalRequest request) {
-        Rental rental = factory.requestToRentalFunction().apply(request);
+    public void putRental(UUID uuid, PutRentalRequest request) {
+        Rental rental = factory.requestToRentalFunction().apply(uuid, request);
 
         if (rentalService.find(rental.getUuid()).isPresent()) {
             rentalService.update(rental);

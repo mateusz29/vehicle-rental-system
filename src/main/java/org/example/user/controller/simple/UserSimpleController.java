@@ -45,8 +45,8 @@ public class UserSimpleController implements UserController {
     }
 
     @Override
-    public void putUser(PutUserRequest request) {
-        User user = factory.requestToUserFunction().apply(request);
+    public void putUser(UUID uuid, PutUserRequest request) {
+        User user = factory.requestToUserFunction().apply(uuid, request);
 
         if (userService.find(user.getUuid()).isPresent()) {
             userService.update(user);

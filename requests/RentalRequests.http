@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### Get all user rentals
-GET http://localhost:9081/vehicle-rental/api/users//rentals
+GET http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5/rentals
 
 ### Get all vehicle rentals
-GET http://localhost:9081/vehicle-rental/api/vehicles//rentals
+GET http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41/rentals

@@ -3,13 +3,14 @@ package org.example.vehicle.dto.function;
 import org.example.vehicle.dto.PutVehicleRequest;
 import org.example.vehicle.entity.Vehicle;
 
-import java.util.function.Function;
+import java.util.UUID;
+import java.util.function.BiFunction;
 
-public class RequestToVehicleFunction implements Function<PutVehicleRequest, Vehicle> {
+public class RequestToVehicleFunction implements BiFunction<UUID, PutVehicleRequest, Vehicle> {
     @Override
-    public Vehicle apply(PutVehicleRequest request) {
+    public Vehicle apply(UUID uuid, PutVehicleRequest request) {
         return Vehicle.builder()
-                .uuid(request.getUuid())
+                .uuid(uuid)
                 .model(request.getModel())
                 .brand(request.getBrand())
                 .type(request.getType())

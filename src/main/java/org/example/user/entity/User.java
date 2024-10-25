@@ -1,11 +1,10 @@
 package org.example.user.entity;
 
 import lombok.*;
-import org.example.vehicle.entity.Rental;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+
 import java.util.UUID;
 
 @Getter
@@ -19,8 +18,6 @@ public class User implements Serializable {
     private UUID uuid;
     private String username;
     private LocalDate birthday;
-    @Singular
-    private List<Rental> rentals;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -11,6 +11,6 @@ public interface RentalController {
     GetRentalsResponse getRentals();
     GetRentalsResponse getVehicleRentals(UUID uuid);
     GetRentalsResponse getUserRentals(UUID uuid);
-    void putRental(PutRentalRequest request);
+    void putRental(UUID uuid, PutRentalRequest request);
     void deleteRental(UUID uuid);
 }

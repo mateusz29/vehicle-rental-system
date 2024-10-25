@@ -44,8 +44,8 @@ public class VehicleSimpleController implements VehicleController {
     }
 
     @Override
-    public void putVehicle(PutVehicleRequest request) {
-        Vehicle vehicle = factory.requestToVehicleFunction().apply(request);
+    public void putVehicle(UUID uuid, PutVehicleRequest request) {
+        Vehicle vehicle = factory.requestToVehicleFunction().apply(uuid, request);
 
         if (vehicleService.find(vehicle.getUuid()).isPresent()) {
             vehicleService.update(vehicle);
@@ -53,5 +53,4 @@ public class VehicleSimpleController implements VehicleController {
             vehicleService.create(vehicle);
         }
     }
-
 }

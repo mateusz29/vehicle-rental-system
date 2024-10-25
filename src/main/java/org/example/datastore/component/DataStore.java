@@ -38,14 +38,6 @@ public class DataStore {
                 .collect(Collectors.toList());
     }
 
-    public synchronized Rental findRentalById(UUID uuid) {
-        return rentals.stream()
-                .filter(rental -> rental.getUuid().equals(uuid))
-                .findFirst()
-                .map(cloningUtility::clone)
-                .orElse(null);
-    }
-
     public synchronized void createRental(Rental value) {
         if (rentals.stream().anyMatch(rental -> rental.getUuid().equals(value.getUuid()))) {
             throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getUuid()));
@@ -73,33 +65,6 @@ public class DataStore {
         return vehicles.stream()
                 .map(cloningUtility::clone)
                 .collect(Collectors.toList());
-//        return vehicles.stream()
-//                .map(vehicle -> {
-//                    Vehicle clonedVehicle = cloningUtility.clone(vehicle);
-//                    List<Rental> vehicleRentals = rentals.stream()
-//                            .filter(rental -> rental.getVehicle().getUuid().equals(clonedVehicle.getUuid()))
-//                            .map(cloningUtility::clone)
-//                            .collect(Collectors.toList());
-//                    clonedVehicle.setRentals(vehicleRentals);
-//                    return clonedVehicle;
-//                })
-//                .collect(Collectors.toList());
-    }
-
-    public synchronized Vehicle findVehicleById(UUID uuid) {
-        return vehicles.stream()
-                .filter(vehicle -> vehicle.getUuid().equals(uuid))
-                .findFirst()
-                .map(genre -> {
-                    Vehicle clonedVehicle = cloningUtility.clone(genre);
-                    List<Rental> vehicleRentals = rentals.stream()
-                            .filter(rental -> rental.getVehicle().getUuid().equals(clonedVehicle.getUuid()))
-                            .map(cloningUtility::clone)
-                            .collect(Collectors.toList());
-                    clonedVehicle.setRentals(vehicleRentals);
-                    return clonedVehicle;
-                })
-                .orElse(null);
     }
 
     public synchronized void createVehicle(Vehicle value) throws IllegalArgumentException {
@@ -113,9 +78,6 @@ public class DataStore {
         if (vehicles.removeIf(vehicle -> vehicle.getUuid().equals(value.getUuid()))) {
             Vehicle updatedVehicle = cloningUtility.clone(value);
             vehicles.add(updatedVehicle);
-//            rentals.stream()
-//                    .filter(rental -> rental.getVehicle().getUuid().equals(updatedVehicle.getUuid()))
-//                    .forEach(rental -> rental.setVehicle(updatedVehicle));
         } else {
             throw new IllegalArgumentException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
         }
@@ -131,35 +93,7 @@ public class DataStore {
         return users.stream()
                 .map(cloningUtility::clone)
                 .collect(Collectors.toList());
-//        return users.stream()
-//                .map(user -> {
-//                    User clonedUser = cloningUtility.clone(user);
-//                    List<Rental> userRentals = rentals.stream()
-//                            .filter(rental -> rental.getUser().getUuid().equals(clonedUser.getUuid()))
-//                            .map(cloningUtility::clone)
-//                            .collect(Collectors.toList());
-//                    clonedUser.setRentals(userRentals);
-//                    return clonedUser;
-//                })
-//                .collect(Collectors.toList());
     }
-
-    public synchronized User findUserById(UUID uuid) {
-        return users.stream()
-                .filter(user -> user.getUuid().equals(uuid))
-                .findFirst()
-                .map(user -> {
-                    User clonedUser = cloningUtility.clone(user);
-                    List<Rental> userRentals = rentals.stream()
-                            .filter(rental -> rental.getUser().getUuid().equals(clonedUser.getUuid()))
-                            .map(cloningUtility::clone)
-                            .collect(Collectors.toList());
-                    clonedUser.setRentals(userRentals);
-                    return clonedUser;
-                })
-                .orElse(null);
-    }
-
 
     public synchronized void createUser(User value) throws IllegalArgumentException {
         if (users.stream().anyMatch(user -> user.getUuid().equals(value.getUuid()))) {
@@ -172,9 +106,6 @@ public class DataStore {
         if (users.removeIf(user -> user.getUuid().equals(value.getUuid()))) {
             User updatedUser = cloningUtility.clone(value);
             users.add(updatedUser);
-//            rentals.stream()
-//                    .filter(rental -> rental.getUser().getUuid().equals(updatedUser.getUuid()))
-//                    .forEach(rental -> rental.setUser(updatedUser));
         } else {
             throw new IllegalArgumentException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
         }
@@ -228,19 +159,17 @@ public class DataStore {
         Rental entity = cloningUtility.clone(value);
 
         if (entity.getUser() != null) {
-            User user = users.stream()
-                    .filter(u -> u.getUuid().equals(value.getUser().getUuid()))
+            entity.setUser(users.stream()
+                    .filter(user -> user.getUuid().equals(value.getUser().getUuid()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getUuid())));
-            entity.setUser(user);
+                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getUuid()))));
         }
 
         if (entity.getVehicle() != null) {
-            Vehicle vehicle = vehicles.stream()
-                    .filter(v -> v.getUuid().equals(value.getVehicle().getUuid()))
+            entity.setVehicle(vehicles.stream()
+                    .filter(vehicle -> vehicle.getUuid().equals(value.getVehicle().getUuid()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No vehicle with id \"%s\".".formatted(value.getVehicle().getUuid())));
-            entity.setVehicle(vehicle);
+                    .orElseThrow(() -> new IllegalArgumentException("No vehicle with id \"%s\".".formatted(value.getVehicle().getUuid()))));
         }
 
         return entity;

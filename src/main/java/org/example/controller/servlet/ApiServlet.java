@@ -148,24 +148,18 @@ public class ApiServlet extends HttpServlet {
         if (Paths.API.equals(servletPath)) {
             if (path.matches(Patterns.RENTAL.pattern())) {
                 UUID uuid = extractUuid(Patterns.RENTAL, path);
-                PutRentalRequest putRentalRequest = jsonb.fromJson(request.getReader(), PutRentalRequest.class);
-                putRentalRequest.setUuid(uuid);
-                rentalController.putRental(putRentalRequest);
-                response.addHeader("Location", createUrl(request, Paths.API + "rentals" + uuid.toString()));
+                rentalController.putRental(uuid, jsonb.fromJson(request.getReader(), PutRentalRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "rentals", uuid.toString()));
                 return;
             } else if (path.matches(Patterns.VEHICLE.pattern())) {
                 UUID uuid = extractUuid(Patterns.VEHICLE, path);
-                PutVehicleRequest putVehicleRequest = jsonb.fromJson(request.getReader(), PutVehicleRequest.class);
-                putVehicleRequest.setUuid(uuid);
-                vehicleController.putVehicle(putVehicleRequest);
-                response.addHeader("Location", createUrl(request, Paths.API + "vehicles" + uuid.toString()));
+                vehicleController.putVehicle(uuid, jsonb.fromJson(request.getReader(), PutVehicleRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "vehicles", uuid.toString()));
                 return;
             } else if (path.matches(Patterns.USER.pattern())) {
                 UUID uuid = extractUuid(Patterns.USER, path);
-                PutUserRequest putUserRequest = jsonb.fromJson(request.getReader(), PutUserRequest.class);
-                putUserRequest.setUuid(uuid);
-                userController.putUser(putUserRequest);
-                response.addHeader("Location", createUrl(request, Paths.API + "users" + uuid.toString()));
+                userController.putUser(uuid, jsonb.fromJson(request.getReader(), PutUserRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "users", uuid.toString()));
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.AVATAR, path);

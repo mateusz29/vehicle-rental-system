@@ -14,6 +14,7 @@ public class UsersToResponseFunction implements Function<List<User>, GetUsersRes
                             .map(user -> GetUsersResponse.User.builder()
                                     .uuid(user.getUuid())
                                     .username(user.getUsername())
+                                    .birthday(user.getBirthday())
                                     .build())
                             .toList())
                     .build();

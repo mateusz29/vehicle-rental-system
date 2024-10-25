@@ -5,13 +5,14 @@ import org.example.vehicle.dto.PutRentalRequest;
 import org.example.vehicle.entity.Rental;
 import org.example.vehicle.entity.Vehicle;
 
-import java.util.function.Function;
+import java.util.UUID;
+import java.util.function.BiFunction;
 
-public class RequestToRentalFunction implements Function<PutRentalRequest, Rental> {
+public class RequestToRentalFunction implements BiFunction<UUID, PutRentalRequest, Rental> {
     @Override
-    public Rental apply(PutRentalRequest request) {
+    public Rental apply(UUID uuid, PutRentalRequest request) {
         return Rental.builder()
-                .uuid(request.getUuid())
+                .uuid(uuid)
                 .rentalDate(request.getRentalDate())
                 .returnDate(request.getReturnDate())
                 .returned(request.isReturned())
