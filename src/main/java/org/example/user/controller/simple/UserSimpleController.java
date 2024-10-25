@@ -2,16 +2,17 @@ package org.example.user.controller.simple;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import org.example.controller.servlet.exception.BadRequestException;
 import org.example.controller.servlet.exception.NotFoundException;
 import org.example.component.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;
 import org.example.user.dto.GetUsersResponse;
+import org.example.user.dto.PatchUserRequest;
 import org.example.user.dto.PutUserRequest;
 import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
-import java.io.InputStream;
 import java.util.UUID;
 
 @RequestScoped
@@ -28,13 +29,13 @@ public class UserSimpleController implements UserController {
     @Override
     public GetUserResponse getUser(UUID uuid) {
         return userService.find(uuid)
-                .map(factory.userToResponeFunction())
+                .map(factory.userToResponse())
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
     public GetUsersResponse getUsers() {
-        return factory.usersToResponseFunction().apply(userService.findAll());
+        return factory.usersToResponse().apply(userService.findAll());
     }
 
     @Override
@@ -45,13 +46,20 @@ public class UserSimpleController implements UserController {
     }
 
     @Override
-    public void putUser(UUID uuid, PutUserRequest request) {
-        User user = factory.requestToUserFunction().apply(uuid, request);
+    public void updateUser(UUID uuid, PatchUserRequest request) {
+        userService.find(uuid).ifPresentOrElse(
+                user -> userService.update(factory.updateUser().apply(user, request)), () -> {
+                throw new NotFoundException();
+            }
+        );
+    }
 
-        if (userService.find(user.getUuid()).isPresent()) {
-            userService.update(user);
-        } else {
-            userService.create(user);
+    @Override
+    public void putUser(UUID uuid, PutUserRequest request) {
+        try {
+            userService.create(factory.requestToUser().apply(uuid, request));
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException(e);
         }
     }
 }

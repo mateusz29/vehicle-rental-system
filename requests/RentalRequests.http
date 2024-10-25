@@ -20,15 +20,13 @@ Content-Type: application/json
 }
 
 ### Update rental
-PUT http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
+PATCH http://localhost:9081/vehicle-rental/api/rentals/9b26b76f-0fd7-4374-a158-0d736be07823
 Content-Type: application/json
 
 {
   "rentalDate": "2023-05-06",
   "returnDate": null,
-  "returned": "false",
-  "user": "7553f71e-5217-4a39-9680-f506d52b08e5",
-  "vehicle": "e83dad4d-5d56-4065-8630-8a887536dc41"
+  "returned": "false"
 }
 
 ### Get all user rentals

@@ -1,11 +1,8 @@
 package org.example.user.dto;
 
 import lombok.*;
-import org.example.user.entity.User;
-import org.example.vehicle.entity.Vehicle;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Getter

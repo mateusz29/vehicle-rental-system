@@ -3,10 +3,12 @@ package org.example.vehicle.controller.simple;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import org.example.component.DtoFunctionFactory;
+import org.example.controller.servlet.exception.BadRequestException;
 import org.example.controller.servlet.exception.NotFoundException;
 import org.example.vehicle.controller.api.VehicleController;
 import org.example.vehicle.dto.GetVehicleResponse;
 import org.example.vehicle.dto.GetVehiclesResponse;
+import org.example.vehicle.dto.PatchVehicleRequest;
 import org.example.vehicle.dto.PutVehicleRequest;
 import org.example.vehicle.entity.Vehicle;
 import org.example.vehicle.service.VehicleService;
@@ -27,13 +29,13 @@ public class VehicleSimpleController implements VehicleController {
     @Override
     public GetVehicleResponse getVehicle(UUID uuid) {
         return vehicleService.find(uuid)
-                .map(factory.vehicleToResponseFunction())
+                .map(factory.vehicleToResponse())
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
     public GetVehiclesResponse getVehicles() {
-        return factory.vehiclesToResponseFunction().apply(vehicleService.findAll());
+        return factory.vehiclesToResponse().apply(vehicleService.findAll());
     }
 
     @Override
@@ -45,12 +47,20 @@ public class VehicleSimpleController implements VehicleController {
 
     @Override
     public void putVehicle(UUID uuid, PutVehicleRequest request) {
-        Vehicle vehicle = factory.requestToVehicleFunction().apply(uuid, request);
-
-        if (vehicleService.find(vehicle.getUuid()).isPresent()) {
-            vehicleService.update(vehicle);
-        } else {
-            vehicleService.create(vehicle);
+        try {
+            vehicleService.create(factory.requestToVehicle().apply(uuid, request));
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException(e);
         }
+    }
+
+    @Override
+    public void updateVehicle(UUID uuid, PatchVehicleRequest request) {
+        vehicleService.find(uuid).ifPresentOrElse(
+                vehicle -> vehicleService.update(factory.updateVehicle().apply(vehicle, request)),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
 }

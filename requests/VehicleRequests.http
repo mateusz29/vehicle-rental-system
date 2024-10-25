@@ -18,10 +18,11 @@ Content-Type: application/json
 }
 
 ### Update vehicle
-PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+PATCH http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
 Content-Type: application/json
 
 {
   "model": "Chiron",
-  "brand": "Bugatti"
+  "brand": "Bugatti",
+  "type": "CAR"
 }

@@ -11,9 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.user.avatar.controller.api.AvatarController;
 import org.example.user.controller.api.UserController;
+import org.example.user.dto.PatchUserRequest;
 import org.example.user.dto.PutUserRequest;
 import org.example.vehicle.controller.api.RentalController;
 import org.example.vehicle.controller.api.VehicleController;
+import org.example.vehicle.dto.PatchRentalRequest;
+import org.example.vehicle.dto.PatchVehicleRequest;
 import org.example.vehicle.dto.PutRentalRequest;
 import org.example.vehicle.dto.PutVehicleRequest;
 
@@ -58,6 +61,15 @@ public class ApiServlet extends HttpServlet {
         this.avatarController = avatarController;
         this.rentalController = rentalController;
         this.vehicleController = vehicleController;
+    }
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getMethod().equals("PATCH")) {
+            doPatch(request, response);
+        } else {
+            super.service(request, response);
+        }
     }
 
     @SuppressWarnings("RedundantThrows")
@@ -164,6 +176,27 @@ public class ApiServlet extends HttpServlet {
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 UUID uuid = extractUuid(Patterns.AVATAR, path);
                 avatarController.putAvatar(uuid, request.getPart("avatar").getInputStream());
+                return;
+            }
+        }
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+    }
+
+    protected void doPatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path = parseRequestPath(request);
+        String servletPath = request.getServletPath();
+        if (Paths.API.equals(servletPath)) {
+            if (path.matches(Patterns.RENTAL.pattern())) {
+                UUID uuid = extractUuid(Patterns.RENTAL, path);
+                rentalController.updateRental(uuid, jsonb.fromJson(request.getReader(), PatchRentalRequest.class));
+                return;
+            } else if (path.matches(Patterns.VEHICLE.pattern())) {
+                UUID uuid = extractUuid(Patterns.VEHICLE, path);
+                vehicleController.updateVehicle(uuid, jsonb.fromJson(request.getReader(), PatchVehicleRequest.class));
+                return;
+            } else if (path.matches(Patterns.USER.pattern())) {
+                UUID uuid = extractUuid(Patterns.USER, path);
+                userController.updateUser(uuid, jsonb.fromJson(request.getReader(), PatchUserRequest.class));
                 return;
             }
         }

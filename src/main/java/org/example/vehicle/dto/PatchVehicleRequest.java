@@ -10,7 +10,7 @@ import org.example.vehicle.entity.VehicleType;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class PutVehicleRequest {
+public class PatchVehicleRequest {
     private String model;
     private String brand;
     private VehicleType type;

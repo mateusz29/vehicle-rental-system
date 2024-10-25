@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class PutUserRequest {
+public class PatchUserRequest {
     private String username;
     private LocalDate birthday;
 }

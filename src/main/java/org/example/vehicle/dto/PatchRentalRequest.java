@@ -1,7 +1,8 @@
 package org.example.vehicle.dto;
 
 import lombok.*;
-import org.example.vehicle.entity.VehicleType;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -10,8 +11,8 @@ import org.example.vehicle.entity.VehicleType;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
-public class PutVehicleRequest {
-    private String model;
-    private String brand;
-    private VehicleType type;
+public class PatchRentalRequest {
+    private LocalDate rentalDate;
+    private LocalDate returnDate;
+    private boolean returned;
 }

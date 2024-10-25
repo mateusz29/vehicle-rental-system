@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class PutRentalRequest {
-    private UUID uuid;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;

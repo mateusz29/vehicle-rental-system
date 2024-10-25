@@ -2,6 +2,7 @@ package org.example.component;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import org.example.user.dto.function.RequestToUserFunction;
+import org.example.user.dto.function.UpdateUserWithRequestFunction;
 import org.example.user.dto.function.UserToResponeFunction;
 import org.example.user.dto.function.UsersToResponseFunction;
 import org.example.vehicle.dto.function.*;
@@ -10,41 +11,53 @@ import org.example.vehicle.dto.function.*;
 public class DtoFunctionFactory {
 
     //user
-    public UserToResponeFunction userToResponeFunction() {
+    public UserToResponeFunction userToResponse() {
         return new UserToResponeFunction();
     }
 
-    public UsersToResponseFunction usersToResponseFunction() {
+    public UsersToResponseFunction usersToResponse() {
         return new UsersToResponseFunction();
     }
 
-    public RequestToUserFunction requestToUserFunction() {
+    public RequestToUserFunction requestToUser() {
         return new RequestToUserFunction();
     }
 
+    public UpdateUserWithRequestFunction updateUser() {
+        return new UpdateUserWithRequestFunction();
+    }
+
     //vehicle
-    public VehicleToResponseFunction vehicleToResponseFunction() {
+    public VehicleToResponseFunction vehicleToResponse() {
         return new VehicleToResponseFunction();
     }
 
-    public VehiclesToResponseFunction vehiclesToResponseFunction() {
+    public VehiclesToResponseFunction vehiclesToResponse() {
         return new VehiclesToResponseFunction();
     }
 
-    public RequestToVehicleFunction requestToVehicleFunction() {
+    public RequestToVehicleFunction requestToVehicle() {
         return new RequestToVehicleFunction();
     }
 
+    public UpdateVehicleWithRequestFunction updateVehicle() {
+        return new UpdateVehicleWithRequestFunction();
+    }
+
     //rental
-    public RentalToResponseFunction rentalToResponseFunction() {
+    public RentalToResponseFunction rentalToResponse() {
         return new RentalToResponseFunction();
     }
 
-    public RentalsToResponseFunction rentalsToResponseFunction() {
+    public RentalsToResponseFunction rentalsToResponse() {
         return new RentalsToResponseFunction();
     }
 
-    public RequestToRentalFunction requestToRentalFunction() {
+    public RequestToRentalFunction requestToRental() {
         return new RequestToRentalFunction();
+    }
+
+    public UpdateRentalWithRequestFunction updateRental() {
+        return new UpdateRentalWithRequestFunction();
     }
 }
