@@ -3,7 +3,6 @@ package org.example.vehicle.entity;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,7 +17,4 @@ public class Vehicle implements Serializable{
     private String model;
     private String brand;
     private VehicleType type;
-
-    @Singular
-    private List<Rental> rentals;
 }

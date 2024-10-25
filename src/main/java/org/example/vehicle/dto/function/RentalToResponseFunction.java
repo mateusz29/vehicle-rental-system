@@ -13,6 +13,12 @@ public class RentalToResponseFunction implements Function<Rental, GetRentalRespo
                 .rentalDate(rental.getRentalDate())
                 .returnDate(rental.getReturnDate())
                 .returned(rental.isReturned())
+                .vehicle(GetRentalResponse.Vehicle.builder()
+                        .uuid(rental.getVehicle().getUuid())
+                        .model(rental.getVehicle().getModel())
+                        .brand(rental.getVehicle().getBrand())
+                        .type(rental.getVehicle().getType())
+                        .build())
                 .build();
     }
 }

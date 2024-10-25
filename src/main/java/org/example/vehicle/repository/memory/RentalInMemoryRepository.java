@@ -11,6 +11,7 @@ import org.example.vehicle.repository.api.RentalRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequestScoped
 public class RentalInMemoryRepository implements RentalRepository {
@@ -52,13 +53,13 @@ public class RentalInMemoryRepository implements RentalRepository {
     public List<Rental> findAllByUser(User user) {
         return store.findAllRentals().stream()
                 .filter(rental -> user.equals(rental.getUser()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Rental> findAllByVehicle(Vehicle vehicle) {
         return store.findAllRentals().stream()
                 .filter(rental -> vehicle.equals(rental.getVehicle()))
-                .toList();
+                .collect(Collectors.toList());
     }
 }
