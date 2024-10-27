@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class PatchRentalRequest {
+    private String referenceCode;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;

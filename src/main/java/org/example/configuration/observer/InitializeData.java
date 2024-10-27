@@ -110,6 +110,7 @@ public class InitializeData implements ServletContextListener {
 
         Rental rental1 = Rental.builder()
                 .id(UUID.fromString("9b26b76f-0fd7-4374-a158-0d736be07823"))
+                .referenceCode("RENT-00001")
                 .rentalDate(LocalDate.of(2021, 1, 1))
                 .returnDate(LocalDate.of(2021, 1, 10))
                 .returned(true)
@@ -119,6 +120,7 @@ public class InitializeData implements ServletContextListener {
 
         Rental rental2 = Rental.builder()
                 .id(UUID.fromString("9807fd8b-13d3-4663-80d2-72a3e809eaa1"))
+                .referenceCode("RENT-00002")
                 .rentalDate(LocalDate.of(2022, 2, 15))
                 .returnDate(LocalDate.of(2022, 3, 5))
                 .returned(true)
@@ -128,6 +130,7 @@ public class InitializeData implements ServletContextListener {
 
         Rental rental3 = Rental.builder()
                 .id(UUID.fromString("1a84328f-187b-4320-a5cc-4ff949691335"))
+                .referenceCode("RENT-00003")
                 .rentalDate(LocalDate.of(2021, 6, 9))
                 .returnDate(LocalDate.of(2021, 6, 15))
                 .returned(true)
@@ -137,6 +140,7 @@ public class InitializeData implements ServletContextListener {
 
         Rental rental4 = Rental.builder()
                 .id(UUID.fromString("88ba8e73-f9e8-4e3a-a66d-32b01ae60c30"))
+                .referenceCode("RENT-00004")
                 .rentalDate(LocalDate.of(2023, 5, 13))
                 .returnDate(LocalDate.of(2023, 10, 20))
                 .returned(true)

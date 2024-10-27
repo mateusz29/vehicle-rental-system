@@ -11,6 +11,7 @@ public class UpdateRentalWithModelFunction implements BiFunction<Rental, RentalE
     public Rental apply(Rental rental, RentalEditModel rentalEditModel) {
         return Rental.builder()
                 .id(rental.getId())
+                .referenceCode(rentalEditModel.getReferenceCode())
                 .rentalDate(rentalEditModel.getRentalDate())
                 .returnDate(rentalEditModel.getReturnDate())
                 .returned(rentalEditModel.isReturned())

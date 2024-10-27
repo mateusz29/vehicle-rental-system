@@ -23,6 +23,7 @@ public class GetRentalsResponse {
     @EqualsAndHashCode
     public static class Rental {
         private UUID id;
+        private String referenceCode;
         private LocalDate rentalDate;
         private LocalDate returnDate;
         private boolean returned;

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @ToString
 @EqualsAndHashCode
 public class RentalEditModel {
+    private String referenceCode;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;

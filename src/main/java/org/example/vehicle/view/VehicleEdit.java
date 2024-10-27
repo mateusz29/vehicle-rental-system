@@ -40,7 +40,6 @@ public class VehicleEdit implements Serializable {
         Optional<Vehicle> vehicle = service.find(id);
         if (vehicle.isPresent()) {
             this.vehicle = factory.vehicleToEditModel().apply(vehicle.get());
-            System.out.println("========================");
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Vehicle not found");
         }

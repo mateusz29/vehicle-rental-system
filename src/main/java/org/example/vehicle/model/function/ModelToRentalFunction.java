@@ -12,6 +12,7 @@ public class ModelToRentalFunction implements Function<RentalCreateModel, Rental
     public Rental apply(RentalCreateModel model) {
         return Rental.builder()
                 .id(model.getId())
+                .referenceCode(model.getReferenceCode())
                 .rentalDate(model.getRentalDate())
                 .returnDate(model.getReturnDate())
                 .returned(model.isReturned())

@@ -10,6 +10,7 @@ public class RentalToResponseFunction implements Function<Rental, GetRentalRespo
     public GetRentalResponse apply(Rental rental) {
         return GetRentalResponse.builder()
                 .id(rental.getId())
+                .referenceCode(rental.getReferenceCode())
                 .rentalDate(rental.getRentalDate())
                 .returnDate(rental.getReturnDate())
                 .returned(rental.isReturned())

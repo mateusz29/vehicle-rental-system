@@ -10,6 +10,7 @@ public class RentalToEditModelFunciton implements Function<Rental, RentalEditMod
     @Override
     public RentalEditModel apply(Rental rental) {
         return RentalEditModel.builder()
+                .referenceCode(rental.getReferenceCode())
                 .rentalDate(rental.getRentalDate())
                 .returnDate(rental.getReturnDate())
                 .returned(rental.isReturned())

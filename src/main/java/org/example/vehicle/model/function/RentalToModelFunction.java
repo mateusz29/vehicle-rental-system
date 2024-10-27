@@ -10,7 +10,7 @@ public class RentalToModelFunction implements Function<Rental, RentalModel>, Ser
     @Override
     public RentalModel apply(Rental entity) {
         return RentalModel.builder()
-                .id(entity.getId())
+                .referenceCode(entity.getReferenceCode())
                 .rentalDate(entity.getRentalDate())
                 .returnDate(entity.getReturnDate())
                 .returned(entity.isReturned())

@@ -16,6 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class Rental implements Serializable {
     private UUID id;
+    private String referenceCode;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;

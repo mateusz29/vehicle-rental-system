@@ -13,6 +13,7 @@ public class RequestToRentalFunction implements BiFunction<UUID, PutRentalReques
     public Rental apply(UUID id, PutRentalRequest request) {
         return Rental.builder()
                 .id(id)
+                .referenceCode(request.getReferenceCode())
                 .rentalDate(request.getRentalDate())
                 .returnDate(request.getReturnDate())
                 .returned(request.isReturned())

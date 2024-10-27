@@ -46,13 +46,10 @@ public class VehicleCreate implements Serializable {
     public String saveAction() {
         service.create(factory.modelToVehicle().apply(vehicle));
         conversation.end();
-        System.out.println("======================");
-        System.out.println(vehicle);
-        System.out.println("======================");
         return "/vehicle/vehicle_list.xhtml?faces-redirect=true";
     }
 
-    public String getconversationId() {
+    public String getConversationId() {
         return conversation.getId();
     }
 }

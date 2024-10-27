@@ -10,6 +10,7 @@ public class UpdateRentalWithRequestFunction implements BiFunction<Rental, Patch
     public Rental apply(Rental rental, PatchRentalRequest patchRentalRequest) {
         return Rental.builder()
                 .id(rental.getId())
+                .referenceCode(patchRentalRequest.getReferenceCode())
                 .rentalDate(patchRentalRequest.getRentalDate())
                 .returnDate(patchRentalRequest.getReturnDate())
                 .returned(patchRentalRequest.isReturned())

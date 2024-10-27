@@ -14,8 +14,8 @@
             <h:dataTable value="#{rentalList.rentals.rentals}" var="rental"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
-                    <f:facet name="header">UUID</f:facet>
-                    <h:outputText value="#{rental.id}"/>
+                    <f:facet name="header">Reference code</f:facet>
+                    <h:outputText value="#{rental.referenceCode}"/>
                 </h:column>
 
                 <h:column>

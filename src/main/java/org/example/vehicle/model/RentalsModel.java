@@ -2,7 +2,6 @@ package org.example.vehicle.model;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +23,7 @@ public class RentalsModel {
     @EqualsAndHashCode
     public static class Rental {
         private UUID id;
-        private LocalDate rentalDate;
+        private String referenceCode;
     }
 
     @Singular

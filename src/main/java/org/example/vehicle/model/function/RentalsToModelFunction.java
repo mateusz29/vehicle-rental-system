@@ -13,7 +13,7 @@ public class RentalsToModelFunction implements Function<List<Rental>, RentalsMod
                 .rentals(entity.stream()
                         .map(rental -> RentalsModel.Rental.builder()
                                 .id(rental.getId())
-                                .rentalDate(rental.getRentalDate())
+                                .referenceCode(rental.getReferenceCode())
                                 .build())
                         .toList())
                 .build();
