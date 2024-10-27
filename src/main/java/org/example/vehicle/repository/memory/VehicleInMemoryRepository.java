@@ -38,7 +38,7 @@ public class VehicleInMemoryRepository implements VehicleRepository {
 
     @Override
     public void delete(Vehicle entity) {
-        store.deleteVehicle(entity);
+        store.deleteVehicle(entity.getId());
     }
 
     @Override

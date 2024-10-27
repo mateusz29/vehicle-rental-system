@@ -78,16 +78,17 @@ public class DataStore {
 
     public synchronized void updateVehicle(Vehicle value) throws IllegalArgumentException {
         if (vehicles.removeIf(vehicle -> vehicle.getId().equals(value.getId()))) {
-            Vehicle updatedVehicle = cloningUtility.clone(value);
-            vehicles.add(updatedVehicle);
+            vehicles.add(cloningUtility.clone(value));
         } else {
             throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 
-    public synchronized void deleteVehicle(Vehicle value) {
-        if (!vehicles.remove(value)) {
-            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getId()));
+    public synchronized void deleteVehicle(UUID id) {
+        rentals.removeIf(rental -> rental.getVehicle().getId().equals(id));
+
+        if (!vehicles.removeIf(vehicle -> vehicle.getId().equals(id))) {
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(id));
         }
     }
 
