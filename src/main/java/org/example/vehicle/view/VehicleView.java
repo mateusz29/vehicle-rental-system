@@ -11,7 +11,6 @@ import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.entity.Vehicle;
 import org.example.vehicle.model.RentalsModel;
 import org.example.vehicle.model.VehicleModel;
-import org.example.vehicle.model.VehiclesModel;
 import org.example.vehicle.service.RentalService;
 import org.example.vehicle.service.VehicleService;
 

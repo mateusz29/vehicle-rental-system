@@ -1,12 +1,13 @@
 package org.example.vehicle.view;
 
 import jakarta.enterprise.context.Conversation;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import lombok.Getter;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.model.RentalCreateModel;
 import org.example.vehicle.model.VehicleModel;
-import org.example.vehicle.model.VehiclesModel;
 import org.example.vehicle.service.RentalService;
 import org.example.vehicle.service.VehicleService;
 
@@ -14,6 +15,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+@ViewScoped
+@Named
 public class RentalCreate implements Serializable {
     private final RentalService rentalService;
     private final VehicleService vehicleService;

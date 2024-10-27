@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.GET;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.maven.model.Model;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.entity.Rental;
 import org.example.vehicle.model.RentalModel;
