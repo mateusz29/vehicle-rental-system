@@ -148,10 +148,54 @@ public class InitializeData implements ServletContextListener {
                 .vehicle(Man)
                 .build();
 
+        Rental rental5 = Rental.builder()
+                .id(UUID.fromString("7625a3cc-df02-4db6-b77f-4b1393733d2a"))
+                .referenceCode("RENT-00005")
+                .rentalDate(LocalDate.of(2022, 4, 9))
+                .returnDate(LocalDate.of(2022, 5, 1))
+                .returned(true)
+                .user(Wilson)
+                .vehicle(Ducati)
+                .build();
+
+        Rental rental6 = Rental.builder()
+                .id(UUID.fromString("5a33ad74-504e-4234-bda8-adc36b5e55b8"))
+                .referenceCode("RENT-00006")
+                .rentalDate(LocalDate.of(2023, 3, 4))
+                .returnDate(LocalDate.of(2023, 4, 22))
+                .returned(true)
+                .user(Nicholas)
+                .vehicle(Man)
+                .build();
+
+        Rental rental7 = Rental.builder()
+                .id(UUID.fromString("bf84d400-4400-4d14-becf-a9311901f30f"))
+                .referenceCode("RENT-00007")
+                .rentalDate(LocalDate.of(2022, 11, 7))
+                .returnDate(LocalDate.of(2023, 5, 3))
+                .returned(true)
+                .user(George)
+                .vehicle(Man)
+                .build();
+
+        Rental rental8 = Rental.builder()
+                .id(UUID.fromString("14beed3c-69e4-4b68-b657-704b11a1f90e"))
+                .referenceCode("RENT-00008")
+                .rentalDate(LocalDate.of(2024, 3, 4))
+                .returnDate(LocalDate.of(2024, 7, 22))
+                .returned(true)
+                .user(Gregory)
+                .vehicle(Man)
+                .build();
+
         rentalService.create(rental1);
         rentalService.create(rental2);
         rentalService.create(rental3);
         rentalService.create(rental4);
+        rentalService.create(rental5);
+        rentalService.create(rental6);
+        rentalService.create(rental7);
+        rentalService.create(rental8);
 
         requestContextController.deactivate();
     }
