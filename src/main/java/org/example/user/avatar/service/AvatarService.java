@@ -23,21 +23,21 @@ public class AvatarService {
         this.userRepository = userRepository;
     }
 
-    public void update(UUID uuid, InputStream is) {
-        userRepository.find(uuid).ifPresent(entity -> {
+    public void update(UUID id, InputStream is) {
+        userRepository.find(id).ifPresent(entity -> {
             try {
-                avatarRepository.updateAvatar(uuid, is.readAllBytes());
+                avatarRepository.updateAvatar(id, is.readAllBytes());
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }
         });
     }
 
-    public Optional<byte[]> get(UUID uuid) {
-        return avatarRepository.getAvatar(uuid);
+    public Optional<byte[]> get(UUID id) {
+        return avatarRepository.getAvatar(id);
     }
 
-    public void delete(UUID uuid) {
-        avatarRepository.deleteAvatar(uuid);
+    public void delete(UUID id) {
+        avatarRepository.deleteAvatar(id);
     }
 }

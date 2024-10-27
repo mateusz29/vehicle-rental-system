@@ -22,7 +22,7 @@ public class GetVehiclesResponse {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @EqualsAndHashCode
     public static class Vehicle {
-        private UUID uuid;
+        private UUID id;
         private String model;
         private String brand;
         private VehicleType type;

@@ -12,7 +12,7 @@ public class RentalsToResponseFunction implements Function<List<Rental>, GetRent
         return GetRentalsResponse.builder()
                 .rentals(rentals.stream()
                         .map(rental -> GetRentalsResponse.Rental.builder()
-                                .uuid(rental.getUuid())
+                                .id(rental.getId())
                                 .rentalDate(rental.getRentalDate())
                                 .returnDate(rental.getReturnDate())
                                 .returned(rental.isReturned())

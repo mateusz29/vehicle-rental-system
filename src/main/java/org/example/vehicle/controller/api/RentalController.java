@@ -8,11 +8,11 @@ import org.example.vehicle.dto.PutRentalRequest;
 import java.util.UUID;
 
 public interface RentalController {
-    GetRentalResponse getRental(UUID uuid);
+    GetRentalResponse getRental(UUID id);
     GetRentalsResponse getRentals();
-    GetRentalsResponse getVehicleRentals(UUID uuid);
-    GetRentalsResponse getUserRentals(UUID uuid);
-    void putRental(UUID uuid, PutRentalRequest request);
-    void updateRental(UUID uuid, PatchRentalRequest request);
-    void deleteRental(UUID uuid);
+    GetRentalsResponse getVehicleRentals(UUID id);
+    GetRentalsResponse getUserRentals(UUID id);
+    void putRental(UUID id, PutRentalRequest request);
+    void updateRental(UUID id, PatchRentalRequest request);
+    void deleteRental(UUID id);
 }

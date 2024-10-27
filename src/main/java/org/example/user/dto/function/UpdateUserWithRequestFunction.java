@@ -9,7 +9,7 @@ public class UpdateUserWithRequestFunction implements BiFunction<User, PatchUser
     @Override
     public User apply(User user, PatchUserRequest request) {
         return User.builder()
-                .uuid(user.getUuid())
+                .id(user.getId())
                 .username(request.getUsername())
                 .birthday(request.getBirthday())
                 .build();

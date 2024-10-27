@@ -23,9 +23,9 @@ public class RentalInMemoryRepository implements RentalRepository {
     }
 
     @Override
-    public Optional<Rental> find(UUID uuid) {;
+    public Optional<Rental> find(UUID id) {;
         return store.findAllRentals().stream()
-                .filter(rental -> rental.getUuid().equals(uuid))
+                .filter(rental -> rental.getId().equals(id))
                 .findFirst();
     }
 
@@ -41,7 +41,7 @@ public class RentalInMemoryRepository implements RentalRepository {
 
     @Override
     public void delete(Rental entity) {
-        store.deleteRental(entity.getUuid());
+        store.deleteRental(entity.getId());
     }
 
     @Override

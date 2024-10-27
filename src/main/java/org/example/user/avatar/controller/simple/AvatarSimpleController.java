@@ -23,22 +23,22 @@ public class AvatarSimpleController implements AvatarController {
     }
 
     @Override
-    public byte[] getAvatar(UUID uuid) {
-        return avatarService.get(uuid)
+    public byte[] getAvatar(UUID id) {
+        return avatarService.get(id)
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public void putAvatar(UUID uuid, InputStream is) {
-        userService.find(uuid).ifPresentOrElse(entity -> avatarService.update(uuid, is), () -> {
+    public void putAvatar(UUID id, InputStream is) {
+        userService.find(id).ifPresentOrElse(entity -> avatarService.update(id, is), () -> {
             throw new NotFoundException();
         });
     }
 
     @Override
-    public void deleteAvatar(UUID uuid) {
-        if (avatarService.get(uuid).isPresent()) {
-            avatarService.delete(uuid);
+    public void deleteAvatar(UUID id) {
+        if (avatarService.get(id).isPresent()) {
+            avatarService.delete(id);
         } else {
             throw new NotFoundException();
         }

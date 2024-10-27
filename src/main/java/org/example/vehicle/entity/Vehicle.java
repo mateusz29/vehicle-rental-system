@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Vehicle implements Serializable{
-    private UUID uuid;
+    private UUID id;
     private String model;
     private String brand;
     private VehicleType type;

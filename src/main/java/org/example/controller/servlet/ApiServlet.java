@@ -84,18 +84,18 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.RENTAL.pattern())) {
                 response.setContentType("application/json");
-                UUID uuid = extractUuid(Patterns.RENTAL, path);
-                response.getWriter().write(jsonb.toJson(rentalController.getRental(uuid)));
+                UUID id = extractUuid(Patterns.RENTAL, path);
+                response.getWriter().write(jsonb.toJson(rentalController.getRental(id)));
                 return;
             } else if (path.matches(Patterns.RENTALS_BY_USER.pattern())) {
                 response.setContentType("application/json");
-                UUID uuid = extractUuid(Patterns.RENTALS_BY_USER, path);
-                response.getWriter().write(jsonb.toJson(rentalController.getUserRentals(uuid)));
+                UUID id = extractUuid(Patterns.RENTALS_BY_USER, path);
+                response.getWriter().write(jsonb.toJson(rentalController.getUserRentals(id)));
                 return;
             } else if (path.matches(Patterns.RENTALS_BY_VEHICLE.pattern())) {
                 response.setContentType("application/json");
-                UUID uuid = extractUuid(Patterns.RENTALS_BY_VEHICLE, path);
-                response.getWriter().write(jsonb.toJson(rentalController.getVehicleRentals(uuid)));
+                UUID id = extractUuid(Patterns.RENTALS_BY_VEHICLE, path);
+                response.getWriter().write(jsonb.toJson(rentalController.getVehicleRentals(id)));
                 return;
             } else if (path.matches(Patterns.VEHICLES.pattern())) {
                 response.setContentType("application/json");
@@ -103,8 +103,8 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.VEHICLE.pattern())) {
                 response.setContentType("application/json");
-                UUID uuid = extractUuid(Patterns.VEHICLE, path);
-                response.getWriter().write(jsonb.toJson(vehicleController.getVehicle(uuid)));
+                UUID id = extractUuid(Patterns.VEHICLE, path);
+                response.getWriter().write(jsonb.toJson(vehicleController.getVehicle(id)));
                 return;
             } else if (path.matches(Patterns.USERS.pattern())) {
                 response.setContentType("application/json");
@@ -112,13 +112,13 @@ public class ApiServlet extends HttpServlet {
                 return;
             } else if (path.matches(Patterns.USER.pattern())) {
                 response.setContentType("application/json");
-                UUID uuid = extractUuid(Patterns.USER, path);
-                response.getWriter().write(jsonb.toJson(userController.getUser(uuid)));
+                UUID id = extractUuid(Patterns.USER, path);
+                response.getWriter().write(jsonb.toJson(userController.getUser(id)));
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
                 response.setContentType("image/png");
-                UUID uuid = extractUuid(Patterns.AVATAR, path);
-                byte[] avatar = avatarController.getAvatar(uuid);
+                UUID id = extractUuid(Patterns.AVATAR, path);
+                byte[] avatar = avatarController.getAvatar(id);
                 response.setContentLength(avatar.length);
                 response.getOutputStream().write(avatar);
                 return;
@@ -134,20 +134,20 @@ public class ApiServlet extends HttpServlet {
         String servletPath = request.getServletPath();
         if (Paths.API.equals(servletPath)) {
             if (path.matches(Patterns.RENTAL.pattern())) {
-                UUID uuid = extractUuid(Patterns.RENTAL, path);
-                rentalController.deleteRental(uuid);
+                UUID id = extractUuid(Patterns.RENTAL, path);
+                rentalController.deleteRental(id);
                 return;
             } else if (path.matches(Patterns.VEHICLE.pattern())) {
-                UUID uuid = extractUuid(Patterns.VEHICLE, path);
-                vehicleController.deleteVehicle(uuid);
+                UUID id = extractUuid(Patterns.VEHICLE, path);
+                vehicleController.deleteVehicle(id);
                 return;
             } else if (path.matches(Patterns.USER.pattern())) {
-                UUID uuid = extractUuid(Patterns.USER, path);
-                userController.deleteUser(uuid);
+                UUID id = extractUuid(Patterns.USER, path);
+                userController.deleteUser(id);
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
-                UUID uuid = extractUuid(Patterns.AVATAR, path);
-                avatarController.deleteAvatar(uuid);
+                UUID id = extractUuid(Patterns.AVATAR, path);
+                avatarController.deleteAvatar(id);
                 return;
             }
         }
@@ -159,23 +159,23 @@ public class ApiServlet extends HttpServlet {
         String servletPath = request.getServletPath();
         if (Paths.API.equals(servletPath)) {
             if (path.matches(Patterns.RENTAL.pattern())) {
-                UUID uuid = extractUuid(Patterns.RENTAL, path);
-                rentalController.putRental(uuid, jsonb.fromJson(request.getReader(), PutRentalRequest.class));
-                response.addHeader("Location", createUrl(request, Paths.API, "rentals", uuid.toString()));
+                UUID id = extractUuid(Patterns.RENTAL, path);
+                rentalController.putRental(id, jsonb.fromJson(request.getReader(), PutRentalRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "rentals", id.toString()));
                 return;
             } else if (path.matches(Patterns.VEHICLE.pattern())) {
-                UUID uuid = extractUuid(Patterns.VEHICLE, path);
-                vehicleController.putVehicle(uuid, jsonb.fromJson(request.getReader(), PutVehicleRequest.class));
-                response.addHeader("Location", createUrl(request, Paths.API, "vehicles", uuid.toString()));
+                UUID id = extractUuid(Patterns.VEHICLE, path);
+                vehicleController.putVehicle(id, jsonb.fromJson(request.getReader(), PutVehicleRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "vehicles", id.toString()));
                 return;
             } else if (path.matches(Patterns.USER.pattern())) {
-                UUID uuid = extractUuid(Patterns.USER, path);
-                userController.putUser(uuid, jsonb.fromJson(request.getReader(), PutUserRequest.class));
-                response.addHeader("Location", createUrl(request, Paths.API, "users", uuid.toString()));
+                UUID id = extractUuid(Patterns.USER, path);
+                userController.putUser(id, jsonb.fromJson(request.getReader(), PutUserRequest.class));
+                response.addHeader("Location", createUrl(request, Paths.API, "users", id.toString()));
                 return;
             } else if (path.matches(Patterns.AVATAR.pattern())) {
-                UUID uuid = extractUuid(Patterns.AVATAR, path);
-                avatarController.putAvatar(uuid, request.getPart("avatar").getInputStream());
+                UUID id = extractUuid(Patterns.AVATAR, path);
+                avatarController.putAvatar(id, request.getPart("avatar").getInputStream());
                 return;
             }
         }
@@ -187,16 +187,16 @@ public class ApiServlet extends HttpServlet {
         String servletPath = request.getServletPath();
         if (Paths.API.equals(servletPath)) {
             if (path.matches(Patterns.RENTAL.pattern())) {
-                UUID uuid = extractUuid(Patterns.RENTAL, path);
-                rentalController.updateRental(uuid, jsonb.fromJson(request.getReader(), PatchRentalRequest.class));
+                UUID id = extractUuid(Patterns.RENTAL, path);
+                rentalController.updateRental(id, jsonb.fromJson(request.getReader(), PatchRentalRequest.class));
                 return;
             } else if (path.matches(Patterns.VEHICLE.pattern())) {
-                UUID uuid = extractUuid(Patterns.VEHICLE, path);
-                vehicleController.updateVehicle(uuid, jsonb.fromJson(request.getReader(), PatchVehicleRequest.class));
+                UUID id = extractUuid(Patterns.VEHICLE, path);
+                vehicleController.updateVehicle(id, jsonb.fromJson(request.getReader(), PatchVehicleRequest.class));
                 return;
             } else if (path.matches(Patterns.USER.pattern())) {
-                UUID uuid = extractUuid(Patterns.USER, path);
-                userController.updateUser(uuid, jsonb.fromJson(request.getReader(), PatchUserRequest.class));
+                UUID id = extractUuid(Patterns.USER, path);
+                userController.updateUser(id, jsonb.fromJson(request.getReader(), PatchUserRequest.class));
                 return;
             }
         }

@@ -17,15 +17,15 @@ public class AvatarInMemoryRepository implements AvatarRepository {
         this.store = store;
     }
 
-    public Optional<byte[]> getAvatar(UUID uuid) {
-        return store.getAvatar(uuid);
+    public Optional<byte[]> getAvatar(UUID id) {
+        return store.getAvatar(id);
     }
 
-    public void updateAvatar(UUID uuid, byte[] avatar) {
-        store.updateAvatar(uuid, avatar);
+    public void updateAvatar(UUID id, byte[] avatar) {
+        store.updateAvatar(id, avatar);
     }
 
-    public void deleteAvatar(UUID uuid) {
-        store.deleteAvatar(uuid);
+    public void deleteAvatar(UUID id) {
+        store.deleteAvatar(id);
     }
 }

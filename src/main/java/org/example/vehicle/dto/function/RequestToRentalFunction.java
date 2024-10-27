@@ -10,14 +10,14 @@ import java.util.function.BiFunction;
 
 public class RequestToRentalFunction implements BiFunction<UUID, PutRentalRequest, Rental> {
     @Override
-    public Rental apply(UUID uuid, PutRentalRequest request) {
+    public Rental apply(UUID id, PutRentalRequest request) {
         return Rental.builder()
-                .uuid(uuid)
+                .id(id)
                 .rentalDate(request.getRentalDate())
                 .returnDate(request.getReturnDate())
                 .returned(request.isReturned())
-                .vehicle(Vehicle.builder().uuid(request.getVehicle()).build())
-                .user(User.builder().uuid(request.getUser()).build())
+                .vehicle(Vehicle.builder().id(request.getVehicle()).build())
+                .user(User.builder().id(request.getUser()).build())
                 .build();
     }
 }

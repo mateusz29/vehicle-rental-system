@@ -9,7 +9,7 @@ public class UpdateRentalWithRequestFunction implements BiFunction<Rental, Patch
     @Override
     public Rental apply(Rental rental, PatchRentalRequest patchRentalRequest) {
         return Rental.builder()
-                .uuid(rental.getUuid())
+                .id(rental.getId())
                 .rentalDate(patchRentalRequest.getRentalDate())
                 .returnDate(patchRentalRequest.getReturnDate())
                 .returned(patchRentalRequest.isReturned())

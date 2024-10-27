@@ -22,7 +22,7 @@ public class GetUsersResponse {
     @ToString
     @EqualsAndHashCode
     public static class User {
-        private UUID uuid;
+        private UUID id;
         private String username;
         private LocalDate birthday;
     }

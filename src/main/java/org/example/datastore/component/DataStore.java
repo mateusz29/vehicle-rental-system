@@ -40,8 +40,8 @@ public class DataStore {
     }
 
     public synchronized void createRental(Rental value) {
-        if (rentals.stream().anyMatch(rental -> rental.getUuid().equals(value.getUuid()))) {
-            throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getUuid()));
+        if (rentals.stream().anyMatch(rental -> rental.getId().equals(value.getId()))) {
+            throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getId()));
         }
         Rental entity = cloneWithRelationships(value);
         rentals.add(entity);
@@ -50,16 +50,16 @@ public class DataStore {
     public synchronized void updateRental(Rental value) {
         rentals.forEach(System.out::println);
         Rental entity = cloneWithRelationships(value);
-        if (rentals.removeIf(rental -> rental.getUuid().equals(value.getUuid()))) {
+        if (rentals.removeIf(rental -> rental.getId().equals(value.getId()))) {
             rentals.add(entity);
         } else {
-            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 
-    public synchronized void deleteRental(UUID uuid) {
-        if (!rentals.removeIf(rental -> rental.getUuid().equals(uuid))) {
-            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(uuid));
+    public synchronized void deleteRental(UUID id) {
+        if (!rentals.removeIf(rental -> rental.getId().equals(id))) {
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(id));
         }
     }
 
@@ -70,24 +70,24 @@ public class DataStore {
     }
 
     public synchronized void createVehicle(Vehicle value) throws IllegalArgumentException {
-        if (vehicles.stream().anyMatch(vehicle -> vehicle.getUuid().equals(value.getUuid()))) {
-            throw new IllegalArgumentException("The vehicle id \"%s\" is not unique".formatted(value.getUuid()));
+        if (vehicles.stream().anyMatch(vehicle -> vehicle.getId().equals(value.getId()))) {
+            throw new IllegalArgumentException("The vehicle id \"%s\" is not unique".formatted(value.getId()));
         }
         vehicles.add(cloningUtility.clone(value));
     }
 
     public synchronized void updateVehicle(Vehicle value) throws IllegalArgumentException {
-        if (vehicles.removeIf(vehicle -> vehicle.getUuid().equals(value.getUuid()))) {
+        if (vehicles.removeIf(vehicle -> vehicle.getId().equals(value.getId()))) {
             Vehicle updatedVehicle = cloningUtility.clone(value);
             vehicles.add(updatedVehicle);
         } else {
-            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 
     public synchronized void deleteVehicle(Vehicle value) {
         if (!vehicles.remove(value)) {
-            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 
@@ -98,24 +98,24 @@ public class DataStore {
     }
 
     public synchronized void createUser(User value) throws IllegalArgumentException {
-        if (users.stream().anyMatch(user -> user.getUuid().equals(value.getUuid()))) {
-            throw new IllegalArgumentException("The user id \"%s\" is not unique".formatted(value.getUuid()));
+        if (users.stream().anyMatch(user -> user.getId().equals(value.getId()))) {
+            throw new IllegalArgumentException("The user id \"%s\" is not unique".formatted(value.getId()));
         }
         users.add(cloningUtility.clone(value));
     }
 
     public synchronized void updateUser(User value) throws IllegalArgumentException {
-        if (users.removeIf(user -> user.getUuid().equals(value.getUuid()))) {
+        if (users.removeIf(user -> user.getId().equals(value.getId()))) {
             User updatedUser = cloningUtility.clone(value);
             users.add(updatedUser);
         } else {
-            throw new NotFoundException("The user with id \"%s\" does not exist".formatted(value.getUuid()));
+            throw new NotFoundException("The user with id \"%s\" does not exist".formatted(value.getId()));
         }
     }
 
-    public synchronized void deleteUser(UUID uuid) {
-        if (!users.removeIf(user -> user.getUuid().equals(uuid))) {
-            throw new NotFoundException("There is no user with \"%s\"".formatted(uuid));
+    public synchronized void deleteUser(UUID id) {
+        if (!users.removeIf(user -> user.getId().equals(id))) {
+            throw new NotFoundException("There is no user with \"%s\"".formatted(id));
         }
     }
 
@@ -123,8 +123,8 @@ public class DataStore {
         return avatarDirectory.resolve(userUUID.toString() + ".png");
     }
 
-    public synchronized Optional<byte[]> getAvatar(UUID uuid) {
-        Path avatarPath = getAvatarPath(uuid);
+    public synchronized Optional<byte[]> getAvatar(UUID id) {
+        Path avatarPath = getAvatarPath(id);
         try {
             if (Files.exists(avatarPath)) {
                 return Optional.of(Files.readAllBytes(avatarPath));
@@ -132,28 +132,28 @@ public class DataStore {
                 return Optional.empty();
             }
         } catch (IOException e) {
-            throw new RuntimeException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+            throw new RuntimeException("Avatar for user with id \"%s\" does not exist".formatted(id));
         }
     }
 
-    public synchronized void updateAvatar(UUID uuid, byte[] avatar) {
-        Path avatarPath = getAvatarPath(uuid);
+    public synchronized void updateAvatar(UUID id, byte[] avatar) {
+        Path avatarPath = getAvatarPath(id);
         try {
             Files.write(avatarPath, avatar);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot update avatar for user with id \"%s\"".formatted(uuid));
+            throw new RuntimeException("Cannot update avatar for user with id \"%s\"".formatted(id));
         }
     }
 
-    public synchronized void deleteAvatar(UUID uuid) {
-        Path avatarPath = getAvatarPath(uuid);
+    public synchronized void deleteAvatar(UUID id) {
+        Path avatarPath = getAvatarPath(id);
         try {
             if (!Files.exists(avatarPath)) {
-                throw new NotFoundException("Avatar for user with id \"%s\" does not exist".formatted(uuid));
+                throw new NotFoundException("Avatar for user with id \"%s\" does not exist".formatted(id));
             }
             Files.delete(avatarPath);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot delete avatar for user with id \"%s\"".formatted(uuid));
+            throw new RuntimeException("Cannot delete avatar for user with id \"%s\"".formatted(id));
         }
     }
 
@@ -162,16 +162,16 @@ public class DataStore {
 
         if (entity.getUser() != null) {
             entity.setUser(users.stream()
-                    .filter(user -> user.getUuid().equals(value.getUser().getUuid()))
+                    .filter(user -> user.getId().equals(value.getUser().getId()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getUuid()))));
+                    .orElseThrow(() -> new IllegalArgumentException("No user with id \"%s\".".formatted(value.getUser().getId()))));
         }
 
         if (entity.getVehicle() != null) {
             entity.setVehicle(vehicles.stream()
-                    .filter(vehicle -> vehicle.getUuid().equals(value.getVehicle().getUuid()))
+                    .filter(vehicle -> vehicle.getId().equals(value.getVehicle().getId()))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("No vehicle with id \"%s\".".formatted(value.getVehicle().getUuid()))));
+                    .orElseThrow(() -> new IllegalArgumentException("No vehicle with id \"%s\".".formatted(value.getVehicle().getId()))));
         }
 
         return entity;

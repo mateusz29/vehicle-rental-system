@@ -27,8 +27,8 @@ public class VehicleSimpleController implements VehicleController {
     }
 
     @Override
-    public GetVehicleResponse getVehicle(UUID uuid) {
-        return vehicleService.find(uuid)
+    public GetVehicleResponse getVehicle(UUID id) {
+        return vehicleService.find(id)
                 .map(factory.vehicleToResponse())
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,24 +39,27 @@ public class VehicleSimpleController implements VehicleController {
     }
 
     @Override
-    public void deleteVehicle(UUID uuid) {
-        vehicleService.find(uuid).ifPresentOrElse(vehicleService::delete, () -> {
-            throw new NotFoundException();
-        });
+    public void deleteVehicle(UUID id) {
+        vehicleService.find(id).ifPresentOrElse(
+                vehicle -> vehicleService.delete(id),
+                () -> {
+                throw new NotFoundException();
+                }
+        );
     }
 
     @Override
-    public void putVehicle(UUID uuid, PutVehicleRequest request) {
+    public void putVehicle(UUID id, PutVehicleRequest request) {
         try {
-            vehicleService.create(factory.requestToVehicle().apply(uuid, request));
+            vehicleService.create(factory.requestToVehicle().apply(id, request));
         } catch (IllegalArgumentException e) {
             throw new BadRequestException(e);
         }
     }
 
     @Override
-    public void updateVehicle(UUID uuid, PatchVehicleRequest request) {
-        vehicleService.find(uuid).ifPresentOrElse(
+    public void updateVehicle(UUID id, PatchVehicleRequest request) {
+        vehicleService.find(id).ifPresentOrElse(
                 vehicle -> vehicleService.update(factory.updateVehicle().apply(vehicle, request)),
                 () -> {
                     throw new NotFoundException();

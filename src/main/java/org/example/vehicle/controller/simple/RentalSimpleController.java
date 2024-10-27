@@ -27,8 +27,8 @@ public class RentalSimpleController implements RentalController {
     }
 
     @Override
-    public GetRentalResponse getRental(UUID uuid) {
-        return rentalService.find(uuid)
+    public GetRentalResponse getRental(UUID id) {
+        return rentalService.find(id)
                 .map(factory.rentalToResponse())
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,31 +39,31 @@ public class RentalSimpleController implements RentalController {
     }
 
     @Override
-    public GetRentalsResponse getVehicleRentals(UUID uuid) {
-        return rentalService.findAllByVehicle(uuid)
+    public GetRentalsResponse getVehicleRentals(UUID id) {
+        return rentalService.findAllByVehicle(id)
                 .map(factory.rentalsToResponse())
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public GetRentalsResponse getUserRentals(UUID uuid) {
-        return rentalService.findAllByUser(uuid)
+    public GetRentalsResponse getUserRentals(UUID id) {
+        return rentalService.findAllByUser(id)
                 .map(factory.rentalsToResponse())
                 .orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public void putRental(UUID uuid, PutRentalRequest request) {
+    public void putRental(UUID id, PutRentalRequest request) {
         try {
-            rentalService.create(factory.requestToRental().apply(uuid, request));
+            rentalService.create(factory.requestToRental().apply(id, request));
         } catch (IllegalArgumentException e) {
             throw new BadRequestException(e);
         }
     }
 
     @Override
-    public void updateRental(UUID uuid, PatchRentalRequest request) {
-        rentalService.find(uuid).ifPresentOrElse(
+    public void updateRental(UUID id, PatchRentalRequest request) {
+        rentalService.find(id).ifPresentOrElse(
                 rental -> rentalService.update(factory.updateRental().apply(rental, request)),
                 () -> {
                     throw new NotFoundException();
@@ -72,9 +72,12 @@ public class RentalSimpleController implements RentalController {
     }
 
     @Override
-    public void deleteRental(UUID uuid) {
-        rentalService.find(uuid).ifPresentOrElse(rentalService::delete, () -> {
-            throw new NotFoundException();
-        });
+    public void deleteRental(UUID id) {
+        rentalService.find(id).ifPresentOrElse(
+                vehicle -> rentalService.delete(id),
+                () -> {
+                    throw new NotFoundException();
+                }
+        );
     }
 }

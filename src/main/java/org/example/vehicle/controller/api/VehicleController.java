@@ -8,9 +8,9 @@ import org.example.vehicle.dto.PutVehicleRequest;
 import java.util.UUID;
 
 public interface VehicleController {
-    GetVehicleResponse getVehicle(UUID uuid);
+    GetVehicleResponse getVehicle(UUID id);
     GetVehiclesResponse getVehicles();
-    void putVehicle(UUID uuid, PutVehicleRequest request);
-    void updateVehicle(UUID uuid, PatchVehicleRequest request);
-    void deleteVehicle(UUID uuid);
+    void putVehicle(UUID id, PutVehicleRequest request);
+    void updateVehicle(UUID id, PatchVehicleRequest request);
+    void deleteVehicle(UUID id);
 }

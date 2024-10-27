@@ -8,9 +8,9 @@ import java.util.function.BiFunction;
 
 public class RequestToVehicleFunction implements BiFunction<UUID, PutVehicleRequest, Vehicle> {
     @Override
-    public Vehicle apply(UUID uuid, PutVehicleRequest request) {
+    public Vehicle apply(UUID id, PutVehicleRequest request) {
         return Vehicle.builder()
-                .uuid(uuid)
+                .id(id)
                 .model(request.getModel())
                 .brand(request.getBrand())
                 .type(request.getType())

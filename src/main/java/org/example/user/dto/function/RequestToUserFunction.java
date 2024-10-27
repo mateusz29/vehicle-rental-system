@@ -8,9 +8,9 @@ import java.util.function.BiFunction;
 
 public class RequestToUserFunction implements BiFunction<UUID, PutUserRequest, User> {
     @Override
-    public User apply(UUID uuid, PutUserRequest request) {
+    public User apply(UUID id, PutUserRequest request) {
         return User.builder()
-                .uuid(uuid)
+                .id(id)
                 .username(request.getUsername())
                 .birthday(request.getBirthday())
                 .build();

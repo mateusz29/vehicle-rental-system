@@ -13,7 +13,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class GetUserResponse {
-    private UUID uuid;
+    private UUID id;
     private String username;
     private LocalDate birthday;
 }

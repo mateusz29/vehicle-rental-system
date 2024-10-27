@@ -20,9 +20,9 @@ public class VehicleInMemoryRepository implements VehicleRepository {
     }
 
     @Override
-    public Optional<Vehicle> find(UUID uuid) {
+    public Optional<Vehicle> find(UUID id) {
         return store.findAllVehicles().stream()
-                .filter(vehicle -> vehicle.getUuid().equals(uuid))
+                .filter(vehicle -> vehicle.getId().equals(id))
                 .findFirst();
     }
 

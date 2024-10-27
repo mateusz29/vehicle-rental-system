@@ -16,16 +16,14 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class VehicleService {
     private final VehicleRepository repository;
-    private final RentalRepository rentalRepository;
 
     @Inject
-    public VehicleService(VehicleRepository repository, RentalRepository rentalRepository) {
+    public VehicleService(VehicleRepository repository) {
         this.repository = repository;
-        this.rentalRepository = rentalRepository;
     }
 
-    public Optional<Vehicle> find(UUID uuid) {
-        return repository.find(uuid);
+    public Optional<Vehicle> find(UUID id) {
+        return repository.find(id);
     }
 
     public List<Vehicle> findAll() {
@@ -40,7 +38,7 @@ public class VehicleService {
         repository.update(vehicle);
     }
 
-    public void delete(Vehicle vehicle) {
-        repository.delete(vehicle);
+    public void delete(UUID id) {
+        repository.delete(repository.find(id).orElseThrow());
     }
 }

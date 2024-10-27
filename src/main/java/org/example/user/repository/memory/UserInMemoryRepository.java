@@ -20,9 +20,9 @@ public class UserInMemoryRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> find(UUID uuid) {
+    public Optional<User> find(UUID id) {
         return store.findAllUsers().stream()
-                .filter(user -> user.getUuid().equals(uuid))
+                .filter(user -> user.getId().equals(id))
                 .findFirst();
     }
 
@@ -40,7 +40,7 @@ public class UserInMemoryRepository implements UserRepository {
 
     @Override
     public void delete(User entity) {
-        store.deleteUser(entity.getUuid());
+        store.deleteUser(entity.getId());
     }
 
     @Override

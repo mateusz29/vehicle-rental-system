@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class GetRentalResponse {
-    private UUID uuid;
+    private UUID id;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;
@@ -27,7 +27,7 @@ public class GetRentalResponse {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @EqualsAndHashCode
     public static class Vehicle {
-        private UUID uuid;
+        private UUID id;
         private String model;
         private String brand;
         private VehicleType type;

@@ -12,7 +12,7 @@ public class VehiclesToResponseFunction implements Function<List<Vehicle>, GetVe
         return GetVehiclesResponse.builder()
                 .vehicles(vehicles.stream()
                         .map(vehicle -> GetVehiclesResponse.Vehicle.builder()
-                                .uuid(vehicle.getUuid())
+                                .id(vehicle.getId())
                                 .model(vehicle.getModel())
                                 .brand(vehicle.getBrand())
                                 .type(vehicle.getType())

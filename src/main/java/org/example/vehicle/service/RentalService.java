@@ -26,8 +26,8 @@ public class RentalService {
         this.userRepository = userRepository;
     }
 
-    public Optional<Rental> find(UUID uuid) {
-        return rentalRepository.find(uuid);
+    public Optional<Rental> find(UUID id) {
+        return rentalRepository.find(id);
     }
 
     public List<Rental> findAll() {
@@ -42,17 +42,17 @@ public class RentalService {
         rentalRepository.update(rental);
     }
 
-    public void delete(Rental rental) {
-        rentalRepository.delete(rental);
+    public void delete(UUID id) {
+        rentalRepository.delete(rentalRepository.find(id).orElseThrow());
     }
 
-    public Optional<List<Rental>> findAllByUser(UUID uuid) {
-        return userRepository.find(uuid)
+    public Optional<List<Rental>> findAllByUser(UUID id) {
+        return userRepository.find(id)
                 .map(rentalRepository::findAllByUser);
     }
 
-    public Optional<List<Rental>> findAllByVehicle(UUID uuid) {
-        return vehicleRepository.find(uuid)
+    public Optional<List<Rental>> findAllByVehicle(UUID id) {
+        return vehicleRepository.find(id)
                 .map(rentalRepository::findAllByVehicle);
     }
 }

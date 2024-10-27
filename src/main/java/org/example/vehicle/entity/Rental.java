@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class Rental implements Serializable {
-    private UUID uuid;
+    private UUID id;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;

@@ -9,12 +9,12 @@ public class RentalToResponseFunction implements Function<Rental, GetRentalRespo
     @Override
     public GetRentalResponse apply(Rental rental) {
         return GetRentalResponse.builder()
-                .uuid(rental.getUuid())
+                .id(rental.getId())
                 .rentalDate(rental.getRentalDate())
                 .returnDate(rental.getReturnDate())
                 .returned(rental.isReturned())
                 .vehicle(GetRentalResponse.Vehicle.builder()
-                        .uuid(rental.getVehicle().getUuid())
+                        .id(rental.getVehicle().getId())
                         .model(rental.getVehicle().getModel())
                         .brand(rental.getVehicle().getBrand())
                         .type(rental.getVehicle().getType())

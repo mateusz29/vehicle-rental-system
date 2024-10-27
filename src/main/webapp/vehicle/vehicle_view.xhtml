@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                template="/WEB-INF/template/main.xhtml">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{vehicleView.id}" required="true"/>
+        <f:viewAction action="#{vehicleView.init()}"/>
+    </f:metadata>
+
+    <ui:define name="content">
+        <article>
+            <header><h2><h:outputText value="#{vehicleView.vehicle.brand}"/></h2></header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Brand
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{vehicleView.vehicle.brand}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Model
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{vehicleView.vehicle.model}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                Vehicle Type
+                            </div>
+                            <div class="col-6">
+                                <h:outputText value="#{vehicleView.vehicle.type}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h:dataTable value="#{rentalView.rentals.rentals}" var="rental"
+                             styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
+
+                    <h:column>
+                        <f:facet name="header">UUID</f:facet>
+                        <h:outputText value="#{rental.id}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">View</f:facet>
+                        <h:link outcome="/rental/rental_view.xhtml" value="View">
+                            <f:param name="id" value="#{rental.id}"/>
+                        </h:link>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Delete</f:facet>
+                        <h:form>
+                            <h:commandButton styleClass="btn" value="Delete"
+                                             action="#{rentalView.deleteRental(rental)}"/>
+                        </h:form>
+                    </h:column>
+                </h:dataTable>
+
+            </div>
+        </article>
+    </ui:define>
+
+</ui:composition>

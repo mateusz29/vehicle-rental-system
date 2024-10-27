@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 public class User implements Serializable {
-    private UUID uuid;
+    private UUID id;
     private String username;
     private LocalDate birthday;
 

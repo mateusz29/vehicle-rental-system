@@ -8,9 +8,9 @@ import org.example.user.dto.PutUserRequest;
 import java.util.UUID;
 
 public interface UserController {
-    GetUserResponse getUser(UUID uuid);
+    GetUserResponse getUser(UUID id);
     GetUsersResponse getUsers();
-    void deleteUser(UUID uuid);
-    void updateUser(UUID uuid, PatchUserRequest request);
-    void putUser(UUID uuid, PutUserRequest request);
+    void deleteUser(UUID id);
+    void updateUser(UUID id, PatchUserRequest request);
+    void putUser(UUID id, PutUserRequest request);
 }

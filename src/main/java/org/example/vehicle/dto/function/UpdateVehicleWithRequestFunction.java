@@ -9,7 +9,7 @@ public class UpdateVehicleWithRequestFunction implements BiFunction<Vehicle, Pat
     @Override
     public Vehicle apply(Vehicle vehicle, PatchVehicleRequest patchVehicleRequest) {
         return Vehicle.builder()
-                .uuid(vehicle.getUuid())
+                .id(vehicle.getId())
                 .model(patchVehicleRequest.getModel())
                 .brand(patchVehicleRequest.getBrand())
                 .type(patchVehicleRequest.getType())

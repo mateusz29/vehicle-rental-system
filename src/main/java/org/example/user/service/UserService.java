@@ -20,8 +20,8 @@ public class UserService {
         this.repository = repository;
     }
 
-    public Optional<User> find(UUID uuid) {
-        return repository.find(uuid);
+    public Optional<User> find(UUID id) {
+        return repository.find(id);
     }
 
     public Optional<User> find(String username) {

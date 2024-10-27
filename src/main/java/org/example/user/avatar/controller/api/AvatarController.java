@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.UUID;
 
 public interface AvatarController {
-    byte[] getAvatar(UUID uuid);
-    void putAvatar(UUID uuid, InputStream is);
-    void deleteAvatar(UUID uuid);
+    byte[] getAvatar(UUID id);
+    void putAvatar(UUID id, InputStream is);
+    void deleteAvatar(UUID id);
 }

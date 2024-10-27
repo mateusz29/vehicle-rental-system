@@ -12,7 +12,7 @@ public class UsersToResponseFunction implements Function<List<User>, GetUsersRes
             return GetUsersResponse.builder()
                     .users(users.stream()
                             .map(user -> GetUsersResponse.User.builder()
-                                    .uuid(user.getUuid())
+                                    .id(user.getId())
                                     .username(user.getUsername())
                                     .birthday(user.getBirthday())
                                     .build())

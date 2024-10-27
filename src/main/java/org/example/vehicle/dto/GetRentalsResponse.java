@@ -22,7 +22,7 @@ public class GetRentalsResponse {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @EqualsAndHashCode
     public static class Rental {
-        private UUID uuid;
+        private UUID id;
         private LocalDate rentalDate;
         private LocalDate returnDate;
         private boolean returned;

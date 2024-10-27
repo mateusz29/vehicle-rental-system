@@ -9,7 +9,7 @@ public class UserToResponeFunction implements Function<User, GetUserResponse> {
     @Override
     public GetUserResponse apply(User user) {
         return GetUserResponse.builder()
-                .uuid(user.getUuid())
+                .id(user.getId())
                 .username(user.getUsername())
                 .birthday(user.getBirthday())
                 .build();

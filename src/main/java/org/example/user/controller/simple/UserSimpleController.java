@@ -27,8 +27,8 @@ public class UserSimpleController implements UserController {
     }
 
     @Override
-    public GetUserResponse getUser(UUID uuid) {
-        return userService.find(uuid)
+    public GetUserResponse getUser(UUID id) {
+        return userService.find(id)
                 .map(factory.userToResponse())
                 .orElseThrow(NotFoundException::new);
     }
@@ -39,15 +39,15 @@ public class UserSimpleController implements UserController {
     }
 
     @Override
-    public void deleteUser(UUID uuid) {
-        userService.find(uuid).ifPresentOrElse(userService::delete, () -> {
+    public void deleteUser(UUID id) {
+        userService.find(id).ifPresentOrElse(userService::delete, () -> {
                 throw new NotFoundException();
             });
     }
 
     @Override
-    public void updateUser(UUID uuid, PatchUserRequest request) {
-        userService.find(uuid).ifPresentOrElse(
+    public void updateUser(UUID id, PatchUserRequest request) {
+        userService.find(id).ifPresentOrElse(
                 user -> userService.update(factory.updateUser().apply(user, request)), () -> {
                 throw new NotFoundException();
             }
@@ -55,9 +55,9 @@ public class UserSimpleController implements UserController {
     }
 
     @Override
-    public void putUser(UUID uuid, PutUserRequest request) {
+    public void putUser(UUID id, PutUserRequest request) {
         try {
-            userService.create(factory.requestToUser().apply(uuid, request));
+            userService.create(factory.requestToUser().apply(id, request));
         } catch (IllegalArgumentException e) {
             throw new BadRequestException(e);
         }

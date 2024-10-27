@@ -9,7 +9,7 @@ public class VehicleToResponseFunction implements Function<Vehicle, GetVehicleRe
     @Override
     public GetVehicleResponse apply(Vehicle vehicle) {
         return GetVehicleResponse.builder()
-                .uuid(vehicle.getUuid())
+                .id(vehicle.getId())
                 .model(vehicle.getModel())
                 .brand(vehicle.getBrand())
                 .type(vehicle.getType())
