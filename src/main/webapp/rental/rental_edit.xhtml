@@ -26,7 +26,8 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="rentalDate" value="#{rentalEdit.rental.rentalDate}" styleClass="form-control"/>
+                            <h:inputText id="rentalDate" value="#{rentalEdit.rental.rentalDate}" styleClass="form-control"
+                                         converter="localDateConverter"/>
                             <h:outputLabel for="rentalDate" value="Rental date:" styleClass="form-label"/>
                         </div>
                     </div>
@@ -35,7 +36,8 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="returnDate" value="#{rentalEdit.rental.rentalDate}" styleClass="form-control"/>
+                            <h:inputText id="returnDate" value="#{rentalEdit.rental.returnDate}" styleClass="form-control"
+                                         converter="localDateConverter"/>
                             <h:outputLabel for="returnDate" value="Return date:" styleClass="form-label"/>
                         </div>
                     </div>
@@ -44,7 +46,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="returned" value="#{rentalEdit.rental.rentalDate}" styleClass="form-control"/>
+                            <h:inputText id="returned" value="#{rentalEdit.rental.returned}" styleClass="form-control"/>
                             <h:outputLabel for="returned" value="Returned:" styleClass="form-label"/>
                         </div>
                     </div>
