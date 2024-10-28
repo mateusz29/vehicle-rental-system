@@ -67,11 +67,12 @@
                         </h:link>
                     </h:column>
 
-                    <h:column>
-                        <f:facet name="header">Create</f:facet>
-                        <h:link outcome="/rental/rental_create.xhtml" value="Create">
-                        </h:link>
-                    </h:column>
+<!--                    <h:column>-->
+<!--                        <f:facet name="header">Create</f:facet>-->
+<!--                        <h:link outcome="/rental/rental_create.xhtml" value="Create">-->
+<!--                            <f:param name="id" value="#{rental.id}"/>-->
+<!--                        </h:link>-->
+<!--                    </h:column>-->
 
                     <h:column>
                         <f:facet name="header">Delete</f:facet>
@@ -80,8 +81,12 @@
                                              action="#{vehicleView.deleteRental(rental)}"/>
                         </h:form>
                     </h:column>
-                </h:dataTable>
 
+                    <f:facet name="footer">
+                        <h:button styleClass="btn" outcome="/rental/rental_create.xhtml"
+                                  value="Create new rental"/>
+                    </f:facet>
+                </h:dataTable>
             </div>
         </article>
     </ui:define>

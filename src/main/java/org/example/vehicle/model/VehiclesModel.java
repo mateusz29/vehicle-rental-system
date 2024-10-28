@@ -1,7 +1,6 @@
 package org.example.vehicle.model;
 
 import lombok.*;
-import org.example.vehicle.entity.VehicleType;
 
 import java.util.List;
 import java.util.UUID;

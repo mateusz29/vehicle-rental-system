@@ -33,36 +33,6 @@ public class DataStore {
         this.avatarDirectory = Paths.get(servletContext.getInitParameter("avatarDirectory"));
     }
 
-    public synchronized List<Rental> findAllRentals() {
-        return rentals.stream()
-                .map(cloningUtility::clone)
-                .collect(Collectors.toList());
-    }
-
-    public synchronized void createRental(Rental value) {
-        if (rentals.stream().anyMatch(rental -> rental.getId().equals(value.getId()))) {
-            throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getId()));
-        }
-        Rental entity = cloneWithRelationships(value);
-        rentals.add(entity);
-    }
-
-    public synchronized void updateRental(Rental value) {
-        rentals.forEach(System.out::println);
-        Rental entity = cloneWithRelationships(value);
-        if (rentals.removeIf(rental -> rental.getId().equals(value.getId()))) {
-            rentals.add(entity);
-        } else {
-            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(value.getId()));
-        }
-    }
-
-    public synchronized void deleteRental(UUID id) {
-        if (!rentals.removeIf(rental -> rental.getId().equals(id))) {
-            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(id));
-        }
-    }
-
     public synchronized List<Vehicle> findAllVehicles() {
         return vehicles.stream()
                 .map(cloningUtility::clone)
@@ -89,6 +59,34 @@ public class DataStore {
 
         if (!vehicles.removeIf(vehicle -> vehicle.getId().equals(id))) {
             throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(id));
+        }
+    }
+
+    public synchronized List<Rental> findAllRentals() {
+        return rentals.stream()
+                .map(cloningUtility::clone)
+                .collect(Collectors.toList());
+    }
+
+    public synchronized void createRental(Rental value) throws IllegalArgumentException{
+        if (rentals.stream().anyMatch(rental -> rental.getId().equals(value.getId()))) {
+            throw new IllegalArgumentException("The rental id \"%s\" is not unique".formatted(value.getId()));
+        }
+        rentals.add(cloneWithRelationships(value));
+    }
+
+    public synchronized void updateRental(Rental value)throws IllegalArgumentException {
+        Rental entity = cloneWithRelationships(value);
+        if (rentals.removeIf(rental -> rental.getId().equals(value.getId()))) {
+            rentals.add(entity);
+        } else {
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(value.getId()));
+        }
+    }
+
+    public synchronized void deleteRental(UUID id) {
+        if (!rentals.removeIf(rental -> rental.getId().equals(id))) {
+            throw new NotFoundException("The rental with id \"%s\" does not exist".formatted(id));
         }
     }
 

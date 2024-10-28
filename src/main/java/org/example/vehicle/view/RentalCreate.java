@@ -1,7 +1,7 @@
 package org.example.vehicle.view;
 
 import jakarta.enterprise.context.Conversation;
-import jakarta.faces.view.ViewScoped;
+import jakarta.enterprise.context.ConversationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -14,8 +14,9 @@ import org.example.vehicle.service.VehicleService;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-@ViewScoped
+@ConversationScoped
 @Named
 public class RentalCreate implements Serializable {
     private final RentalService rentalService;
@@ -24,7 +25,7 @@ public class RentalCreate implements Serializable {
     private final Conversation conversation;
 
     @Getter
-    private RentalCreateModel rental;
+    RentalCreateModel rental;
 
     @Getter
     private List<VehicleModel> vehicles;
@@ -41,8 +42,8 @@ public class RentalCreate implements Serializable {
         if (conversation.isTransient()) {
             vehicles = vehicleService.findAll().stream()
                     .map(factory.vehicleToModel())
-                    .toList();
-            rental= RentalCreateModel.builder()
+                    .collect(Collectors.toList());
+            rental = RentalCreateModel.builder()
                     .id(UUID.randomUUID())
                     .build();
             conversation.begin();
@@ -55,13 +56,10 @@ public class RentalCreate implements Serializable {
     }
 
     public String saveAction() {
+        System.out.println("TESTUBGDUGBSDGSD dsfdsb");
+        System.out.println("Rental created: " + rental);
         rentalService.create(factory.modelToRental().apply(rental));
         conversation.end();
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
-
-    public String getConversationId() {
-        return conversation.getId();
-    }
 }
-

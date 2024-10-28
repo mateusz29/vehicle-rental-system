@@ -7,14 +7,13 @@ import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.entity.Vehicle;
-import org.example.vehicle.model.RentalModel;
 import org.example.vehicle.model.VehicleModel;
 import org.example.vehicle.service.VehicleService;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@FacesConverter(forClass = RentalModel.class, managed = true)
+@FacesConverter(value = "vehicleModelConverter", managed = true)
 public class VehicleModelConverter implements Converter<VehicleModel> {
     private final VehicleService service;
     private final ModelFunctionFactory factory;
@@ -27,7 +26,7 @@ public class VehicleModelConverter implements Converter<VehicleModel> {
 
     @Override
     public VehicleModel getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value == null || value.isEmpty()) {
+        if (value == null || value.isBlank()) {
             return null;
         }
         Optional<Vehicle> vehicle = service.find(UUID.fromString(value));

@@ -10,17 +10,22 @@ import lombok.Setter;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.entity.Rental;
 import org.example.vehicle.model.RentalEditModel;
+import org.example.vehicle.model.VehicleModel;
 import org.example.vehicle.service.RentalService;
+import org.example.vehicle.service.VehicleService;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @ViewScoped
 @Named
 public class RentalEdit implements Serializable {
-    private final RentalService service;
+    private final RentalService rentalService;
+    private final VehicleService vehicleService;
     private final ModelFunctionFactory factory;
 
     @Getter
@@ -30,15 +35,22 @@ public class RentalEdit implements Serializable {
     @Getter
     private RentalEditModel rental;
 
+    @Getter
+    private List<VehicleModel> vehicles;
+
     @Inject
-    public RentalEdit(RentalService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public RentalEdit(RentalService rentalService, VehicleService vehicleService, ModelFunctionFactory factory) {
+        this.rentalService = rentalService;
+        this.vehicleService = vehicleService;
         this.factory = factory;
     }
 
     public void init() throws IOException {
-        Optional<Rental> rental = service.find(id);
+        Optional<Rental> rental = rentalService.find(id);
         if (rental.isPresent()) {
+            vehicles = vehicleService.findAll().stream()
+                    .map(factory.vehicleToModel())
+                    .collect(Collectors.toList());
             this.rental = factory.rentalToEditModel().apply(rental.get());
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Rental not found");
@@ -46,8 +58,7 @@ public class RentalEdit implements Serializable {
     }
 
     public String saveAction() {
-        service.update(factory.updateRental().apply(service.find(id).orElseThrow(), rental));
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+        rentalService.update(factory.updateRental().apply(rentalService.find(id).orElseThrow(), rental));
+        return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }

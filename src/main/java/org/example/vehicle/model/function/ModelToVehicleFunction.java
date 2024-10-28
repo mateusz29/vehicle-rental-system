@@ -10,6 +10,7 @@ public class ModelToVehicleFunction implements Function<VehicleCreateModel, Vehi
     @Override
     public Vehicle apply(VehicleCreateModel model) {
         return Vehicle.builder()
+                .id(model.getId())
                 .model(model.getModel())
                 .brand(model.getBrand())
                 .type(model.getType())

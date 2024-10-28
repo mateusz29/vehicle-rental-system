@@ -25,8 +25,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="rentalDate" value="#{rentalCreate.rental.rentalDate}" styleClass="form-control"
-                                         converter="localDateConverter"/>
+                            <h:inputText id="rentalDate" value="#{rentalCreate.rental.rentalDate}" styleClass="form-control"/>
                             <h:outputLabel for="rentalDate" value="Rental date:" styleClass="form-label"/>
                         </div>
                     </div>
@@ -35,8 +34,7 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="returnDate" value="#{rentalCreate.rental.returnDate}" styleClass="form-control"
-                                         converter="localDateConverter"/>
+                            <h:inputText id="returnDate" value="#{rentalCreate.rental.returnDate}" styleClass="form-control"/>
                             <h:outputLabel for="returnDate" value="Return date:" styleClass="form-label"/>
                         </div>
                     </div>
@@ -53,13 +51,21 @@
 
                 <div class="row">
                     <div class="col-4 p-2">
-                        <div class="form-outline">
-                            <h:selectOneMenu id="vehicle" value="#{rentalCreate.rental.vehicle}" styleClass="form-select">
-                                <f:selectItem itemLabel="Select a vehicle" itemValue="" noSelectionOption="true"/>
-                                <f:selectItems value="#{rentalCreate.vehicles}" var="vehicle"
-                                               itemValue="#{vehicle}" itemLabel="#{vehicle.brand}"/>
-                            </h:selectOneMenu>
-                        </div>
+                        <fieldset>
+                            <legend class="form-label fs-6">Vehicle:</legend>
+                            <ui:repeat value="#{rentalCreate.vehicles}" var="vehicle">
+                                <div class="form-check">
+                                    <h:selectOneRadio id="radioId" group="vehicle"
+                                                      value="#{rentalCreate.rental.vehicle}"
+                                                      styleClass="form-check-input"
+                                                      enabledClass="form-check-label"
+                                                      converter="vehicleModelConverter"
+                                                      required="true">
+                                        <f:selectItem itemValue="#{vehicle}" itemLabel="#{vehicle.brand}"/>
+                                    </h:selectOneRadio>
+                                </div>
+                            </ui:repeat>
+                        </fieldset>
                     </div>
                 </div>
 

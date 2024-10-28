@@ -59,7 +59,7 @@ public class RentalInMemoryRepository implements RentalRepository {
     @Override
     public List<Rental> findAllByVehicle(Vehicle vehicle) {
         return store.findAllRentals().stream()
-                .filter(rental -> vehicle.equals(rental.getVehicle()))
+                .filter(rental -> vehicle.getId().equals(rental.getVehicle().getId()))
                 .collect(Collectors.toList());
     }
 }

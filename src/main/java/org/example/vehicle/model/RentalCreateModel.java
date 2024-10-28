@@ -2,7 +2,6 @@ package org.example.vehicle.model;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -15,8 +14,8 @@ import java.util.UUID;
 public class RentalCreateModel {
     private UUID id;
     private String referenceCode;
-    private LocalDate rentalDate;
-    private LocalDate returnDate;
+    private String rentalDate;
+    private String returnDate;
     private boolean returned;
     private VehicleModel vehicle;
 }

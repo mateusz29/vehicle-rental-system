@@ -32,8 +32,8 @@ public class ModelFunctionFactory {
     public ModelToRentalFunction modelToRental() {
         return new ModelToRentalFunction();
     }
-    public RentalToEditModelFunciton rentalToEditModel() {
-        return new RentalToEditModelFunciton();
+    public RentalToEditModelFunction rentalToEditModel() {
+        return new RentalToEditModelFunction();
     }
     public UpdateRentalWithModelFunction updateRental() {
         return new UpdateRentalWithModelFunction();
