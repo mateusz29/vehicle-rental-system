@@ -56,8 +56,6 @@ public class RentalCreate implements Serializable {
     }
 
     public String saveAction() {
-        System.out.println("TESTUBGDUGBSDGSD dsfdsb");
-        System.out.println("Rental created: " + rental);
         rentalService.create(factory.modelToRental().apply(rental));
         conversation.end();
         return "/rental/rental_list.xhtml?faces-redirect=true";
