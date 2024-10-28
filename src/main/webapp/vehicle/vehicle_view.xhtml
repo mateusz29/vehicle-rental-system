@@ -55,24 +55,21 @@
 
                     <h:column>
                         <f:facet name="header">View</f:facet>
-                        <h:link outcome="/rental/rental_view.xhtml" value="View">
-                            <f:param name="id" value="#{rental.id}"/>
-                        </h:link>
+                        <h:form>
+                            <h:button styleClass="btn" outcome="/rental/rental_view.xhtml" value="View">
+                                <f:param name="id" value="#{rental.id}"/>
+                            </h:button>
+                        </h:form>
                     </h:column>
 
                     <h:column>
                         <f:facet name="header">Edit</f:facet>
-                        <h:link outcome="/rental/rental_edit.xhtml" value="Edit">
-                            <f:param name="id" value="#{rental.id}"/>
-                        </h:link>
+                        <h:form>
+                            <h:button styleClass="btn" outcome="/rental/rental_edit.xhtml" value="Edit">
+                                <f:param name="id" value="#{rental.id}"/>
+                            </h:button>
+                        </h:form>
                     </h:column>
-
-<!--                    <h:column>-->
-<!--                        <f:facet name="header">Create</f:facet>-->
-<!--                        <h:link outcome="/rental/rental_create.xhtml" value="Create">-->
-<!--                            <f:param name="id" value="#{rental.id}"/>-->
-<!--                        </h:link>-->
-<!--                    </h:column>-->
 
                     <h:column>
                         <f:facet name="header">Delete</f:facet>

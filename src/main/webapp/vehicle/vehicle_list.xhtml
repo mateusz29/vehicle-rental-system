@@ -20,16 +20,20 @@
 
                 <h:column>
                     <f:facet name="header">View</f:facet>
-                    <h:link outcome="/vehicle/vehicle_view.xhtml" value="View">
-                        <f:param name="id" value="#{vehicle.id}"/>
-                    </h:link>
+                    <h:form>
+                        <h:button styleClass="btn" outcome="/vehicle/vehicle_view.xhtml" value="View">
+                            <f:param name="id" value="#{vehicle.id}"/>
+                        </h:button>
+                    </h:form>
                 </h:column>
 
                 <h:column>
                     <f:facet name="header">Edit</f:facet>
-                    <h:link outcome="/vehicle/vehicle_edit.xhtml" value="Edit">
-                        <f:param name="id" value="#{vehicle.id}"/>
-                    </h:link>
+                    <h:form>
+                        <h:button styleClass="btn" outcome="/vehicle/vehicle_edit.xhtml" value="Edit">
+                            <f:param name="id" value="#{vehicle.id}"/>
+                        </h:button>
+                    </h:form>
                 </h:column>
 
                 <h:column>
