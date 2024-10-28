@@ -34,18 +34,15 @@ public class VehicleCreate implements Serializable {
             vehicle = VehicleCreateModel.builder()
                     .id(UUID.randomUUID())
                     .build();
-            conversation.begin();
         }
     }
 
     public String cancelAction() {
-        conversation.end();
         return "/vehicle/vehicle_list.xhtml?faces-redirect=true";
     }
 
     public String saveAction() {
         service.create(factory.modelToVehicle().apply(vehicle));
-        conversation.end();
         return "/vehicle/vehicle_list.xhtml?faces-redirect=true";
     }
 

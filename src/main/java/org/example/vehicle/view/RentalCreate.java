@@ -2,6 +2,7 @@ package org.example.vehicle.view;
 
 import jakarta.enterprise.context.Conversation;
 import jakarta.enterprise.context.ConversationScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@ConversationScoped
+@ViewScoped
 @Named
 public class RentalCreate implements Serializable {
     private final RentalService rentalService;
@@ -46,18 +47,15 @@ public class RentalCreate implements Serializable {
             rental = RentalCreateModel.builder()
                     .id(UUID.randomUUID())
                     .build();
-            conversation.begin();
         }
     }
 
     public String cancelAction() {
-        conversation.end();
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 
     public String saveAction() {
         rentalService.create(factory.modelToRental().apply(rental));
-        conversation.end();
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }
