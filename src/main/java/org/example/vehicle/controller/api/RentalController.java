@@ -1,5 +1,7 @@
 package org.example.vehicle.controller.api;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import org.example.vehicle.dto.GetRentalResponse;
 import org.example.vehicle.dto.GetRentalsResponse;
 import org.example.vehicle.dto.PatchRentalRequest;
@@ -7,12 +9,40 @@ import org.example.vehicle.dto.PutRentalRequest;
 
 import java.util.UUID;
 
+@Path("")
 public interface RentalController {
-    GetRentalResponse getRental(UUID id);
+
+    @GET
+    @Path("/rentals/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetRentalResponse getRental(@PathParam("id") UUID id);
+
+    @GET
+    @Path("/rentals")
+    @Produces(MediaType.APPLICATION_JSON)
     GetRentalsResponse getRentals();
-    GetRentalsResponse getVehicleRentals(UUID id);
-    GetRentalsResponse getUserRentals(UUID id);
-    void putRental(UUID id, PutRentalRequest request);
-    void updateRental(UUID id, PatchRentalRequest request);
-    void deleteRental(UUID id);
+
+    @GET
+    @Path("/vehicles/{id}/rentals")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetRentalsResponse getVehicleRentals(@PathParam("id") UUID id);
+
+    @GET
+    @Path("/users/{id}/rentals")
+    @Produces(MediaType.APPLICATION_JSON)
+    GetRentalsResponse getUserRentals(@PathParam("id") UUID id);
+
+    @PUT
+    @Path("/rentals/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void putRental(@PathParam("id") UUID id, PutRentalRequest request);
+
+    @PATCH
+    @Path("/rentals/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void updateRental(@PathParam("id") UUID id, PatchRentalRequest request);
+
+    @DELETE
+    @Path("/rentals/{id}")
+    void deleteRental(@PathParam("id") UUID id);
 }
