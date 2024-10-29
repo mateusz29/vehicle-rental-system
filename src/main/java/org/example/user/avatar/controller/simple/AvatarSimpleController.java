@@ -2,7 +2,7 @@ package org.example.user.avatar.controller.simple;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.example.controller.servlet.exception.NotFoundException;
+import jakarta.ws.rs.NotFoundException;
 import org.example.user.avatar.controller.api.AvatarController;
 import org.example.user.avatar.service.AvatarService;
 import org.example.user.service.UserService;

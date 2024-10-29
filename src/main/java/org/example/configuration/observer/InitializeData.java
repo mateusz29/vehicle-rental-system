@@ -5,7 +5,6 @@ import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.context.control.RequestContextController;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletContextListener;
 import lombok.SneakyThrows;
 import org.example.user.entity.User;
 import org.example.user.service.UserService;
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @ApplicationScoped
-public class InitializeData implements ServletContextListener {
+public class InitializeData {
     private final UserService userService;
     private final VehicleService vehicleService;
     private final RentalService rentalService;

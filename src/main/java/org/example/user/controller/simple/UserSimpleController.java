@@ -2,15 +2,14 @@ package org.example.user.controller.simple;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import org.example.controller.servlet.exception.BadRequestException;
-import org.example.controller.servlet.exception.NotFoundException;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.NotFoundException;
 import org.example.component.DtoFunctionFactory;
 import org.example.user.controller.api.UserController;
 import org.example.user.dto.GetUserResponse;
 import org.example.user.dto.GetUsersResponse;
 import org.example.user.dto.PatchUserRequest;
 import org.example.user.dto.PutUserRequest;
-import org.example.user.entity.User;
 import org.example.user.service.UserService;
 
 import java.util.UUID;
