@@ -12,6 +12,7 @@ PUT http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1
 Content-Type: application/json
 
 {
+  "referenceCode": "RENT-00010",
   "rentalDate": "2023-04-05",
   "returnDate": "2023-04-15",
   "returned": true,
@@ -24,9 +25,10 @@ PATCH http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4
 Content-Type: application/json
 
 {
-  "rentalDate": "2023-05-06",
-  "returnDate": null,
-  "returned": "false"
+  "referenceCode": "RENT-12345",
+  "rentalDate": "1980-03-07",
+  "returnDate": "1099-04-15",
+  "returned": true
 }
 
 ### Get all user rentals
