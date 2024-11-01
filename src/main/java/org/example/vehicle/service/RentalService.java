@@ -2,6 +2,7 @@ package org.example.vehicle.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import org.example.user.repository.api.UserRepository;
 import org.example.vehicle.entity.Rental;
@@ -30,12 +31,27 @@ public class RentalService {
         return rentalRepository.find(id);
     }
 
+    public Optional<Rental> findByVehicle(UUID vehicleId, UUID rentalId) {
+        return findAllByVehicle(vehicleId)
+                .flatMap(rentals -> rentals.stream()
+                        .filter(rental -> rental.getId().equals(rentalId))
+                        .findFirst());
+    }
+
     public List<Rental> findAll() {
         return rentalRepository.findAll();
     }
 
-    public void create(Rental rental) {
-        rentalRepository.create(rental);
+    public void create(Rental rental, UUID vehicleId) {
+        vehicleRepository.find(vehicleId).ifPresentOrElse(
+                vehicle -> {
+                    rental.setVehicle(vehicle);
+                    rentalRepository.create(rental);
+                },
+                () -> {
+                    throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(vehicleId));
+                }
+        );
     }
 
     public void update(Rental rental) {

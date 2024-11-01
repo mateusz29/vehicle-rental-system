@@ -187,14 +187,14 @@ public class InitializeData {
                 .vehicle(Man)
                 .build();
 
-        rentalService.create(rental1);
-        rentalService.create(rental2);
-        rentalService.create(rental3);
-        rentalService.create(rental4);
-        rentalService.create(rental5);
-        rentalService.create(rental6);
-        rentalService.create(rental7);
-        rentalService.create(rental8);
+        rentalService.create(rental1, Porsche.getId());
+        rentalService.create(rental2, BMW.getId());
+        rentalService.create(rental3, Ducati.getId());
+        rentalService.create(rental4, Man.getId());
+        rentalService.create(rental5, Ducati.getId());
+        rentalService.create(rental6, Man.getId());
+        rentalService.create(rental7, Man.getId());
+        rentalService.create(rental8, Man.getId());
 
         requestContextController.deactivate();
     }

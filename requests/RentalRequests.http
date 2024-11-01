@@ -8,7 +8,7 @@ GET http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1
 DELETE http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
 
 ### Create rental
-PUT http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
 Content-Type: application/json
 
 {
@@ -16,12 +16,11 @@ Content-Type: application/json
   "rentalDate": "2023-04-05",
   "returnDate": "2023-04-15",
   "returned": true,
-  "user": "7553f71e-5217-4a39-9680-f506d52b08e5",
-  "vehicle": "e83dad4d-5d56-4065-8630-8a887536dc41"
+  "user": "7553f71e-5217-4a39-9680-f506d52b08e5"
 }
 
 ### Update rental
-PATCH http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+PATCH http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
 Content-Type: application/json
 
 {

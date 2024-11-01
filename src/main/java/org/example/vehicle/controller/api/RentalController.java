@@ -33,14 +33,14 @@ public interface RentalController {
     GetRentalsResponse getUserRentals(@PathParam("id") UUID id);
 
     @PUT
-    @Path("/rentals/{id}")
+    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    void putRental(@PathParam("id") UUID id, PutRentalRequest request);
+    void putRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId ,PutRentalRequest request);
 
     @PATCH
-    @Path("/rentals/{id}")
+    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    void updateRental(@PathParam("id") UUID id, PatchRentalRequest request);
+    void updateRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId, PatchRentalRequest request);
 
     @DELETE
     @Path("/rentals/{id}")
