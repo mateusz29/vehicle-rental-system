@@ -46,7 +46,8 @@ public class RentalEdit implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Rental> rental = rentalService.find(id);
+        // TODO: Change 2nd id to vehicleId
+        Optional<Rental> rental = rentalService.findByVehicle(id, id);
         if (rental.isPresent()) {
             vehicles = vehicleService.findAll().stream()
                     .map(factory.vehicleToModel())
@@ -58,7 +59,8 @@ public class RentalEdit implements Serializable {
     }
 
     public String saveAction() {
-        rentalService.update(factory.updateRental().apply(rentalService.find(id).orElseThrow(), rental));
+        // TODO: Change 1st id to vehicleId
+        rentalService.update(factory.updateRental().apply(rentalService.findByVehicle(id, id).orElseThrow(), rental));
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }

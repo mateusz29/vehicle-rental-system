@@ -62,8 +62,8 @@ public class RentalRestController implements RentalController {
     }
 
     @Override
-    public GetRentalResponse getRental(UUID id) {
-        return service.find(id)
+    public GetRentalResponse getRental(UUID vehicleId, UUID rentalId) {
+        return service.findByVehicle(vehicleId, rentalId)
                 .map(factory.rentalToResponse())
                 .orElseThrow(NotFoundException::new);
     }
@@ -73,10 +73,10 @@ public class RentalRestController implements RentalController {
     public void putRental(UUID vehicleId, UUID rentalId, PutRentalRequest request) {
         try {
             service.create(factory.requestToRental().apply(rentalId, request), vehicleId);
-            response.setHeader("Location", uriInfo.getBaseUriBuilder()
-                    .path(RentalController.class, "getRental")
-                    .build(rentalId)
-                    .toString());
+//            response.setHeader("Location", uriInfo.getBaseUriBuilder()
+//                    .path(RentalController.class, "getRental")
+//                    .build(rentalId)
+//                    .toString());
             throw new WebApplicationException(Response.Status.CREATED);
         } catch (IllegalArgumentException ex) {
             throw new BadRequestException(ex);
@@ -96,9 +96,9 @@ public class RentalRestController implements RentalController {
     }
 
     @Override
-    public void deleteRental(UUID id) {
-        service.find(id).ifPresentOrElse(
-                vehicle -> service.delete(id),
+    public void deleteRental(UUID vehicleId, UUID rentalId) {
+        service.findByVehicle(vehicleId, rentalId).ifPresentOrElse(
+                vehicle -> service.delete(rentalId),
                 () -> {
                     throw new NotFoundException();
                 }

@@ -13,12 +13,12 @@ import java.util.UUID;
 public interface RentalController {
 
     @GET
-    @Path("/rentals/{id}")
+    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
     @Produces(MediaType.APPLICATION_JSON)
-    GetRentalResponse getRental(@PathParam("id") UUID id);
+    GetRentalResponse getRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId);
 
     @GET
-    @Path("/rentals")
+    @Path("/vehicles/rentals")
     @Produces(MediaType.APPLICATION_JSON)
     GetRentalsResponse getRentals();
 
@@ -43,6 +43,6 @@ public interface RentalController {
     void updateRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId, PatchRentalRequest request);
 
     @DELETE
-    @Path("/rentals/{id}")
-    void deleteRental(@PathParam("id") UUID id);
+    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
+    void deleteRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId);
 }

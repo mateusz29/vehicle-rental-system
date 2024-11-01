@@ -38,7 +38,8 @@ public class RentalView implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Rental> rental = service.find(id);
+        // TODO: Change 1st id to vehicleId
+        Optional<Rental> rental = service.findByVehicle(id, id);
         if (rental.isPresent()) {
             this.rental = factory.rentalToModel().apply(rental.get());
         } else {
