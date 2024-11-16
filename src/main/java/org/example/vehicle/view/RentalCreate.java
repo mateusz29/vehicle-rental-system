@@ -55,8 +55,7 @@ public class RentalCreate implements Serializable {
     }
 
     public String saveAction() {
-        // TODO: Change the id
-        rentalService.create(factory.modelToRental().apply(rental), rental.getId());
+        rentalService.create(factory.modelToRental().apply(rental));
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }

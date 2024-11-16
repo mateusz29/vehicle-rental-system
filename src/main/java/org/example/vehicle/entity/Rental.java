@@ -1,5 +1,6 @@
 package org.example.vehicle.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.example.user.entity.User;
 
@@ -14,12 +15,21 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
+@Entity
+@Table(name = "rentals")
 public class Rental implements Serializable {
+    @Id
     private UUID id;
     private String referenceCode;
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;
+
+    @ManyToOne
+    @JoinColumn(name = "user_username")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle")
     private Vehicle vehicle;
 }

@@ -22,6 +22,20 @@ public interface RentalController {
     @Produces(MediaType.APPLICATION_JSON)
     GetRentalsResponse getRentals();
 
+    @PUT
+    @Path("/rentals/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void putRental(@PathParam("id") UUID id, PutRentalRequest request);
+
+    @PATCH
+    @Path("/rentals/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    void updateRental(@PathParam("id") UUID id, PatchRentalRequest request);
+
+    @DELETE
+    @Path("/rentals/{id}")
+    void deleteRental(@PathParam("id") UUID id);
+
     @GET
     @Path("/vehicles/{id}/rentals")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,18 +45,4 @@ public interface RentalController {
     @Path("/users/{id}/rentals")
     @Produces(MediaType.APPLICATION_JSON)
     GetRentalsResponse getUserRentals(@PathParam("id") UUID id);
-
-    @PUT
-    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    void putRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId ,PutRentalRequest request);
-
-    @PATCH
-    @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    void updateRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId, PatchRentalRequest request);
-
-    @DELETE
-    @Path("/rentals/{id}")
-    void deleteRental(@PathParam("id") UUID id);
 }

@@ -32,28 +32,19 @@ public class RentalService {
         return rentalRepository.find(id);
     }
 
-    public Optional<Rental> findByVehicle(UUID vehicleId, UUID rentalId) {
-        return findAllByVehicle(vehicleId)
-                .flatMap(rentals -> rentals.stream()
-                        .filter(rental -> rental.getId().equals(rentalId))
-                        .findFirst());
-    }
-
     public List<Rental> findAll() {
         return rentalRepository.findAll();
     }
 
     @Transactional
-    public void create(Rental rental, UUID vehicleId) {
-        vehicleRepository.find(vehicleId).ifPresentOrElse(
-                vehicle -> {
-                    rental.setVehicle(vehicle);
-                    rentalRepository.create(rental);
-                },
-                () -> {
-                    throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(vehicleId));
-                }
-        );
+    public void create(Rental rental) {
+        if (rentalRepository.find(rental.getId()).isPresent()) {
+            throw new IllegalArgumentException("Rental with id \"%s\" already exists".formatted(rental.getId()));
+        }
+        if (vehicleRepository.find(rental.getVehicle().getId()).isEmpty()) {
+            throw new NotFoundException("The vehicle with id \"%s\" does not exist".formatted(rental.getVehicle().getId()));
+        }
+        rentalRepository.create(rental);
     }
 
     @Transactional

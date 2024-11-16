@@ -80,9 +80,11 @@ public class UserRestController implements UserController {
 
     @Override
     public void deleteUser(UUID id) {
-        service.find(id).ifPresentOrElse(service::delete, () -> {
-            throw new NotFoundException();
-        });
+        service.find(id).ifPresentOrElse(
+                entity -> service.delete(id),
+                () -> {
+                    throw new NotFoundException();
+                });
     }
 
 }

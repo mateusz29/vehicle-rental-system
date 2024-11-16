@@ -38,10 +38,12 @@ public class UserService {
         repository.create(user);
     }
 
-    public void delete(User user) {
-        repository.delete(user);
+    @Transactional
+    public void delete(UUID id) {
+        repository.delete(repository.find(id).orElseThrow());
     }
 
+    @Transactional
     public void update(User user) {
         repository.update(user);
     }

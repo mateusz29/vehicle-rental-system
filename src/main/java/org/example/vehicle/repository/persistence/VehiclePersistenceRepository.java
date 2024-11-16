@@ -43,4 +43,4 @@ public class VehiclePersistenceRepository implements VehicleRepository {
     public void update(Vehicle entity) {
         em.merge(entity);
     }
-    }
+}
