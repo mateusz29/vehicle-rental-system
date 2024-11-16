@@ -25,6 +25,6 @@ public class Vehicle implements Serializable{
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Rental> rentals;
 }

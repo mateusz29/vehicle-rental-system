@@ -36,11 +36,14 @@ public class VehiclePersistenceRepository implements VehicleRepository {
 
     @Override
     public void delete(Vehicle entity) {
-        em.remove(em.find(Vehicle.class, entity.getId()));
+        Vehicle managed = em.find(Vehicle.class, entity.getId());
+        em.refresh(managed);
+        em.remove(managed);
     }
 
     @Override
     public void update(Vehicle entity) {
-        em.merge(entity);
+        Vehicle managed = em.merge(entity);
+        em.refresh(managed);
     }
 }

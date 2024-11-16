@@ -5,7 +5,7 @@ GET http://localhost:9081/vehicle-rental/api/vehicles
 GET http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
 
 ### Delete vehicle
-DELETE http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+DELETE http://localhost:9081/vehicle-rental/api/vehicles/7bf652b9-0760-4aad-9072-b0c2f9f6c138
 
 ### Create vehicle
 PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
