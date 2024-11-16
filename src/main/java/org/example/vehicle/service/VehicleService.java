@@ -2,6 +2,7 @@ package org.example.vehicle.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import org.example.vehicle.entity.Rental;
 import org.example.vehicle.entity.Vehicle;
@@ -30,14 +31,17 @@ public class VehicleService {
         return repository.findAll();
     }
 
+    @Transactional
     public void create(Vehicle vehicle) {
         repository.create(vehicle);
     }
 
+    @Transactional
     public void update(Vehicle vehicle) {
         repository.update(vehicle);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }

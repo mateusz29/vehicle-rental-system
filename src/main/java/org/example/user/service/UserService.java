@@ -2,6 +2,7 @@ package org.example.user.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
@@ -32,6 +33,7 @@ public class UserService {
         return repository.findAll();
     }
 
+    @Transactional
     public void create(User user) {
         repository.create(user);
     }

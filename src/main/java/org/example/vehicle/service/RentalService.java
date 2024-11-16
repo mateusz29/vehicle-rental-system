@@ -2,6 +2,7 @@ package org.example.vehicle.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import org.example.user.repository.api.UserRepository;
@@ -42,6 +43,7 @@ public class RentalService {
         return rentalRepository.findAll();
     }
 
+    @Transactional
     public void create(Rental rental, UUID vehicleId) {
         vehicleRepository.find(vehicleId).ifPresentOrElse(
                 vehicle -> {
@@ -54,10 +56,12 @@ public class RentalService {
         );
     }
 
+    @Transactional
     public void update(Rental rental) {
         rentalRepository.update(rental);
     }
 
+    @Transactional
     public void delete(UUID id) {
         rentalRepository.delete(rentalRepository.find(id).orElseThrow());
     }
