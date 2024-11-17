@@ -30,13 +30,14 @@ public class RentalEdit implements Serializable {
 
     @Getter
     @Setter
-    private UUID id;
+    private UUID rentalId;
+
+    @Getter
+    @Setter
+    private UUID vehicleId;
 
     @Getter
     private RentalEditModel rental;
-
-    @Getter
-    private List<VehicleModel> vehicles;
 
     @Inject
     public RentalEdit(RentalService rentalService, VehicleService vehicleService, ModelFunctionFactory factory) {
@@ -46,19 +47,22 @@ public class RentalEdit implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Rental> rental = rentalService.find(id);
+        Optional<Rental> rental = rentalService.find(rentalId);
         if (rental.isPresent()) {
-            vehicles = vehicleService.findAll().stream()
-                    .map(factory.vehicleToModel())
-                    .collect(Collectors.toList());
             this.rental = factory.rentalToEditModel().apply(rental.get());
+            VehicleModel vehicle = vehicleService.find(vehicleId)
+                    .map(factory.vehicleToModel())
+                    .orElseThrow();
+
+            this.rental.setVehicle(vehicle);
+
         } else {
             FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Rental not found");
         }
     }
 
     public String saveAction() {
-        rentalService.update(factory.updateRental().apply(rentalService.find(id).orElseThrow(), rental));
+        rentalService.update(factory.updateRental().apply(rentalService.find(rentalId).orElseThrow(), rental));
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }

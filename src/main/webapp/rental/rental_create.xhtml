@@ -6,6 +6,7 @@
                 template="/WEB-INF/template/main.xhtml">
 
     <f:metadata>
+        <f:viewParam name="vehicleId" value="#{rentalCreate.vehicleId}" required="true"/>
         <f:viewAction action="#{rentalCreate.init()}"/>
     </f:metadata>
 
@@ -44,37 +45,16 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-4 p-2">
                         <fieldset>
                             <legend class="form-label fs-6">Returned:</legend>
-                                <h:selectOneMenu id="returned" value="#{rentalCreate.rental.returned}"
-                                                 styleClass="form-control"
-                                                 required="true" group="returned">
-                                    <f:selectItem itemValue="true" itemLabel="Yes" />
-                                    <f:selectItem itemValue="false" itemLabel="No" />
-                                </h:selectOneMenu>
-                        </fieldset>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-4 p-2">
-                        <fieldset>
-                            <legend class="form-label fs-6">Vehicle:</legend>
-                            <ui:repeat value="#{rentalCreate.vehicles}" var="vehicle">
-                                <div class="form-check">
-                                    <h:selectOneRadio id="radioId" group="vehicle"
-                                                      value="#{rentalCreate.rental.vehicle}"
-                                                      styleClass="form-check-input"
-                                                      enabledClass="form-check-label"
-                                                      converter="vehicleModelConverter"
-                                                      required="true">
-                                        <f:selectItem itemValue="#{vehicle}" itemLabel="#{vehicle.brand}"/>
-                                    </h:selectOneRadio>
-                                </div>
-                            </ui:repeat>
+                            <h:selectOneMenu id="returned" value="#{rentalCreate.rental.returned}"
+                                             styleClass="form-control"
+                                             required="true" group="returned">
+                                <f:selectItem itemValue="true" itemLabel="Yes" />
+                                <f:selectItem itemValue="false" itemLabel="No" />
+                            </h:selectOneMenu>
                         </fieldset>
                     </div>
                 </div>
@@ -82,7 +62,7 @@
                 <div class="row">
                     <div class="col-2 p-2 text-center">
                         <h:commandButton styleClass="btn btn-primary" value="Create"
-                                  action="#{rentalCreate.saveAction()}"/>
+                                         action="#{rentalCreate.saveAction()}"/>
                     </div>
                     <div class="col-2 p-2 text-center">
                         <h:commandButton styleClass="btn btn-secondary" value="Cancel"

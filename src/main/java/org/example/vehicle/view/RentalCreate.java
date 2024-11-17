@@ -5,6 +5,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
+import lombok.Setter;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.model.RentalCreateModel;
 import org.example.vehicle.model.VehicleModel;
@@ -14,9 +15,7 @@ import org.example.vehicle.service.VehicleService;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @ViewScoped
 @Named
@@ -27,10 +26,11 @@ public class RentalCreate implements Serializable {
     private final Conversation conversation;
 
     @Getter
-    RentalCreateModel rental;
+    @Setter
+    private UUID vehicleId;
 
     @Getter
-    private List<VehicleModel> vehicles;
+    RentalCreateModel rental;
 
     @Inject
     public RentalCreate(RentalService rentalService, VehicleService vehicleService, ModelFunctionFactory factory, Conversation conversation) {
@@ -46,15 +46,16 @@ public class RentalCreate implements Serializable {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedDate = currentDate.format(formatter);
 
-            vehicles = vehicleService.findAll().stream()
+            VehicleModel vehicle = vehicleService.find(vehicleId)
                     .map(factory.vehicleToModel())
-                    .collect(Collectors.toList());
+                    .orElseThrow();
 
             rental = RentalCreateModel.builder()
                     .id(UUID.randomUUID())
                     .returned(true)
                     .rentalDate(formattedDate)
                     .returnDate(formattedDate)
+                    .vehicle(vehicle)
                     .build();
         }
     }

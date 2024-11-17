@@ -70,12 +70,12 @@ public class RentalRestController implements RentalController {
 
     @Override
     @SneakyThrows
-    public void putRental(UUID id, PutRentalRequest request) {
+    public void putRental(UUID vehicleId, UUID rentalId, PutRentalRequest request) {
         try {
-            service.create(factory.requestToRental().apply(id, request));
+            service.create(factory.requestToRental().apply(rentalId, request));
             response.setHeader("Location", uriInfo.getBaseUriBuilder()
                     .path(RentalController.class, "getRental")
-                    .build(id)
+                    .build(rentalId)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
         } catch (IllegalArgumentException ex) {
@@ -84,8 +84,8 @@ public class RentalRestController implements RentalController {
     }
 
     @Override
-    public void updateRental(UUID id, PatchRentalRequest request) {
-        service.find(id).ifPresentOrElse(
+    public void updateRental(UUID vehicleId, UUID rentalId, PatchRentalRequest request) {
+        service.find(rentalId).ifPresentOrElse(
                 rental -> service.update(factory.updateRental().apply(rental, request)),
                 () -> {
                     throw new NotFoundException();
