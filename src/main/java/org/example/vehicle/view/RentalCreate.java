@@ -1,7 +1,6 @@
 package org.example.vehicle.view;
 
 import jakarta.enterprise.context.Conversation;
-import jakarta.enterprise.context.ConversationScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;

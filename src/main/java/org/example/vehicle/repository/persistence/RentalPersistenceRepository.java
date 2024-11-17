@@ -38,7 +38,6 @@ public class RentalPersistenceRepository implements RentalRepository {
 
     @Override
     public void delete(Rental entity) {
-        em.refresh(entity);
         em.remove(em.find(Rental.class, entity.getId()));
     }
 

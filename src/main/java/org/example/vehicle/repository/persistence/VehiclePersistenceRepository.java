@@ -43,7 +43,6 @@ public class VehiclePersistenceRepository implements VehicleRepository {
 
     @Override
     public void update(Vehicle entity) {
-        Vehicle managed = em.merge(entity);
-        em.refresh(managed);
+        em.merge(entity);
     }
 }
