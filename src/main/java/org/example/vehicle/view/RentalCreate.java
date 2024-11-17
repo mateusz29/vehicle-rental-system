@@ -12,6 +12,8 @@ import org.example.vehicle.service.RentalService;
 import org.example.vehicle.service.VehicleService;
 
 import java.io.Serializable;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,11 +42,19 @@ public class RentalCreate implements Serializable {
 
     public void init() {
         if (conversation.isTransient()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedDate = currentDate.format(formatter);
+
             vehicles = vehicleService.findAll().stream()
                     .map(factory.vehicleToModel())
                     .collect(Collectors.toList());
+
             rental = RentalCreateModel.builder()
                     .id(UUID.randomUUID())
+                    .returned(true)
+                    .rentalDate(formattedDate)
+                    .returnDate(formattedDate)
                     .build();
         }
     }

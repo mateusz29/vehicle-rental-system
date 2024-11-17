@@ -25,8 +25,10 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="rentalDate" value="#{rentalCreate.rental.rentalDate}" styleClass="form-control"/>
-                            <h:outputLabel for="rentalDate" value="Rental date:" styleClass="form-label"/>
+                            <h:inputText id="rentalDate" value="#{rentalCreate.rental.rentalDate}"
+                                         type="date"
+                                         styleClass="form-control" />
+                            <h:outputLabel for="rentalDate" value="Rental date:" styleClass="form-label" />
                         </div>
                     </div>
                 </div>
@@ -34,18 +36,26 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="returnDate" value="#{rentalCreate.rental.returnDate}" styleClass="form-control"/>
-                            <h:outputLabel for="returnDate" value="Return date:" styleClass="form-label"/>
+                            <h:inputText id="returnDate" value="#{rentalCreate.rental.returnDate}"
+                                         type="date"
+                                         styleClass="form-control" />
+                            <h:outputLabel for="returnDate" value="Return date:" styleClass="form-label" />
                         </div>
                     </div>
                 </div>
 
+
                 <div class="row">
                     <div class="col-4 p-2">
-                        <div class="form-outline">
-                            <h:inputText id="returned" value="#{rentalCreate.rental.returned}" styleClass="form-control"/>
-                            <h:outputLabel for="returned" value="Returned:" styleClass="form-label"/>
-                        </div>
+                        <fieldset>
+                            <legend class="form-label fs-6">Returned:</legend>
+                                <h:selectOneMenu id="returned" value="#{rentalCreate.rental.returned}"
+                                                 styleClass="form-control"
+                                                 required="true" group="returned">
+                                    <f:selectItem itemValue="true" itemLabel="Yes" />
+                                    <f:selectItem itemValue="false" itemLabel="No" />
+                                </h:selectOneMenu>
+                        </fieldset>
                     </div>
                 </div>
 
@@ -55,7 +65,7 @@
                             <legend class="form-label fs-6">Vehicle:</legend>
                             <ui:repeat value="#{rentalCreate.vehicles}" var="vehicle">
                                 <div class="form-check">
-                                    <h:selectOneRadio id="radioId" group="vehcile"
+                                    <h:selectOneRadio id="radioId" group="vehicle"
                                                       value="#{rentalCreate.rental.vehicle}"
                                                       styleClass="form-check-input"
                                                       enabledClass="form-check-label"
