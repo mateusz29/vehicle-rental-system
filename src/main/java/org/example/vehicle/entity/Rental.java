@@ -29,7 +29,7 @@ public class Rental implements Serializable {
     @JoinColumn(name = "user_username")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne()
     @JoinColumn(name = "vehicle")
     private Vehicle vehicle;
 }
