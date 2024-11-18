@@ -42,12 +42,18 @@ public class RentalCreate implements Serializable {
 
     public void init() {
         if (conversation.isTransient()) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String formattedDate = currentDate.format(formatter);
+
             VehicleModel vehicle = vehicleService.find(vehicleId)
                     .map(factory.vehicleToModel())
                     .orElseThrow();
 
             rental = RentalCreateModel.builder()
                     .id(UUID.randomUUID())
+                    .rentalDate(formattedDate)
+                    .returnDate(formattedDate)
                     .vehicle(vehicle)
                     .build();
         }

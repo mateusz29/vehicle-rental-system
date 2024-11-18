@@ -34,6 +34,7 @@ public class RentalPersistenceRepository implements RentalRepository {
     @Override
     public void create(Rental entity) {
         em.persist(entity);
+        em.refresh(em.find(Vehicle.class, entity.getVehicle().getId()));
     }
 
     @Override
@@ -55,8 +56,6 @@ public class RentalPersistenceRepository implements RentalRepository {
 
     @Override
     public List<Rental> findAllByVehicle(Vehicle vehicle) {
-        return em.createQuery("select r from Rental r where r.vehicle = :vehicle", Rental.class)
-                .setParameter("vehicle", vehicle)
-                .getResultList();
+        return vehicle.getRentals();
     }
 }

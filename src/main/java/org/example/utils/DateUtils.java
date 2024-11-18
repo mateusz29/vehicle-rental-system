@@ -10,7 +10,7 @@ public class DateUtils {
         try {
             return LocalDate.parse(dateString, FORMATTER);
         } catch (Exception e) {
-            return LocalDate.now();
+            return null;
         }
     }
 }

@@ -48,10 +48,13 @@
 
                 <div class="row">
                     <div class="col-4 p-2">
-                        <div class="form-outline">
-                            <h:inputText id="returned" value="#{rentalEdit.rental.returned}" styleClass="form-control"/>
-                            <h:outputLabel for="returned" value="Returned:" styleClass="form-label"/>
-                        </div>
+                        <fieldset>
+                            <legend class="form-label fs-6">Returned:</legend>
+                            <h:selectOneMenu id="returned" value="#{rentalEdit.rental.returned}" styleClass="form-control" required="true">
+                                <f:selectItem itemValue="true" itemLabel="Yes" />
+                                <f:selectItem itemValue="false" itemLabel="No" />
+                            </h:selectOneMenu>
+                        </fieldset>
                     </div>
                 </div>
 

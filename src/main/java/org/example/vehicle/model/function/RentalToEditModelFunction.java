@@ -12,8 +12,8 @@ public class RentalToEditModelFunction implements Function<Rental, RentalEditMod
     public RentalEditModel apply(Rental rental) {
         return RentalEditModel.builder()
                 .referenceCode(rental.getReferenceCode())
-                .rentalDate(rental.getRentalDate().toString())
-                .returnDate(rental.getReturnDate().toString())
+                .rentalDate(rental.getRentalDate() != null ? rental.getRentalDate().toString() : null)
+                .returnDate(rental.getReturnDate() != null ? rental.getReturnDate().toString() : null)
                 .returned(rental.isReturned())
                 .vehicle(VehicleModel.builder()
                         .id(rental.getVehicle().getId())
