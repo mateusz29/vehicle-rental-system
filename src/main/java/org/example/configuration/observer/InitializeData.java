@@ -7,6 +7,7 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import lombok.SneakyThrows;
 import org.example.user.entity.User;
+import org.example.user.entity.UserRoles;
 import org.example.user.service.UserService;
 import org.example.vehicle.entity.Rental;
 import org.example.vehicle.entity.Vehicle;
@@ -15,6 +16,7 @@ import org.example.vehicle.service.RentalService;
 import org.example.vehicle.service.VehicleService;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
@@ -50,24 +52,28 @@ public class InitializeData {
                     .id(UUID.fromString("7553f71e-5217-4a39-9680-f506d52b08e5"))
                     .username("Georgy")
                     .birthday(LocalDate.of(1999, 1, 1))
+                    .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
                     .build();
 
             User Nicholas = User.builder()
                     .id(UUID.fromString("d1cdcccd-17ed-4db5-a0cd-e7c7cd5ba4b3"))
                     .username("Nick")
                     .birthday(LocalDate.of(1978, 10, 12))
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             User Wilson = User.builder()
                     .id(UUID.fromString("e3cc7be8-b40c-4c3a-afc3-796880b4cccc"))
                     .username("Will")
                     .birthday(LocalDate.of(1990, 4, 20))
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             User Gregory = User.builder()
                     .id(UUID.fromString("3c9ee08b-b759-47a0-8ad2-3b52827c0583"))
                     .username("House")
                     .birthday(LocalDate.of(1987, 2, 16))
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             userService.create(George);

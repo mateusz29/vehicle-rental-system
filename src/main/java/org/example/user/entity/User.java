@@ -36,4 +36,9 @@ public class User implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private byte[] avatar;
+
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "ud"))
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 }
