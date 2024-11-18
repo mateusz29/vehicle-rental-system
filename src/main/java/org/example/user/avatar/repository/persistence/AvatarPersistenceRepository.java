@@ -1,6 +1,6 @@
 package org.example.user.avatar.repository.persistence;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.example.user.avatar.repository.api.AvatarRepository;
@@ -8,7 +8,7 @@ import org.example.user.avatar.repository.api.AvatarRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@Dependent
 public class AvatarPersistenceRepository implements AvatarRepository {
     private EntityManager em;
 

@@ -13,6 +13,18 @@
         <feature>appSecurity-5.0</feature>
     </featureManager>
 
+    <application type="war" location="vehicle-rental-system-1.0-SNAPSHOT.war">
+        <application-bnd>
+            <security-role name="admin">
+                <group name="admin" access-id="group:jdbc/RentalSystem/admin"/>
+                <run-as userid="admin-service"/>
+            </security-role>
+            <security-role name="user">
+                <group name="user" access-id="group:jdbc/RentalSystem/user"/>
+            </security-role>
+        </application-bnd>
+    </application>
+
     <dataSource id="RentalSystemRentalsDataSource" jndiName="jdbc/RentalSystem">
         <jdbcDriver javax.sql.XADataSource="org.h2.jdbcx.JdbcDataSource"
                     javax.sql.ConnectionPoolDataSource="org.h2.jdbcx.JdbcDataSource"

@@ -14,4 +14,5 @@ import java.time.LocalDate;
 public class PutUserRequest {
     private String username;
     private LocalDate birthday;
+    private String password;
 }

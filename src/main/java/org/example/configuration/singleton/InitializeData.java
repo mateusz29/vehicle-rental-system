@@ -1,10 +1,12 @@
-package org.example.configuration.observer;
+package org.example.configuration.singleton;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Initialized;
-import jakarta.enterprise.context.control.RequestContextController;
-import jakarta.enterprise.event.Observes;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.RunAs;
+import jakarta.ejb.*;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.example.user.entity.User;
 import org.example.user.entity.UserRoles;
@@ -19,39 +21,45 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-@ApplicationScoped
+@Singleton
+@Startup
+@TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+@NoArgsConstructor
+@DependsOn("InitializeAdminService")
+@DeclareRoles({UserRoles.ADMIN, UserRoles.USER})
+@RunAs(UserRoles.ADMIN)
 public class InitializeData {
-    private final UserService userService;
-    private final VehicleService vehicleService;
-    private final RentalService rentalService;
-    private final RequestContextController requestContextController;
+    private UserService userService;
+    private VehicleService vehicleService;
+    private RentalService rentalService;
 
     @Inject
-    public InitializeData(
-            UserService userService,
-            VehicleService vehicleService,
-            RentalService rentalService,
-            RequestContextController requestContextController
-    ) {
+    private SecurityContext securityContext;
+
+    @EJB
+    public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @EJB
+    public void setVehicleService(VehicleService vehicleService) {
         this.vehicleService = vehicleService;
+    }
+
+    @EJB
+    public void setRentalService(RentalService rentalService) {
         this.rentalService = rentalService;
-        this.requestContextController = requestContextController;
     }
 
-    public void contextInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        init();
-    }
-
+    @PostConstruct
     @SneakyThrows
     private void init() {
-        requestContextController.activate(); // start request scope in order to inject request scoped repositories
-
-        if (userService.find("Georgy").isEmpty()) {
+        if (userService.find("admin").isEmpty()) {
             User George = User.builder()
                     .id(UUID.fromString("7553f71e-5217-4a39-9680-f506d52b08e5"))
-                    .username("Georgy")
+                    .username("admin")
                     .birthday(LocalDate.of(1999, 1, 1))
+                    .password("admin")
                     .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
                     .build();
 
@@ -59,6 +67,7 @@ public class InitializeData {
                     .id(UUID.fromString("d1cdcccd-17ed-4db5-a0cd-e7c7cd5ba4b3"))
                     .username("Nick")
                     .birthday(LocalDate.of(1978, 10, 12))
+                    .password("user")
                     .roles(List.of(UserRoles.USER))
                     .build();
 
@@ -66,6 +75,7 @@ public class InitializeData {
                     .id(UUID.fromString("e3cc7be8-b40c-4c3a-afc3-796880b4cccc"))
                     .username("Will")
                     .birthday(LocalDate.of(1990, 4, 20))
+                    .password("user")
                     .roles(List.of(UserRoles.USER))
                     .build();
 
@@ -73,6 +83,7 @@ public class InitializeData {
                     .id(UUID.fromString("3c9ee08b-b759-47a0-8ad2-3b52827c0583"))
                     .username("House")
                     .birthday(LocalDate.of(1987, 2, 16))
+                    .password("user")
                     .roles(List.of(UserRoles.USER))
                     .build();
 
@@ -204,7 +215,5 @@ public class InitializeData {
             rentalService.create(rental8);
 
         }
-
-        requestContextController.deactivate();
     }
 }

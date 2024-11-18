@@ -12,6 +12,7 @@ public class UpdateUserWithRequestFunction implements BiFunction<User, PatchUser
                 .id(user.getId())
                 .username(request.getUsername())
                 .birthday(request.getBirthday())
+                .password(user.getPassword())
                 .build();
     }
 }

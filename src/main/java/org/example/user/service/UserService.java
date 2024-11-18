@@ -3,6 +3,7 @@ package org.example.user.service;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 import lombok.NoArgsConstructor;
 import org.example.user.entity.User;
 import org.example.user.repository.api.UserRepository;
@@ -16,10 +17,15 @@ import java.util.UUID;
 @NoArgsConstructor(force = true)
 public class UserService {
     private final UserRepository repository;
+    private final Pbkdf2PasswordHash passwordHash;
 
     @Inject
-    public UserService(UserRepository repository) {
+    public UserService(
+            UserRepository repository,
+            @SuppressWarnings("CdiInjectionPointsInspection") Pbkdf2PasswordHash passwordHash
+    ) {
         this.repository = repository;
+        this.passwordHash = passwordHash;
     }
 
     public Optional<User> find(UUID id) {
@@ -35,6 +41,7 @@ public class UserService {
     }
 
     public void create(User user) {
+        user.setPassword(passwordHash.generate(user.getPassword().toCharArray()));
         repository.create(user);
     }
 
@@ -44,5 +51,11 @@ public class UserService {
 
     public void update(User user) {
         repository.update(user);
+    }
+
+    public boolean verify(String username, String password) {
+        return find(username)
+                .map(user -> passwordHash.verify(password.toCharArray(), user.getPassword()))
+                .orElse(false);
     }
 }
