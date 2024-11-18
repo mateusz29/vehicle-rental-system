@@ -1,8 +1,8 @@
 package org.example.vehicle.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.LocalBean;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import org.example.user.repository.api.UserRepository;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@ApplicationScoped
+@LocalBean
+@Stateless
 @NoArgsConstructor(force = true)
 public class RentalService {
     private final VehicleRepository vehicleRepository;
@@ -36,7 +37,6 @@ public class RentalService {
         return rentalRepository.findAll();
     }
 
-    @Transactional
     public void create(Rental rental) {
         if (rentalRepository.find(rental.getId()).isPresent()) {
             throw new IllegalArgumentException("Rental with id \"%s\" already exists".formatted(rental.getId()));
@@ -47,12 +47,10 @@ public class RentalService {
         rentalRepository.create(rental);
     }
 
-    @Transactional
     public void update(Rental rental) {
         rentalRepository.update(rental);
     }
 
-    @Transactional
     public void delete(UUID id) {
         rentalRepository.delete(rentalRepository.find(id).orElseThrow());
     }

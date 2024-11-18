@@ -1,5 +1,6 @@
 package org.example.vehicle.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -12,15 +13,19 @@ import java.io.Serializable;
 @ViewScoped
 @Named
 public class VehicleList implements Serializable {
-    private final VehicleService service;
+    private VehicleService service;
     private final ModelFunctionFactory factory;
 
     private VehiclesModel vehicles;
 
     @Inject
-    public VehicleList(VehicleService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public VehicleList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(VehicleService service) {
+        this.service = service;
     }
 
     public VehiclesModel getVehicles() {

@@ -1,6 +1,8 @@
 package org.example.component;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import org.example.user.model.function.UserToModelFunction;
+import org.example.user.model.function.UsersToModelFunction;
 import org.example.vehicle.model.function.*;
 
 @ApplicationScoped
@@ -39,4 +41,11 @@ public class ModelFunctionFactory {
         return new UpdateRentalWithModelFunction();
     }
 
+    //user
+    public UserToModelFunction userToModel() {
+        return new UserToModelFunction();
+    }
+    public UsersToModelFunction usersToModel() {
+        return new UsersToModelFunction();
+    }
 }

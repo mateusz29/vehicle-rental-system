@@ -1,5 +1,6 @@
 package org.example.vehicle.view;
 
+import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -10,15 +11,19 @@ import org.example.vehicle.service.RentalService;
 @RequestScoped
 @Named
 public class RentalList {
-    private final RentalService service;
+    private RentalService service;
     private final ModelFunctionFactory factory;
 
     private RentalsModel rentals;
 
     @Inject
-    public RentalList(RentalService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public RentalList(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(RentalService service) {
+        this.service = service;
     }
 
     public RentalsModel getRentals() {

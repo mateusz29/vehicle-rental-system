@@ -1,5 +1,6 @@
 package org.example.vehicle.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -24,8 +25,8 @@ import java.util.stream.Collectors;
 @ViewScoped
 @Named
 public class RentalEdit implements Serializable {
-    private final RentalService rentalService;
-    private final VehicleService vehicleService;
+    private RentalService rentalService;
+    private VehicleService vehicleService;
     private final ModelFunctionFactory factory;
 
     @Getter
@@ -40,11 +41,20 @@ public class RentalEdit implements Serializable {
     private RentalEditModel rental;
 
     @Inject
-    public RentalEdit(RentalService rentalService, VehicleService vehicleService, ModelFunctionFactory factory) {
-        this.rentalService = rentalService;
-        this.vehicleService = vehicleService;
+    public RentalEdit(ModelFunctionFactory factory) {
         this.factory = factory;
     }
+
+    @EJB
+    public void setRentalService(RentalService rentalService) {
+        this.rentalService = rentalService;
+    }
+
+    @EJB
+    public void setVehicleService(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
+
 
     public void init() throws IOException {
         Optional<Rental> rental = rentalService.find(rentalId);

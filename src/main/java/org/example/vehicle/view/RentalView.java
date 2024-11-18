@@ -1,5 +1,6 @@
 package org.example.vehicle.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class RentalView implements Serializable {
-    private final RentalService service;
+    private RentalService service;
     private final ModelFunctionFactory factory;
 
     @Getter
@@ -32,9 +33,13 @@ public class RentalView implements Serializable {
     private RentalModel rental;
 
     @Inject
-    public RentalView(RentalService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public RentalView(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(RentalService service) {
+        this.service = service;
     }
 
     public void init() throws IOException {

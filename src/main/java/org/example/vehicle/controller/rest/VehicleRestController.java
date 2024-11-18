@@ -1,14 +1,15 @@
 package org.example.vehicle.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import lombok.extern.java.Log;
 import org.example.component.DtoFunctionFactory;
 import org.example.vehicle.controller.api.VehicleController;
 import org.example.vehicle.dto.GetVehicleResponse;
@@ -18,10 +19,12 @@ import org.example.vehicle.dto.PutVehicleRequest;
 import org.example.vehicle.service.VehicleService;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class VehicleRestController implements VehicleController {
-    private final VehicleService service;
+    private VehicleService service;
     private final DtoFunctionFactory factory;
     private final UriInfo uriInfo;
     private HttpServletResponse response;
@@ -33,12 +36,15 @@ public class VehicleRestController implements VehicleController {
 
     @Inject
     public VehicleRestController(
-            VehicleService service,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(VehicleService service) {
+        this.service = service;
     }
 
     @Override
@@ -62,15 +68,26 @@ public class VehicleRestController implements VehicleController {
                     .build(id)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 
     @Override
     public void updateVehicle(UUID id, PatchVehicleRequest request) {
         service.find(id).ifPresentOrElse(
-                vehicle -> service.update(factory.updateVehicle().apply(vehicle, request)),
+                vehicle -> {
+                    try {
+                        service.update(factory.updateVehicle().apply(vehicle, request));
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+                },
                 () -> {
                     throw new NotFoundException();
                 }
@@ -80,7 +97,14 @@ public class VehicleRestController implements VehicleController {
     @Override
     public void deleteVehicle(UUID id) {
         service.find(id).ifPresentOrElse(
-                vehicle -> service.delete(id),
+                vehicle -> {
+                    try {
+                        service.delete(id);
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+                },
                 () -> {
                     throw new NotFoundException();
                 }

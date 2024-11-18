@@ -1,15 +1,16 @@
 package org.example.vehicle.controller.rest;
 
+import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
+import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.ws.rs.BadRequestException;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import lombok.SneakyThrows;
+import lombok.extern.java.Log;
 import org.example.component.DtoFunctionFactory;
 import org.example.vehicle.controller.api.RentalController;
 import org.example.vehicle.dto.GetRentalResponse;
@@ -19,10 +20,12 @@ import org.example.vehicle.dto.PutRentalRequest;
 import org.example.vehicle.service.RentalService;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Path("")
+@Log
 public class RentalRestController implements RentalController {
-    private final RentalService service;
+    private RentalService service;
     private final DtoFunctionFactory factory;
     private final UriInfo uriInfo;
     private HttpServletResponse response;
@@ -34,12 +37,15 @@ public class RentalRestController implements RentalController {
 
     @Inject
     public RentalRestController(
-            RentalService service,
             DtoFunctionFactory factory,
             @SuppressWarnings("CdiInjectionPointsInspection") UriInfo uriInfo) {
-        this.service = service;
         this.factory = factory;
         this.uriInfo = uriInfo;
+    }
+
+    @EJB
+    public void setService(RentalService service) {
+        this.service = service;
     }
 
     @Override
@@ -78,15 +84,26 @@ public class RentalRestController implements RentalController {
                     .build(rentalId)
                     .toString());
             throw new WebApplicationException(Response.Status.CREATED);
-        } catch (IllegalArgumentException ex) {
-            throw new BadRequestException(ex);
+        } catch (EJBException ex) {
+            if (ex.getCause() instanceof IllegalArgumentException) {
+                log.log(Level.WARNING, ex.getMessage(), ex);
+                throw new BadRequestException(ex);
+            }
+            throw ex;
         }
     }
 
     @Override
     public void updateRental(UUID vehicleId, UUID rentalId, PatchRentalRequest request) {
         service.find(rentalId).ifPresentOrElse(
-                rental -> service.update(factory.updateRental().apply(rental, request)),
+                rental -> {
+                    try {
+                        service.update(factory.updateRental().apply(rental, request));
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+                },
                 () -> {
                     throw new NotFoundException();
                 }
@@ -96,7 +113,14 @@ public class RentalRestController implements RentalController {
     @Override
     public void deleteRental(UUID id) {
         service.find(id).ifPresentOrElse(
-                vehicle -> service.delete(id),
+                vehicle -> {
+                    try {
+                        service.delete(id);
+                    } catch (EJBAccessException ex) {
+                        log.log(Level.WARNING, ex.getMessage(), ex);
+                        throw new ForbiddenException(ex.getMessage());
+                    }
+                },
                 () -> {
                     throw new NotFoundException();
                 }

@@ -1,5 +1,6 @@
 package org.example.vehicle.view;
 
+import jakarta.ejb.EJB;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @ViewScoped
 @Named
 public class VehicleEdit implements Serializable {
-    private final VehicleService service;
+    private VehicleService service;
     private final ModelFunctionFactory factory;
 
     @Setter
@@ -31,9 +32,13 @@ public class VehicleEdit implements Serializable {
     private VehicleEditModel vehicle;
 
     @Inject
-    public VehicleEdit(VehicleService service, ModelFunctionFactory factory) {
-        this.service = service;
+    public VehicleEdit(ModelFunctionFactory factory) {
         this.factory = factory;
+    }
+
+    @EJB
+    public void setService(VehicleService service) {
+        this.service = service;
     }
 
     public void init() throws IOException {
