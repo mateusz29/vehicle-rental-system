@@ -22,14 +22,11 @@ public class UserLogout {
     @SneakyThrows
     public String logoutAction() {
         request.logout();//Session invalidate can possibly not work with JASPIC.
-        request.getSession().invalidate();
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        externalContext.setResponseStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//        externalContext.responseFlushBuffer();
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.setResponseStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        externalContext.responseFlushBuffer();
 
-        String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
-        return viewId + "?faces-redirect=true&includeViewParams=true";
+        return "/index.xhtml";
     }
 }
