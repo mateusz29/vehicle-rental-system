@@ -6,6 +6,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.component.ModelFunctionFactory;
 import org.example.vehicle.model.RentalCreateModel;
@@ -20,6 +21,7 @@ import java.util.UUID;
 
 @ViewScoped
 @Named
+@NoArgsConstructor(force = true)
 public class RentalCreate implements Serializable {
     private RentalService rentalService;
     private VehicleService vehicleService;
@@ -73,7 +75,7 @@ public class RentalCreate implements Serializable {
     }
 
     public String saveAction() {
-        rentalService.create(factory.modelToRental().apply(rental));
+        rentalService.createForCallerPrincipal(factory.modelToRental().apply(rental));
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }
 }

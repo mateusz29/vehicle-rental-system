@@ -6,9 +6,11 @@ import org.example.vehicle.entity.Rental;
 import org.example.vehicle.entity.Vehicle;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface RentalRepository extends Repository<Rental, UUID> {
     List<Rental> findAllByUser(User user);
     List<Rental> findAllByVehicle(Vehicle vehicle);
+    Optional<Rental> findByIdAndUser(UUID id, User user);
 }

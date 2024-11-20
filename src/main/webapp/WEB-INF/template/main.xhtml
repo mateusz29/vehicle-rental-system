@@ -24,6 +24,12 @@
             <header class="mb-4 mt-4">
                 <h:graphicImage value="/resources/images/logo.jpg" alt="Logo" style="max-height: 100px; margin-right: 10px;" />
                 <h1 style="display: inline;">Vehicle rental system</h1>
+                <h:form styleClass="container d-flex  align-items-center justify-content-end"
+                        rendered="#{facesContext.externalContext.userPrincipal != null}">
+                    Logged: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
+                    <h:commandButton styleClass="btn btn-link" value="Logout"
+                                     action="#{userLogout.logoutAction()}"/>
+                </h:form>
             </header>
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
@@ -40,10 +46,12 @@
                             <h:link styleClass="nav-link"
                                     outcome="/vehicle/vehicle_list.xhtml">Vehicles</h:link>
                         </li>
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link"
-                                    outcome="/user/user_list.xhtml">Users</h:link>
-                        </li>
+                        <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link"
+                                        outcome="/user/user_list.xhtml">Users</h:link>
+                            </li>
+                        </h:panelGroup>
                     </ul>
                 </div>
             </nav>

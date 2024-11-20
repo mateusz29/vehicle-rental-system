@@ -6,7 +6,7 @@
                 template="/WEB-INF/template/main.xhtml">
 
     <ui:define name="content">
-        <h:outputStylesheet library="rental" name="css/rental_list.css"/><!-- Automatically relocated to head. -->
+        <h:outputStylesheet library="rental" name="css/rental_list.css"/>
 
         <article class="text--justified">
             <header><h2>Rentals</h2></header>
@@ -27,15 +27,6 @@
                     </h:form>
                 </h:column>
 
-<!--                <h:column>-->
-<!--                    <f:facet name="header">Edit</f:facet>-->
-<!--                    <h:form>-->
-<!--                        <h:button styleClass="btn" outcome="/rental/rental_edit.xhtml" value="Edit">-->
-<!--                            <f:param name="id" value="#{rental.id}"/>-->
-<!--                        </h:button>-->
-<!--                    </h:form>-->
-<!--                </h:column>-->
-
                 <h:column>
                     <f:facet name="header">Delete</f:facet>
                     <h:form>
@@ -44,10 +35,6 @@
                     </h:form>
                 </h:column>
 
-<!--                <f:facet name="footer">-->
-<!--                    <h:button styleClass="btn" outcome="/rental/rental_create.xhtml"-->
-<!--                              value="Create new rental"/>-->
-<!--                </f:facet>-->
             </h:dataTable>
         </article>
     </ui:define>

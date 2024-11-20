@@ -1,9 +1,12 @@
 package org.example.vehicle.service;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import lombok.NoArgsConstructor;
+import org.example.user.entity.UserRoles;
 import org.example.vehicle.entity.Vehicle;
 import org.example.vehicle.repository.api.VehicleRepository;
 
@@ -22,22 +25,27 @@ public class VehicleService {
         this.repository = repository;
     }
 
+    @PermitAll
     public Optional<Vehicle> find(UUID id) {
         return repository.find(id);
     }
 
+    @PermitAll
     public List<Vehicle> findAll() {
         return repository.findAll();
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public void create(Vehicle vehicle) {
         repository.create(vehicle);
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public void update(Vehicle vehicle) {
         repository.update(vehicle);
     }
 
+    @RolesAllowed(UserRoles.ADMIN)
     public void delete(UUID id) {
         repository.delete(repository.find(id).orElseThrow());
     }

@@ -57,7 +57,7 @@ public class RentalEdit implements Serializable {
 
 
     public void init() throws IOException {
-        Optional<Rental> rental = rentalService.find(rentalId);
+        Optional<Rental> rental = rentalService.findForCallerPrincipal(rentalId);
         if (rental.isPresent()) {
             this.rental = factory.rentalToEditModel().apply(rental.get());
             VehicleModel vehicle = vehicleService.find(vehicleId)

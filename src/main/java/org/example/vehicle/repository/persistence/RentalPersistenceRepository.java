@@ -3,6 +3,7 @@ package org.example.vehicle.repository.persistence;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.example.user.entity.User;
 import org.example.vehicle.entity.Rental;
@@ -46,6 +47,18 @@ public class RentalPersistenceRepository implements RentalRepository {
     @Override
     public void update(Rental entity) {
         em.merge(entity);
+    }
+
+    @Override
+    public Optional<Rental> findByIdAndUser(UUID id, User user) {
+        try {
+            return Optional.of(em.createQuery("select c from Rental c where c.id = :id and c.user = :user", Rental.class)
+                    .setParameter("user", user)
+                    .setParameter("id", id)
+                    .getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override

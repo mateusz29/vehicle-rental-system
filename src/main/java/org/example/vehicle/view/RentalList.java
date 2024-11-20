@@ -28,7 +28,7 @@ public class RentalList {
 
     public RentalsModel getRentals() {
         if (rentals == null) {
-            rentals = factory.rentalsToModel().apply(service.findAll());
+            rentals = factory.rentalsToModel().apply(service.findAllForCallerPrincipal());
         }
         return rentals;
     }
