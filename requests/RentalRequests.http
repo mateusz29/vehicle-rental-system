@@ -1,14 +1,22 @@
 ### Get all rentals
 GET http://localhost:9081/vehicle-rental/api/rentals
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Get single rental
-GET http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+GET http://localhost:9081/vehicle-rental/api/rentals/bf84d400-4400-4d14-becf-a9311901f30f
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Delete rental
 DELETE http://localhost:9081/vehicle-rental/api/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Create rental
 PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 Content-Type: application/json
 
 {
@@ -20,7 +28,9 @@ Content-Type: application/json
 }
 
 ### Update rental
-PATCH http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41/rentals/7625a3cc-df02-4db6-b77f-4b1393733d2a
+PATCH http://localhost:9081/vehicle-rental/api/vehicles/00a1a742-f885-41e1-b37d-92891085b791/rentals/bf84d400-4400-4d14-becf-a9311901f30f
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 Content-Type: application/json
 
 {
@@ -31,7 +41,11 @@ Content-Type: application/json
 }
 
 ### Get all user rentals
-GET http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5/rentals
+GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583/rentals
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Get all vehicle rentals
 GET http://localhost:9081/vehicle-rental/api/vehicles/00a1a742-f885-41e1-b37d-92891085b791/rentals
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user

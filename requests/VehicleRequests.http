@@ -1,14 +1,22 @@
 ### Get all vehicles
 GET http://localhost:9081/vehicle-rental/api/vehicles
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Get single vehicle
 GET http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Delete vehicle
 DELETE http://localhost:9081/vehicle-rental/api/vehicles/7bf652b9-0760-4aad-9072-b0c2f9f6c138
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Create vehicle
 PUT http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 Content-Type: application/json
 
 {
@@ -19,6 +27,8 @@ Content-Type: application/json
 
 ### Update vehicle
 PATCH http://localhost:9081/vehicle-rental/api/vehicles/e83dad4d-5d56-4065-8630-8a887536dc41
+Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
+#Authorization: Basic SG91c2U6dXNlcg== #House:user
 Content-Type: application/json
 
 {

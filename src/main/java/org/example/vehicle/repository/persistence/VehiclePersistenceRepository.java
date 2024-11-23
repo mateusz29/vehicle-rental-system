@@ -22,7 +22,9 @@ public class VehiclePersistenceRepository implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> find(UUID id) {
-        return Optional.ofNullable(em.find(Vehicle.class, id));
+        Vehicle vehicle = em.find(Vehicle.class, id);
+        em.refresh(vehicle);
+        return Optional.ofNullable(vehicle);
     }
 
     @Override

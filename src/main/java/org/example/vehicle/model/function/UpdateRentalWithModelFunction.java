@@ -17,6 +17,7 @@ public class UpdateRentalWithModelFunction implements BiFunction<Rental, RentalE
                 .rentalDate(DateUtils.convertStringToLocalDate(rentalEditModel.getRentalDate()))
                 .returnDate(DateUtils.convertStringToLocalDate(rentalEditModel.getReturnDate()))
                 .returned(rentalEditModel.isReturned())
+                .user(rental.getUser())
                 .vehicle(Vehicle.builder()
                         .id(rentalEditModel.getVehicle().getId())
                         .build())
