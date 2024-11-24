@@ -1,17 +1,14 @@
 ### Get all users
 GET http://localhost:9081/vehicle-rental/api/users
 Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
-#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Get single user
 GET http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
-#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Delete user
 DELETE http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
-#Authorization: Basic SG91c2U6dXNlcg== #House:user
 
 ### Create user
 PUT http://localhost:9081/vehicle-rental/api/users/481edd9e-85ad-4203-8658-576dd7c370ad
@@ -27,13 +24,17 @@ Content-Type: application/json
 ### Update user
 PATCH http://localhost:9081/vehicle-rental/api/users/7553f71e-5217-4a39-9680-f506d52b08e5
 Authorization: Basic YWRtaW46YWRtaW4= #admin:admin
-#Authorization: Basic SG91c2U6dXNlcg== #House:user
 Content-Type: application/json
 
 {
   "username": "Lisa",
   "birthday": "1990-03-03"
 }
+
+
+
+
+
 
 ### Get avatar
 GET http://localhost:9081/vehicle-rental/api/users/3c9ee08b-b759-47a0-8ad2-3b52827c0583/avatar

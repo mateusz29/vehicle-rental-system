@@ -30,12 +30,7 @@ public class User implements Serializable {
 
     @ToString.Exclude
     private String password;
-
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Rental> rentals;
-
+    
     @Lob
     @Basic(fetch = FetchType.EAGER)
     @ToString.Exclude

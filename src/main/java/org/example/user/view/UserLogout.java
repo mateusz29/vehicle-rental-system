@@ -21,7 +21,7 @@ public class UserLogout {
 
     @SneakyThrows
     public String logoutAction() {
-        request.logout();//Session invalidate can possibly not work with JASPIC.
+        request.logout();
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.setResponseStatus(HttpServletResponse.SC_UNAUTHORIZED);

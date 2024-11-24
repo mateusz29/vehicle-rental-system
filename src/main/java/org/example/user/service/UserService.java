@@ -57,7 +57,7 @@ public class UserService {
         repository.delete(repository.find(id).orElseThrow());
     }
 
-    @PermitAll
+    @RolesAllowed(UserRoles.ADMIN)
     public void update(User user) {
         repository.update(user);
     }
