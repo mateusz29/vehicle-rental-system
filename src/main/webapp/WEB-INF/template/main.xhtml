@@ -5,75 +5,76 @@
       xmlns:h="jakarta.faces.html"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core">
-<f:view>
-    <h:head>
-        <meta charset="UTF-8"/>
-        <meta name="description" content="Vehicle rental system"/>
-        <meta name="keywords" content="rentals"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Vehicle rental system</title>
 
-        <h:outputStylesheet library="webjars" name="mdb-ui-kit/6.4.0/css/mdb.min.css"/>
-        <h:outputStylesheet library="default" name="css/main.css"/>
-        <h:outputScript library="webjars" name="mdb-ui-kit/6.4.0/js/mdb.min.js"/>
-        <h:outputScript library="mdb" name="js/main.js" target="body"/>
-    </h:head>
+    <f:view>
+        <h:head>
+            <meta charset="UTF-8"/>
+            <meta name="description" content="Vehicle rental system"/>
+            <meta name="keywords" content="rentals"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Vehicle rental system</title>
 
-    <h:body>
-        <div class="container">
-            <header class="mb-4 mt-4">
-                <h:graphicImage value="/resources/images/logo.jpg" alt="Logo" style="max-height: 100px; margin-right: 10px;" />
-                <h1 style="display: inline;">Vehicle rental system</h1>
-                <h:form styleClass="container d-flex  align-items-center justify-content-end"
-                        rendered="#{facesContext.externalContext.userPrincipal != null}">
-                    Logged: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
-                    <h:commandButton styleClass="btn btn-link" value="Logout"
-                                     action="#{userLogout.logoutAction()}"/>
-                </h:form>
-                <h:form styleClass="container d-flex  align-items-center justify-content-end"
-                        rendered="#{facesContext.externalContext.userPrincipal == null}">
-                    <h:link styleClass="nav-link"
-                            outcome="/authentication/custom/login.xhtml">Login</h:link>
-                </h:form>
-            </header>
+            <h:outputStylesheet library="webjars" name="mdb-ui-kit/6.4.0/css/mdb.min.css"/>
+            <h:outputStylesheet library="default" name="css/main.css"/>
+            <h:outputScript library="webjars" name="mdb-ui-kit/6.4.0/js/mdb.min.js"/>
+            <h:outputScript library="mdb" name="js/main.js" target="body"/>
+        </h:head>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-                <div class="container-fluid">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link" outcome="/index.xhtml">Home</h:link>
-                        </li>
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link"
-                                    outcome="/rental/rental_list.xhtml">Rentals</h:link>
-                        </li>
-                        <li class="nav-item">
-                            <h:link styleClass="nav-link"
-                                    outcome="/vehicle/vehicle_list.xhtml">Vehicles</h:link>
-                        </li>
-                        <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+        <h:body>
+            <div class="container">
+                <header class="mb-4 mt-4">
+                    <h:graphicImage styleClass="flag" library="default" name="img/logo.jpg" alt="Logo" style="max-height: 200px; margin-right: 10px;"/>
+                    <h1 style="display: inline;">Vehicle rental system</h1>
+                    <h:form styleClass="container d-flex  align-items-center justify-content-end"
+                            rendered="#{facesContext.externalContext.userPrincipal != null}">
+                        #{messages.logged}: <h:outputText value="#{facesContext.externalContext.userPrincipal.name}"/>
+                        <h:commandButton styleClass="btn btn-link" value="Logout"
+                                         action="#{userLogout.logoutAction()}"/>
+                    </h:form>
+                    <h:form styleClass="container d-flex  align-items-center justify-content-end"
+                            rendered="#{facesContext.externalContext.userPrincipal == null}">
+                        <h:link styleClass="nav-link"
+                                outcome="/authentication/custom/login.xhtml">#{messages.login}</h:link>
+                    </h:form>
+                </header>
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link" outcome="/index.xhtml">#{messages['nav.home']}</h:link>
+                            </li>
                             <li class="nav-item">
                                 <h:link styleClass="nav-link"
-                                        outcome="/user/user_list.xhtml">Users</h:link>
+                                        outcome="/rental/rental_list.xhtml">#{messages['nav.rentals']}</h:link>
                             </li>
-                        </h:panelGroup>
-                    </ul>
-                </div>
-            </nav>
+                            <li class="nav-item">
+                                <h:link styleClass="nav-link"
+                                        outcome="/vehicle/vehicle_list.xhtml">#{messages['nav.vehicles']}</h:link>
+                            </li>
+                            <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}">
+                                <li class="nav-item">
+                                    <h:link styleClass="nav-link"
+                                            outcome="/user/user_list.xhtml">#{messages['nav.users']}</h:link>
+                                </li>
+                            </h:panelGroup>
+                        </ul>
+                    </div>
+                </nav>
 
-            <main class="mb-4 mt-4">
-                <ui:insert name="content"/>
-            </main>
+                <main class="mb-4 mt-4">
+                    <ui:insert name="content"/>
+                </main>
 
-            <footer class="text-center text-lg-start bg-light text-muted p-2">
-                <div class="text-center">
-                    Created by me
-                </div>
-                <div class="text-center">
-                    Footer text
-                </div>
-            </footer>
-        </div>
-    </h:body>
-</f:view>
+                <footer class="text-center text-lg-start bg-light text-muted p-2">
+                    <div class="text-center">
+                        #{messages['copyright.createdBy']}
+                    </div>
+                    <div class="text-center">
+                        #{messages['copyright.text']}
+                    </div>
+                </footer>
+            </div>
+        </h:body>
+    </f:view>
 </html>
