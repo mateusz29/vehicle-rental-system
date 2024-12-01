@@ -50,6 +50,14 @@ public class RentalPersistenceRepository implements RentalRepository {
     }
 
     @Override
+    public List<Rental> findAllByVehicleAndUser(Vehicle vehicle, User user) {
+        return em.createQuery("select c from Rental c where c.vehicle = :vehicle and c.user = :user", Rental.class)
+                .setParameter("vehicle", vehicle)
+                .setParameter("user", user)
+                .getResultList();
+    }
+
+    @Override
     public Optional<Rental> findByIdAndUser(UUID id, User user) {
         try {
             return Optional.of(em.createQuery("select c from Rental c where c.id = :id and c.user = :user", Rental.class)

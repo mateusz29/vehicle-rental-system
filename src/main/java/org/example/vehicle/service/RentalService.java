@@ -43,7 +43,9 @@ public class RentalService {
 
     @RolesAllowed(UserRoles.USER)
     public Optional<Rental> find(UUID id) {
-        return rentalRepository.find(id);
+        Optional<Rental> rental =  rentalRepository.find(id);
+        checkAdminRoleOrOwner(rental);
+        return rental;
     }
 
     @RolesAllowed(UserRoles.USER)
@@ -121,8 +123,13 @@ public class RentalService {
 
     @RolesAllowed(UserRoles.USER)
     public Optional<List<Rental>> findAllByVehicle(UUID id) {
+        if(securityContext.isCallerInRole(UserRoles.ADMIN)) {
+            return vehicleRepository.find(id)
+                    .map(rentalRepository::findAllByVehicle);
+        }
+
         return vehicleRepository.find(id)
-                .map(rentalRepository::findAllByVehicle);
+                .map(vehicle -> rentalRepository.findAllByVehicleAndUser(vehicle, userRepository.findByUsername(securityContext.getCallerPrincipal().getName()).get()));
     }
 
     private void checkAdminRoleOrOwner(Optional<Rental> rental) throws EJBAccessException {

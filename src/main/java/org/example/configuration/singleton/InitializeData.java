@@ -55,12 +55,20 @@ public class InitializeData {
     @SneakyThrows
     private void init() {
         if (userService.find("admin").isEmpty()) {
-            User George = User.builder()
-                    .id(UUID.fromString("7553f71e-5217-4a39-9680-f506d52b08e5"))
+            User admin = User.builder()
+                    .id(UUID.fromString("c512bfe6-e636-4ea0-9c68-720a0bd917e7"))
                     .username("admin")
                     .birthday(LocalDate.of(1999, 1, 1))
                     .password("admin")
                     .roles(List.of(UserRoles.ADMIN, UserRoles.USER))
+                    .build();
+
+            User George = User.builder()
+                    .id(UUID.fromString("7553f71e-5217-4a39-9680-f506d52b08e5"))
+                    .username("George")
+                    .birthday(LocalDate.of(1999, 1, 1))
+                    .password("user")
+                    .roles(List.of(UserRoles.USER))
                     .build();
 
             User Nicholas = User.builder()
@@ -87,6 +95,7 @@ public class InitializeData {
                     .roles(List.of(UserRoles.USER))
                     .build();
 
+            userService.create(admin);
             userService.create(George);
             userService.create(Nicholas);
             userService.create(Wilson);

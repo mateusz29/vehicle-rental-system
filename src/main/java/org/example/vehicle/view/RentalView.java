@@ -1,6 +1,7 @@
 package org.example.vehicle.view;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBAccessException;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -43,11 +44,17 @@ public class RentalView implements Serializable {
     }
 
     public void init() throws IOException {
-        Optional<Rental> rental = service.find(id);
-        if (rental.isPresent()) {
-            this.rental = factory.rentalToModel().apply(rental.get());
-        } else {
-            FacesContext.getCurrentInstance().getExternalContext().responseSendError(HttpServletResponse.SC_NOT_FOUND, "Rental not found");
+        try {
+            Optional<Rental> rental = service.find(id);
+            if (rental.isPresent()) {
+                this.rental = factory.rentalToModel().apply(rental.get());
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext()
+                        .responseSendError(HttpServletResponse.SC_NOT_FOUND, "Rental not found");
+            }
+        } catch (EJBAccessException e) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.getExternalContext().responseSendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
         }
     }
 }

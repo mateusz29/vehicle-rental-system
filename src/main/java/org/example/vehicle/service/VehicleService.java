@@ -30,7 +30,7 @@ public class VehicleService {
         return repository.find(id);
     }
 
-    @PermitAll
+    @RolesAllowed(UserRoles.USER)
     public List<Vehicle> findAll() {
         return repository.findAll();
     }

@@ -9,7 +9,13 @@ import jakarta.security.enterprise.identitystore.DatabaseIdentityStoreDefinition
 import jakarta.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @ApplicationScoped
-@BasicAuthenticationMechanismDefinition(realmName = "Vehicle Rental")
+//@BasicAuthenticationMechanismDefinition(realmName = "Vehicle Rental")
+@CustomFormAuthenticationMechanismDefinition(
+        loginToContinue = @LoginToContinue(
+                loginPage = "/authentication/custom/login.xhtml",
+                errorPage = "/authentication/custom/login_error.xhtml"
+        )
+)
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "jdbc/RentalSystem",
         callerQuery = "select password from users where username = ?",

@@ -11,7 +11,7 @@
         <article class="text--justified">
             <header><h2>Vehicles</h2></header>
 
-            <h:dataTable value="#{vehicleList.vehicles.vehicles}" var="vehicle"
+            <h:dataTable id="vehicleTable" value="#{vehicleList.vehicles.vehicles}" var="vehicle"
                          styleClass="table align-middle mb-0 bg-white" headerClass="bg-light">
                 <h:column>
                     <f:facet name="header">Brand</f:facet>
@@ -27,7 +27,7 @@
                     </h:form>
                 </h:column>
 
-                <h:column>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                     <f:facet name="header">Edit</f:facet>
                     <h:form>
                         <h:button styleClass="btn" outcome="/vehicle/vehicle_edit.xhtml" value="Edit">
@@ -36,19 +36,29 @@
                     </h:form>
                 </h:column>
 
-                <h:column>
+                <h:column rendered="#{facesContext.externalContext.isUserInRole('admin')}">
                     <f:facet name="header">Delete</f:facet>
                     <h:form>
                         <h:commandButton styleClass="btn" value="Delete"
-                                         action="#{vehicleList.deleteAction(vehicle)}"/>
+                                         action="#{vehicleList.deleteAction(vehicle)}">
+                            <f:ajax execute="@this" render=":vehicleTable"/>
+                        </h:commandButton>
                     </h:form>
                 </h:column>
 
-                <f:facet name="footer">
-                    <h:button styleClass="btn" outcome="/vehicle/vehicle_create.xhtml"
-                              value="Create new vehicle"/>
-                </f:facet>
+<!--                <f:facet name="footer">-->
+<!--                    <h:button styleClass="btn" outcome="/vehicle/vehicle_create.xhtml"-->
+<!--                              value="Create new vehicle"/>-->
+<!--                </f:facet>-->
+
             </h:dataTable>
+
+            <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('admin')}" styleClass="p-3">
+                <h:form>
+                    <h:button styleClass="btn" outcome="/vehicle/vehicle_create.xhtml"
+                              value="Create new vehicle" />
+                </h:form>
+            </h:panelGroup>
         </article>
     </ui:define>
 
