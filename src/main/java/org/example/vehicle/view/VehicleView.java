@@ -62,8 +62,8 @@ public class VehicleView implements Serializable {
         }
     }
 
-    public String deleteRental(RentalsModel.Rental rental) {
+    public void deleteRental(RentalsModel.Rental rental) {
         rentalService.delete(rental.getId());
-        return "vehicle_view?faces-redirect=true&id=" + this.id;
+        rentals = factory.rentalsToModel().apply(rentalService.findAllByVehicle(id).get());
     }
 }

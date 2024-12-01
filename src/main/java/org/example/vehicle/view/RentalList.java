@@ -33,8 +33,8 @@ public class RentalList {
         return rentals;
     }
 
-    public String deleteAction(RentalsModel.Rental rental) {
+    public void deleteAction(RentalsModel.Rental rental) {
         service.delete(rental.getId());
-        return "rental_list?faces-redirect=true";
+        rentals = factory.rentalsToModel().apply(service.findAllForCallerPrincipal());
     }
 }

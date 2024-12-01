@@ -35,8 +35,8 @@ public class VehicleList implements Serializable {
         return vehicles;
     }
 
-    public String deleteAction(VehiclesModel.Vehicle vehicle) {
+    public void deleteAction(VehiclesModel.Vehicle vehicle) {
         service.delete(vehicle.getId());
-        return "vehicle_list?faces-redirect=true";
+        vehicles = null;
     }
 }
