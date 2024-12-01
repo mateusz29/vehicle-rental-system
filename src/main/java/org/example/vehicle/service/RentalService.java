@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 import org.example.user.entity.User;
 import org.example.user.entity.UserRoles;
 import org.example.user.repository.api.UserRepository;
@@ -22,6 +23,7 @@ import java.util.UUID;
 @LocalBean
 @Stateless
 @NoArgsConstructor(force = true)
+@Log
 public class RentalService {
     private final VehicleRepository vehicleRepository;
     private final RentalRepository rentalRepository;
@@ -101,18 +103,21 @@ public class RentalService {
 
         rental.setUser(user);
         create(rental);
+        log.info("User '" + securityContext.getCallerPrincipal().getName() + "' created a new rental with ID '" + rental.getId().toString() + "'");
     }
 
     @RolesAllowed(UserRoles.USER)
     public void update(Rental rental) {
         checkAdminRoleOrOwner(rentalRepository.find(rental.getId()));
         rentalRepository.update(rental);
+        log.info("User '" + securityContext.getCallerPrincipal().getName() + "' updated a rental with ID '" + rental.getId().toString() + "'");
     }
 
     @RolesAllowed(UserRoles.USER)
     public void delete(UUID id) {
         checkAdminRoleOrOwner(rentalRepository.find(id));
         rentalRepository.delete(rentalRepository.find(id).orElseThrow());
+        log.info("User '" + securityContext.getCallerPrincipal().getName() + "' deleted a rental with ID '" + id.toString() + "'");
     }
 
     @RolesAllowed(UserRoles.USER)
