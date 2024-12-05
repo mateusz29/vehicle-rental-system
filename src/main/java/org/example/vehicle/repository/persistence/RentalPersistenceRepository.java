@@ -5,8 +5,12 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.example.user.entity.User;
 import org.example.vehicle.entity.Rental;
+import org.example.vehicle.entity.Rental_;
 import org.example.vehicle.entity.Vehicle;
 import org.example.vehicle.repository.api.RentalRepository;
 
@@ -30,7 +34,11 @@ public class RentalPersistenceRepository implements RentalRepository {
 
     @Override
     public List<Rental> findAll() {
-        return em.createQuery("select r from Rental r", Rental.class).getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> query = cb.createQuery(Rental.class);
+        Root<Rental> root = query.from(Rental.class);
+        query.select(root);
+        return em.createQuery(query).getResultList();
     }
 
     @Override
@@ -51,19 +59,29 @@ public class RentalPersistenceRepository implements RentalRepository {
 
     @Override
     public List<Rental> findAllByVehicleAndUser(Vehicle vehicle, User user) {
-        return em.createQuery("select c from Rental c where c.vehicle = :vehicle and c.user = :user", Rental.class)
-                .setParameter("vehicle", vehicle)
-                .setParameter("user", user)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> query = cb.createQuery(Rental.class);
+        Root<Rental> root = query.from(Rental.class);
+        query.select(root)
+                .where(cb.and(
+                        cb.equal(root.get(Rental_.vehicle), vehicle),
+                        cb.equal(root.get(Rental_.user), user)
+                ));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
     public Optional<Rental> findByIdAndUser(UUID id, User user) {
         try {
-            return Optional.of(em.createQuery("select c from Rental c where c.id = :id and c.user = :user", Rental.class)
-                    .setParameter("user", user)
-                    .setParameter("id", id)
-                    .getSingleResult());
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Rental> query = cb.createQuery(Rental.class);
+            Root<Rental> root = query.from(Rental.class);
+            query.select(root)
+                    .where(cb.and(
+                            cb.equal(root.get(Rental_.user), user),
+                            cb.equal(root.get(Rental_.id), id)
+                    ));
+            return Optional.of(em.createQuery(query).getSingleResult());
         } catch (NoResultException ex) {
             return Optional.empty();
         }
@@ -71,9 +89,12 @@ public class RentalPersistenceRepository implements RentalRepository {
 
     @Override
     public List<Rental> findAllByUser(User user) {
-        return em.createQuery("select r from Rental r where r.user = :user", Rental.class)
-                .setParameter("user", user)
-                .getResultList();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Rental> query = cb.createQuery(Rental.class);
+        Root<Rental> root = query.from(Rental.class);
+        query.select(root)
+                .where(cb.equal(root.get(Rental_.user), user));
+        return em.createQuery(query).getResultList();
     }
 
     @Override
