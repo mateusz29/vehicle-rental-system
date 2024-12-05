@@ -19,6 +19,11 @@
                 </h:column>
 
                 <h:column>
+                    <f:facet name="header">Version</f:facet>
+                    <h:outputText value="#{rental.version}"/>
+                </h:column>
+
+                <h:column>
                     <f:facet name="header">Created</f:facet>
                     <h:outputText value="#{rental.creationDateTime}">
                         <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>

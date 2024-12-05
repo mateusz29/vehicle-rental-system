@@ -26,6 +26,7 @@ public class RentalsModel implements Serializable {
     public static class Rental {
         private UUID id;
         private String referenceCode;
+        private Long version;
         private LocalDateTime creationDateTime;
         private LocalDateTime updateDateTime;
     }

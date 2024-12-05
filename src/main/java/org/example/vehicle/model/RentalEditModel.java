@@ -15,4 +15,5 @@ public class RentalEditModel {
     private String returnDate;
     private boolean returned;
     private VehicleModel vehicle;
+    private Long version;
 }

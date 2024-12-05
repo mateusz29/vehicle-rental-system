@@ -21,6 +21,7 @@ public class RentalToEditModelFunction implements Function<Rental, RentalEditMod
                         .brand(rental.getVehicle().getBrand())
                         .type(rental.getVehicle().getType())
                         .build())
+                .version(rental.getVersion())
                 .build();
     }
 }

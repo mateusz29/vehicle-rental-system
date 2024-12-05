@@ -19,6 +19,7 @@ public class GetRentalResponse {
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;
+    private Long version;
 
     @Getter
     @Setter

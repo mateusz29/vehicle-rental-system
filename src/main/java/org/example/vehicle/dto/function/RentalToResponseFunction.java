@@ -14,6 +14,7 @@ public class RentalToResponseFunction implements Function<Rental, GetRentalRespo
                 .rentalDate(rental.getRentalDate())
                 .returnDate(rental.getReturnDate())
                 .returned(rental.isReturned())
+                .version(rental.getVersion())
                 .vehicle(GetRentalResponse.Vehicle.builder()
                         .id(rental.getVehicle().getId())
                         .model(rental.getVehicle().getModel())

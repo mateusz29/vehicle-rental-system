@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 public class VersionAndCreationDateAuditable {
-    //@Version
-    //private Long version;
+    @Version
+    private Long version;
 
     @Column(name = "creation_date_time")
     private LocalDateTime creationDateTime;

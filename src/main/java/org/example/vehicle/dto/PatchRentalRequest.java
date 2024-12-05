@@ -16,4 +16,5 @@ public class PatchRentalRequest {
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;
+    private Long version;
 }

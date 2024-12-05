@@ -17,6 +17,7 @@ public class UpdateRentalWithRequestFunction implements BiFunction<Rental, Patch
                 .returned(patchRentalRequest.isReturned())
                 .user(rental.getUser())
                 .vehicle(rental.getVehicle())
+                .version(patchRentalRequest.getVersion())
                 .creationDateTime(rental.getCreationDateTime())
                 .updateDateTime(LocalDateTime.now())
                 .build();

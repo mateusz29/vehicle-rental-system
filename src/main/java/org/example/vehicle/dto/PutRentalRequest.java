@@ -17,6 +17,7 @@ public class PutRentalRequest {
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private boolean returned;
+    private Long version;
 
     private UUID user;
     private UUID vehicle;
