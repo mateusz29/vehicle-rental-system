@@ -14,6 +14,8 @@ public class RentalsToModelFunction implements Function<List<Rental>, RentalsMod
                         .map(rental -> RentalsModel.Rental.builder()
                                 .id(rental.getId())
                                 .referenceCode(rental.getReferenceCode())
+                                .creationDateTime(rental.getCreationDateTime())
+                                .updateDateTime(rental.getUpdateDateTime())
                                 .build())
                         .toList())
                 .build();

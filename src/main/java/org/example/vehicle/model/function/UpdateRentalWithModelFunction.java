@@ -6,6 +6,7 @@ import org.example.vehicle.entity.Vehicle;
 import org.example.vehicle.model.RentalEditModel;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.function.BiFunction;
 
 public class UpdateRentalWithModelFunction implements BiFunction<Rental, RentalEditModel, Rental>, Serializable {
@@ -21,6 +22,8 @@ public class UpdateRentalWithModelFunction implements BiFunction<Rental, RentalE
                 .vehicle(Vehicle.builder()
                         .id(rentalEditModel.getVehicle().getId())
                         .build())
+                .creationDateTime(rental.getCreationDateTime())
+                .updateDateTime(LocalDateTime.now())
                 .build();
     }
 }

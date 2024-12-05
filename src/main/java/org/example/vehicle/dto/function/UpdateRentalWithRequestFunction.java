@@ -3,6 +3,7 @@ package org.example.vehicle.dto.function;
 import org.example.vehicle.dto.PatchRentalRequest;
 import org.example.vehicle.entity.Rental;
 
+import java.time.LocalDateTime;
 import java.util.function.BiFunction;
 
 public class UpdateRentalWithRequestFunction implements BiFunction<Rental, PatchRentalRequest, Rental> {
@@ -16,6 +17,8 @@ public class UpdateRentalWithRequestFunction implements BiFunction<Rental, Patch
                 .returned(patchRentalRequest.isReturned())
                 .user(rental.getUser())
                 .vehicle(rental.getVehicle())
+                .creationDateTime(rental.getCreationDateTime())
+                .updateDateTime(LocalDateTime.now())
                 .build();
     }
 }

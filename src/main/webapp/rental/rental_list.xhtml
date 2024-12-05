@@ -19,6 +19,20 @@
                 </h:column>
 
                 <h:column>
+                    <f:facet name="header">Created</f:facet>
+                    <h:outputText value="#{rental.creationDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Updated</f:facet>
+                    <h:outputText value="#{rental.updateDateTime}">
+                        <f:convertDateTime type="localDateTime" pattern="yyyy-MM-dd HH:mm"/>
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
                     <f:facet name="header">View</f:facet>
                     <h:form>
                         <h:button styleClass="btn" outcome="/rental/rental_view.xhtml" value="View">
