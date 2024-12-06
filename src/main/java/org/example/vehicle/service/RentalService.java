@@ -5,7 +5,9 @@ import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.security.enterprise.SecurityContext;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
@@ -108,6 +110,14 @@ public class RentalService {
 
     @RolesAllowed(UserRoles.USER)
     public void update(Rental rental) {
+//        try {
+//            checkAdminRoleOrOwner(rentalRepository.find(rental.getId()));
+//            rentalRepository.update(rental);
+//            log.info("User '" + securityContext.getCallerPrincipal().getName() + "' updated a rental with ID '" + rental.getId().toString() + "'");
+//        } catch (OptimisticLockException e) {
+//            System.out.println("Optimistic lock exception: " + e.getMessage());
+//            throw new BadRequestException("The entity was modified by another user. Please refresh and try again.");
+//        }
         checkAdminRoleOrOwner(rentalRepository.find(rental.getId()));
         rentalRepository.update(rental);
         log.info("User '" + securityContext.getCallerPrincipal().getName() + "' updated a rental with ID '" + rental.getId().toString() + "'");

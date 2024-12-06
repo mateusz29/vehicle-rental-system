@@ -1,11 +1,15 @@
 package org.example.vehicle.view;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.TransactionalException;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.component.ModelFunctionFactory;
@@ -55,7 +59,6 @@ public class RentalEdit implements Serializable {
         this.vehicleService = vehicleService;
     }
 
-
     public void init() throws IOException {
         Optional<Rental> rental = rentalService.findForCallerPrincipal(rentalId);
         if (rental.isPresent()) {
@@ -71,8 +74,18 @@ public class RentalEdit implements Serializable {
         }
     }
 
-    public String saveAction() {
-        rentalService.update(factory.updateRental().apply(rentalService.find(rentalId).orElseThrow(), rental));
-        return "/rental/rental_list.xhtml?faces-redirect=true";
+    public String saveAction() throws IOException{
+        try {
+            rentalService.update(factory.updateRental().apply(rentalService.find(rentalId).orElseThrow(), rental));
+            return "/rental/rental_list.xhtml?faces-redirect=true";
+        } catch (TransactionalException | EJBException ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                System.out.println("test");
+                init();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Version collision."));
+            }
+            return null ;
+        }
+
     }
 }

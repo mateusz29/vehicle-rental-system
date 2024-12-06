@@ -4,7 +4,9 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.EJBAccessException;
 import jakarta.ejb.EJBException;
 import jakarta.inject.Inject;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.TransactionalException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
@@ -95,19 +97,25 @@ public class RentalRestController implements RentalController {
 
     @Override
     public void updateRental(UUID vehicleId, UUID rentalId, PatchRentalRequest request) {
-        service.find(rentalId).ifPresentOrElse(
-                rental -> {
-                    try {
-                        service.update(factory.updateRental().apply(rental, request));
-                    } catch (EJBAccessException ex) {
-                        log.log(Level.WARNING, ex.getMessage(), ex);
-                        throw new ForbiddenException(ex.getMessage());
+        try {
+            service.find(rentalId).ifPresentOrElse(
+                    rental -> {
+                        try {
+                            service.update(factory.updateRental().apply(rental, request));
+                        } catch (EJBAccessException ex) {
+                            log.log(Level.WARNING, ex.getMessage(), ex);
+                            throw new ForbiddenException(ex.getMessage());
+                        }
+                    },
+                    () -> {
+                        throw new NotFoundException();
                     }
-                },
-                () -> {
-                    throw new NotFoundException();
-                }
-        );
+            );
+        } catch (TransactionalException ex) {
+            if (ex.getCause() instanceof OptimisticLockException) {
+                throw new BadRequestException(ex.getCause());
+            }
+        }
     }
 
     @Override
