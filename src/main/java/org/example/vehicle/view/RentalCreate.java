@@ -15,8 +15,6 @@ import org.example.vehicle.service.RentalService;
 import org.example.vehicle.service.VehicleService;
 
 import java.io.Serializable;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @ViewScoped
@@ -33,12 +31,13 @@ public class RentalCreate implements Serializable {
     private UUID vehicleId;
 
     @Getter
-    RentalCreateModel rental;
+    private final RentalCreateModel rental;
 
     @Inject
-    public RentalCreate(ModelFunctionFactory factory, Conversation conversation) {
+    public RentalCreate(ModelFunctionFactory factory, Conversation conversation, RentalCreateModel rental) {
         this.factory = factory;
         this.conversation = conversation;
+        this.rental = rental;
     }
 
     @EJB
@@ -53,20 +52,12 @@ public class RentalCreate implements Serializable {
 
     public void init() {
         if (conversation.isTransient()) {
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String formattedDate = currentDate.format(formatter);
-
             VehicleModel vehicle = vehicleService.find(vehicleId)
                     .map(factory.vehicleToModel())
                     .orElseThrow();
 
-            rental = RentalCreateModel.builder()
-                    .id(UUID.randomUUID())
-                    .rentalDate(formattedDate)
-                    .returnDate(formattedDate)
-                    .vehicle(vehicle)
-                    .build();
+            rental.setId(UUID.randomUUID());
+            rental.setVehicle(vehicle);
         }
     }
 
@@ -75,6 +66,11 @@ public class RentalCreate implements Serializable {
     }
 
     public String saveAction() {
+        VehicleModel vehicle = vehicleService.find(vehicleId)
+                .map(factory.vehicleToModel())
+                .orElseThrow();
+        rental.setId(UUID.randomUUID());
+        rental.setVehicle(vehicle);
         rentalService.createForCallerPrincipal(factory.modelToRental().apply(rental));
         return "/rental/rental_list.xhtml?faces-redirect=true";
     }

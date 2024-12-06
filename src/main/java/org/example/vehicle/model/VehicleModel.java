@@ -3,6 +3,7 @@ package org.example.vehicle.model;
 import lombok.*;
 import org.example.vehicle.entity.VehicleType;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class VehicleModel {
+public class VehicleModel implements Serializable {
     private UUID id;
     private String model;
     private String brand;

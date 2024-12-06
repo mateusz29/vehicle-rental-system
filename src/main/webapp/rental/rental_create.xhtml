@@ -17,8 +17,14 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="referenceCode" value="#{rentalCreate.rental.referenceCode}" styleClass="form-control"/>
+                            <h:inputText id="referenceCode" value="#{rentalCreateModel.referenceCode}"
+                                         binding="#{referenceCodeInput}"
+                                         styleClass="#{referenceCodeInput.valid ? 'form-control' : 'is-invalid form-control'}">
+                                <f:validateBean
+                                        validationGroups="org.example.vehicle.validation.group.RentalModelGroup, jakarta.validation.groups.Default"/>
+                            </h:inputText>
                             <h:outputLabel for="referenceCode" value="Reference code:" styleClass="form-label"/>
+                            <h:message for="referenceCode" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -26,10 +32,15 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="rentalDate" value="#{rentalCreate.rental.rentalDate}"
+                            <h:inputText id="rentalDate" value="#{rentalCreateModel.rentalDate}" converter="localDateConverter"
                                          type="date"
-                                         styleClass="form-control" />
+                                         binding="#{rentalDateInput}"
+                                         styleClass="#{rentalDateInput.valid ? 'form-control' : 'is-invalid form-control'}">
+                                <f:validateBean
+                                        validationGroups="org.example.vehicle.validation.group.RentalModelGroup, jakarta.validation.groups.Default"/>
+                            </h:inputText>
                             <h:outputLabel for="rentalDate" value="Rental date:" styleClass="form-label" />
+                            <h:message for="rentalDate" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -37,10 +48,15 @@
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">
-                            <h:inputText id="returnDate" value="#{rentalCreate.rental.returnDate}"
+                            <h:inputText id="returnDate" value="#{rentalCreateModel.returnDate}" converter="localDateConverter"
                                          type="date"
-                                         styleClass="form-control" />
+                                         binding="#{returnDateInput}"
+                                         styleClass="#{returnDateInput.valid ? 'form-control' : 'is-invalid form-control'}">
+                                <f:validateBean
+                                        validationGroups="org.example.vehicle.validation.group.RentalModelGroup, jakarta.validation.groups.Default"/>
+                            </h:inputText>
                             <h:outputLabel for="returnDate" value="Return date:" styleClass="form-label" />
+                            <h:message for="returnDate" styleClass="invalid-feedback"/>
                         </div>
                     </div>
                 </div>
@@ -49,11 +65,17 @@
                     <div class="col-4 p-2">
                         <fieldset>
                             <legend class="form-label fs-6">Returned:</legend>
-                            <h:selectOneMenu id="returned" value="#{rentalCreate.rental.returned}" styleClass="form-control" required="true">
+                            <h:selectOneMenu id="returned" value="#{rentalCreateModel.returned}" styleClass="form-control" required="true">
                                 <f:selectItem itemValue="true" itemLabel="Yes" />
                                 <f:selectItem itemValue="false" itemLabel="No" />
                             </h:selectOneMenu>
                         </fieldset>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4 p-2">
+                        <h:message styleClass="text-danger" for="rental"/>
                     </div>
                 </div>
 
@@ -67,6 +89,9 @@
                                          action="#{rentalCreate.cancelAction()}"/>
                     </div>
                 </div>
+
+                <f:validateWholeBean id="rental" value="#{rentalCreateModel}"
+                                     validationGroups="org.example.vehicle.validation.group.RentalModelGroup"/>
             </h:form>
         </article>
     </ui:define>

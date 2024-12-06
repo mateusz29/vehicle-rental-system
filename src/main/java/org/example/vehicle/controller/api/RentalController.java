@@ -1,5 +1,6 @@
 package org.example.vehicle.controller.api;
 
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.example.vehicle.dto.GetRentalResponse;
@@ -24,8 +25,8 @@ public interface RentalController {
 
     @PUT
     @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    void putRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId ,PutRentalRequest request);
+    @Consumes({MediaType.APPLICATION_JSON})
+    void putRental(@PathParam("vehicleId") UUID vehicleId, @PathParam("rentalId") UUID rentalId, @Valid PutRentalRequest request);
 
     @PATCH
     @Path("/vehicles/{vehicleId}/rentals/{rentalId}")
