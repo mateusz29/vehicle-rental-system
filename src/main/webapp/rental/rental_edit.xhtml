@@ -21,6 +21,32 @@
                     </div>
                 </div>
 
+                <h:panelGroup rendered="#{not empty rentalEdit.unsavedRental}">
+                    <div class="row">
+                        <div class="col-12 p-2">
+                            <h:outputText value="Updated data was not saved:" styleClass="text-danger" />
+                            <ul>
+                                <li>
+                                    <strong>Reference code:</strong>
+                                    <h:outputText value="#{rentalEdit.unsavedRental.referenceCode}" />
+                                </li>
+                                <li>
+                                    <strong>Rental date:</strong>
+                                    <h:outputText value="#{rentalEdit.unsavedRental.rentalDate}" />
+                                </li>
+                                <li>
+                                    <strong>Return date:</strong>
+                                    <h:outputText value="#{rentalEdit.unsavedRental.returnDate}" />
+                                </li>
+                                <li>
+                                    <strong>Returned:</strong>
+                                    <h:outputText value="#{rentalEdit.unsavedRental.returned}" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </h:panelGroup>
+
                 <div class="row">
                     <div class="col-4 p-2">
                         <div class="form-outline">

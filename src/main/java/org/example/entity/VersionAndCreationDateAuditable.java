@@ -1,9 +1,6 @@
 package org.example.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -30,7 +27,10 @@ public class VersionAndCreationDateAuditable {
     @PrePersist
     public void updateCreationDateTime() {
         creationDateTime = LocalDateTime.now();
-        updateDateTime = LocalDateTime.now();
     }
 
+    @PreUpdate
+    public void updateUpdateDateTime() {
+        updateDateTime = LocalDateTime.now();
+    }
 }

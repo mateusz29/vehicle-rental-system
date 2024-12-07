@@ -32,6 +32,7 @@ public class RentalEdit implements Serializable {
     private RentalService rentalService;
     private VehicleService vehicleService;
     private final ModelFunctionFactory factory;
+    private final FacesContext facesContext;
 
     @Getter
     @Setter
@@ -44,8 +45,12 @@ public class RentalEdit implements Serializable {
     @Getter
     private RentalEditModel rental;
 
+    @Getter
+    private RentalEditModel unsavedRental;
+
     @Inject
-    public RentalEdit(ModelFunctionFactory factory) {
+    public RentalEdit(ModelFunctionFactory factory, FacesContext facesContext) {
+        this.facesContext = facesContext;
         this.factory = factory;
     }
 
@@ -78,11 +83,12 @@ public class RentalEdit implements Serializable {
         try {
             rentalService.update(factory.updateRental().apply(rentalService.find(rentalId).orElseThrow(), rental));
             return "/rental/rental_list.xhtml?faces-redirect=true";
-        } catch (TransactionalException | EJBException ex) {
+        } catch (Exception ex) {
             if (ex.getCause() instanceof OptimisticLockException) {
                 System.out.println("test");
+                unsavedRental = rental;
                 init();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Version collision."));
+                facesContext.addMessage(null, new FacesMessage("Version collision."));
             }
             return null ;
         }

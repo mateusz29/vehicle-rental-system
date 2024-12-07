@@ -24,7 +24,7 @@ public class UpdateRentalWithModelFunction implements BiFunction<Rental, RentalE
                         .build())
                 .version(rentalEditModel.getVersion())
                 .creationDateTime(rental.getCreationDateTime())
-                .updateDateTime(LocalDateTime.now())
+                .updateDateTime(rental.getUpdateDateTime())
                 .build();
     }
 }
